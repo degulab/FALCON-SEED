@@ -1,4 +1,6 @@
 # FALCON-SEED
+Framework of ALgebraic COmpilatioN for Social, Economical & Enterprise Data
+
 
 ## Licence
 
