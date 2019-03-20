@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+  Copyright 2007-2014  SSAC(Systems of Social Accounting Consortium)
+  <author> Yasunari Ishizuka (PieCake,Inc.)
+  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
+  <author> Yuji Onuki (Statistics Bureau)
+  <author> Shungo Sakaki (Tokyo University of Technology)
+  <author> Akira Sasaki (HOSEI UNIVERSITY)
+  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
+-->
+<project default="aadlrt_javadoc">
+<target name="aadlrt_javadoc">
+	<property name="dist.name" value="aadlrt-javadoc" />
+	<property name="javadoc.dir" location="${basedir}/doc/javadoc" />
+	<property name="dist.dir" location="${javadoc.dir}/${dist.name}" />
+
+	<path id="lib.path">
+		<fileset dir="${basedir}/lib">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<!-- delete all failes in doc/javadoc directory -->
+	<mkdir dir="${dist.dir}" />
+	<delete dir="${dist.dir}" includes="**/*" includeEmptyDirs="true" />
+
+	<!-- make javadoc -->
+	<javadoc destdir="${dist.dir}" author="true"  use="true" version="true"
+		nodeprecated="false" nodeprecatedlist="false" noindex="false"
+		additionalparam="-encoding UTF-8 -charset UTF-8"
+		access="public" source="1.6" nonavbar="false" notree="false" splitindex="true">
+		<classpath refid="lib.path" />
+
+		<packageset dir="runtime" defaultexcludes="yes" >
+			<include name="ssac/**" />
+			<exclude name="ssac/**/internal/**" />
+		</packageset>
+
+		<link href="http://docs.oracle.com/javase/jp/6/api/" />
+		<link href="../Exalge2-javadoc/" />
+		<link href="../Dtalge-javadoc/" />
+		<link href="../mqttutil-javadoc/" />
+		<doctitle>AADLランタイムライブラリ</doctitle>
+	</javadoc>
+</target>
+</project>

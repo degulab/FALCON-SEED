@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+  Copyright 2007-2015  SSAC(Systems of Social Accounting Consortium)
+  <author> Yasunari Ishizuka (PieCake,Inc.)
+  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
+  <author> Yuji Onuki (Statistics Bureau)
+  <author> Shungo Sakaki (Tokyo University of Technology)
+  <author> Akira Sasaki (HOSEI UNIVERSITY)
+  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
+-->
+<project name="aadlc" default="create" basedir=".">
+	<property name="dist.dir" location="${basedir}/jar" />
+	<property name="build.dir" location="${dist.dir}/classes" />
+	<property name="src.dir" location="${basedir}/java" />
+	<property name="lib.dir" location="${basedir}/lib" />
+	<property name="resource.dir" location="${basedir}/resource" />
+	<property name="main.class" value="ssac.aadlc.Main" />
+	<property name="aadlrt.build.dir" location="${dist.dir}/runtime" />
+	<property name="aadlrt.src.dir" location="${basedir}/runtime" />
+
+	<path id="lib.path">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<!--init property-->
+	<target name="init" >
+		<property name="dist.title" value="AADL Compiler" />
+		<property name="dist.version" value="2.2.1.20150720" />
+		<property name="dist.name" value="aadlc" />
+		<property name="aadlrt.title" value="AADL Runtime library" />
+		<property name="aadlrt.name" value="aadlrt" />
+		<mkdir dir="${dist.dir}" />
+	</target>
+
+	<!--build classes-->
+	<!-- for AADL Runtime library -->
+	<target name="mkrtclass" depends="init">
+		<!-- create directory -->
+		<mkdir dir="${aadlrt.build.dir}" />
+		
+		<!-- compile -->
+		<javac destdir="${aadlrt.build.dir}" includeantruntime="no" fork="yes" compiler="javac1.6" encoding="UTF8" source="1.6">
+			<compilerarg line="-deprecation -g:none" />
+			<classpath refid="lib.path" />
+			<src path="${aadlrt.src.dir}" />
+		</javac>
+	</target>
+	<!-- for AADL Compiler -->
+	<target name="mkclass" depends="init">
+		<!-- create directory -->
+		<mkdir dir="${build.dir}" />
+		
+		<!-- compile -->
+		<javac destdir="${build.dir}" includeantruntime="no" fork="yes" compiler="javac1.6" encoding="UTF8" source="1.6">
+			<compilerarg line="-deprecation -g:none" />
+			<classpath refid="lib.path" />
+			<classpath path="${aadlrt.build.dir}" />
+			<src path="${src.dir}" />
+		</javac>
+	</target>
+
+	<!-- create -->
+	<target name="create" depends="mkrtclass, mkclass">
+		<!-- create directories -->
+		<mkdir dir="${dist.dir}/lib" />
+		<!-- copy libraries -->
+		<copy todir="${dist.dir}/lib">
+			<fileset dir="${lib.dir}">
+				<include name="**/Dtalge*.jar" />
+				<include name="**/Exalge*.jar" />
+				<include name="**/antlr-runtime-*.jar" />
+				<include name="**/mqttutil*.jar" />
+			</fileset>
+		</copy>
+		<!-- create jar file (AADL Runtime) -->
+		<jar destfile="${dist.dir}/lib/${aadlrt.name}.jar" basedir="${aadlrt.build.dir}">
+			<manifest>
+				<attribute name="Specification-Title" value="${aadlrt.title}" />
+				<attribute name="Specification-Version" value="${dist.version}" />
+				<attribute name="Implementation-Title" value="${aadlrt.title}" />
+				<attribute name="Implementation-Version" value="${dist.version}" />
+			</manifest>
+		</jar>
+		<!-- create jar file (AADL Compiler) -->
+		<jar destfile="${dist.dir}/lib/${dist.name}.jar" basedir="${build.dir}">
+			<manifest>
+				<attribute name="Specification-Title" value="${dist.title}" />
+				<attribute name="Specification-Version" value="${dist.version}" />
+				<attribute name="Implementation-Title" value="${dist.title}" />
+				<attribute name="Implementation-Version" value="${dist.version}" />
+				<attribute name="Main-Class" value="${main.class}" />
+			</manifest>
+		</jar>
+		
+		<!-- create javadoc zip
+		<zip destfile="${dist.dir}/${dist.name}-${dist.version}-javadoc.zip">
+			<fileset dir="${doc.dir}/javadoc" />
+		</zip>
+		-->
+		
+		<!-- create sources zip -->
+		<zip destfile="${dist.dir}/${dist.name}-${dist.version}-src.zip">
+			<fileset dir="${basedir}/">
+				<include name="java/" />
+				<include name="runtime/" />
+				<include name="recource/" />
+				<include name="grammar/AADL.g" />
+				<include name="grammar/AADLWalker.g" />
+				<include name="grammar/grammarBuild.bat" />
+				<include name="grammar/walkerBuild.bat" />
+				<include name="lib/*.jar" />
+			</fileset>
+			<fileset file="${basedir}/build.xml" />
+			<fileset file="${basedir}/Changes_ja.txt" />
+			<fileset file="${basedir}/LICENSE" />
+			<fileset file="${basedir}/LICENSE.antlr" />
+		</zip>
+	</target>
+
+	<!-- clean -->
+	<target name="clean" depends="init">
+		<delete dir="${build.dir}" />
+		<delete dir="${dist.dir}/lib" />
+		<delete file="${dist.dir}/${dist.name}-*-src.zip" />
+	</target>
+
+</project>

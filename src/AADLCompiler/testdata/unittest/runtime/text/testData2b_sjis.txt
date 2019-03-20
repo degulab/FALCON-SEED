@@ -1,0 +1,6 @@
+1. AADL について
+
+AADL（Algebraic Accounting Description Language）は、交換代数に極めて近い表現を持つ使用記述言語です。
+AADL の記述は、専用のプリプロセッサー（AADL コンパイラー）によりJAVA プログラムに転換され、JAVA プラットフォーム上で実行可能な形式（JAR）に転換されます。
+そのため、AADL コンパイラー自身もJAVA で実装されています。
+本書では、AADL の記述方法、ならびにAADL コンパイラーの利用方法について説明します。

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+  Copyright 2007-2009  SSAC(Systems of Social Accounting Consortium)
+  <author> Yasunari Ishizuka (PieCake,Inc.)
+  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
+  <author> Yuji Onuki (Statistics Bureau)
+  <author> Shungo Sakaki (Tokyo University of Technology)
+  <author> Akira Sasaki (HOSEI UNIVERSITY)
+  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
+-->
+<project name="deployTemplates" default="deploy" basedir=".">
+	<property name="dist.dir" location="${basedir}/jar" />
+	<property name="doc.dir" location="${basedir}/doc" />
+	<property name="lib.dir" location="${basedir}/lib" />
+	<property name="templates.dir" location="${basedir}/templates" />
+
+	<!--init property-->
+	<target name="init" >
+		<mkdir dir="${dist.dir}" />
+	</target>
+
+	<!-- create -->
+	<target name="deploy" depends="init">
+		<!-- copy templates -->
+		<copy todir="${dist.dir}">
+			<fileset dir="${templates.dir}">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+	</target>
+
+	<!-- clean -->
+	<target name="clean" depends="init">
+		<delete dir="${dist.dir}/bin" />
+		<delete dir="${dist.dir}/doc" />
+		<delete dir="${dist.dir}/lib" />
+		<delete dir="${dist.dir}/samples" />
+	</target>
+
+</project>

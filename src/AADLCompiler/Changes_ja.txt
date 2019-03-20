@@ -1,0 +1,490 @@
+﻿***************************************************************************
+*  AADL Compiler - Change Log                                             *
+*                                               Last update : 2015/07/20  *
+***************************************************************************
+
+==========================================================================
+  AADLコンパイラの変更履歴
+==========================================================================
+
+◆2.2.1.20150720
+　・日付時刻書式オブジェクトの機能を一部修正しました。
+
+◆2.2.0.20150529
+　・次の組み込み関数を追加しました。
+　　　toCsvString(o:StringList,f:Boolean):String
+　　　newStringListFromCsvString(s:String):StringList
+
+◆2.1.0.20140529
+  ・予約語に以下のキーワードを追加しました。
+      MqttCsvParameter
+  ・次のデータ型を追加しました。
+      MqttCsvParameter
+  ・次の組み込み関数を追加しました。
+      zeroProj(o:Exalge):Exalge
+      zeroProj(o:ExAlgeSet):ExAlgeSet
+      notzeroProj(o:Exalge):Exalge
+      notzeroProj(o:ExAlgeSet):ExAlgeSet
+      newExalgeFromCsvString(s:String):Exalge
+      newExAlgeSetFromCsvString(s:String):ExAlgeSet
+      newExBaseSetFromCsvString(s:String):ExBaseSet
+      newExBasePatternSetFromCsvString(s:String):ExBasePatternSet
+      newTransTableFromCsvString(s:String):TransTable
+      newTransMatrixFromCsvString(s:String):TransMatrix
+      newExTransferFromCsvString(s:String):ExTransfer
+      toCsvString(o:Exalge):String
+      toCsvString(o:ExAlgeSet):String
+      toCsvString(o:ExBaseSet):String
+      toCsvString(o:ExBasePatternSet):String
+      toCsvString(o:TransTable):String
+      toCsvString(o:TransMatrix):String
+      toCsvString(o:ExTransfer):String
+      parseMqttCsvParameter(s:String):MqttCsvParameter
+      parseMqttCsvParameter(s:String, f:Boolean):MqttCsvParameter
+      parseMqttCsvParameter(s:String, q:Decimal):MqttCsvParameter
+      parseMqttCsvParameter(s:String, f:Boolean, q:Decimal):MqttCsvParameter
+      getMqttServerURI(p:MqttCsvParameter):String
+      getMqttClientID(p:MqttCsvParameter):String
+      getAvailableMqttClientID(p:MqttCsvParameter):String
+      getMqttQOS(p:MqttCsvParameter):Decimal
+      getMqttTopicList(p:MqttCsvParameter):StringList
+      toCsvString(p:MqttCsvParameter):String
+
+◆2.0.0.20140323
+  ・外部からのプロセス中断要求に応答するための機能を追加しました。
+  ・次の組み込み関数を追加しました。
+      errorprint(全データ型):Boolean
+      errorprintln(全データ型):Boolean
+      errorprintln():Boolean
+      checkAndAcceptTerminateRequest()
+      acceptTerminateRequest():Boolean
+      isTerminateRequested():Boolean
+      strictBar(o:Exalge):Exalge
+      strictBarLeaveZero(o:Exalge, la:Boolean):Exalge
+
+◆1.90.20130827
+  ・いくつかの不具合を修正しました。
+  ・次の組み込み関数を追加しました。
+      writerValidSucceeded(TextFileWriter)
+      writerValidSucceeded(CsvFileWriter)
+      closeWriterValidSucceeded(TextFileWriter)
+      closeWriterValidSucceeded(CsvFileWriter)
+      toBoolean(s:String):Boolean
+      isBooleanExactly(s:String):Boolean
+      getBooleanValueByIndex(l:BooleanList, i:Decimal):Boolean
+      getBooleanValueByNumber(l:BooleanList, i:Decimal):Boolean
+      getDecimalValueByIndex(l:DecimalList, i:Decimal):Decimal
+      getDecimalValueByNumber(l:DecimalList, i:Decimal):Decimal
+      getStringValueByIndex(l:StringList, i:Decimal):String
+      getStringValueByNumber(l:StringList, i:Decimal):String
+      deleteFile(s:String):Boolean
+      deleteFile(s:String, f:Boolean):Boolean
+      createTemporaryFile(p:String, s:String):String
+      createTemporaryFile(d:String, p:String, s:String):String
+      createTemporaryDirectory(p:String, s:String):String
+      createTemporaryDirectory(d:String, p:String, s:String):String
+
+◆1.81.20121005
+  ・AADLコンパイル時にトークンエラーが発生してもコンパイルが成功してしまう不具合を修正しました。
+  ・JDK1.7のJAVAコンパイラでコンパイルした際、不要な警告メッセージが出力されないようにしました。
+
+◆1.80.20120613
+  ・次の組み込み関数を追加しました。
+      writeTableCsvFileWithoutNull(o:Dtalge, f:String)
+      writeTableCsvFileWithoutNull(o:Dtalge, f:String, e:String)
+      writeTableCsvFileWithoutNull(o:DtAlgeSet, f:String)
+      writeTableCsvFileWithoutNull(o:DtAlgeSet, f:String, e:String)
+      writeTableCsvFileWithBaseOrder(o:Dtalge, b:DtBaseSet, f:String)
+      writeTableCsvFileWithBaseOrder(o:Dtalge, b:DtBaseSet, f:String, e:String)
+      writeTableCsvFileWithBaseOrder(o:DtAlgeSet, b:DtBaseSet, f:String)
+      writeTableCsvFileWithBaseOrder(o:DtAlgeSet, b:DtBaseSet, f:String, e:String)
+      writeTableCsvFile(o:Dtalge, b:DtBaseSet, w:Boolean, f:String)
+      writeTableCsvFile(o:Dtalge, b:DtBaseSet, w:Boolean, f:String, e:String)
+      writeTableCsvFile(o:DtAlgeSet, b:DtBaseSet, w:Boolean, f:String)
+      writeTableCsvFile(o:DtAlgeSet, b:DtBaseSet, w:Boolean, f:String, e:String)
+
+◆1.70.20110712
+  ・AADLモジュール実行時に発生した例外の AADL 行番号が正しく出力されない不具合を修正しました。
+
+◆1.70.20110629
+  ・ユーザー定義関数の宣言に 'public' キーワードの指定が可能となりました。
+    このキーワードを指定すると、public メソッドとして JAVA コードが生成されます。
+    キーワードを指定しない場合は protected メソッドとして JAVA コードが生成されます。
+    この変更に伴い、生成されるJAVAコードのAADLプログラム・クラスやエントリメンバ
+    メソッドを変更しました。
+  ・内包記法(内包記述ブロック)のイテレート式に関数呼び出しが記述可能となりました。
+  ・予約語に以下のキーワードを追加しました。
+      Range
+      DecimalRange
+  ・次のデータ型を追加しました。
+      DecimalRange
+  ・次の組み込み関数を追加しました。
+      range(last:Decimal):DecimalRange
+      range(last:Decimal, includeLast:Boolean):DecimalRange
+      range(first:Decimal, last:Decimal):DecimalRange
+      range(first:Decimal, last:Decimal, includeLast:Boolean):DecimalRange
+      range(first:Decimal, last:Decimal, step:Decimal):DecimalRange
+      range(first:Decimal, last:Decimal, step:Decimal, includeLast:Boolean):DecimalRange
+      naturalNumberRange(s:String):DecimalRange
+      naturalNumberRange(s:String, max:Decimal):DecimalRange
+      isNaturalNumberRangeFormat(s:String):Boolean
+      isEmpty(r:DecimalRange):Boolean
+      isIncludeRangeLast(r:DecimalRange):Boolean
+      isIncremental(r:DecimalRange):Boolean
+      rangeFirst(r:DecimalRange):Decimal
+      rangeLast(r:DecimalRange):Decimal
+      rangeStep(r:DecimalRange):Decimal
+      rangeMin(r:DecimalRange):Decimal
+      rangeMax(r:DecimalRange):Decimal
+
+◆1.60.20110316
+  ・DtStringThesaurus において、一つの子となる語句に、複数の親となる語句を
+    関連付けることが可能となりました。
+  ・次の組み込み関数を追加しました。
+      getThesaurusParents(t:DtStringThesaurus, w:String):StringList
+      getThesaurusChildren(t:DtStringThesaurus, w:String):StringList
+      sum(o:DtAlgeSet):Dtalge
+      toStringList(o:DtAlgeSet, b:DtBase):StringList
+      toDistinctStringList(o:DtAlgeSet, b:DtBase):StringList
+      toDecimalList(o:DtAlgeSet, b:DtBase):DecimalList
+      toDistinctDecimalList(o:DtAlgeSet, b:DtBase):DecimalList
+      toBooleanList(o:DtAlgeSet, b:DtBase):BooleanList
+      toDistinctBooleanList(o:DtAlgeSet, b:DtBase):BooleanList
+      minDecimal(o:DtAlgeSet, b:DtBase):Decimal
+      maxDecimal(o:DtAlgeSet, b:DtBase):Decimal
+      sum(o:DtAlgeSet):Dtalge
+      sortedAlgesByValue(o:DtAlgeSet, b:DtBase, asc:Boolean):DtAlgeSet
+      sortAlgesByValue(o:DtAlgeSet, b:DtBase, asc:Boolean);
+      containsValue(o:DtAlgeSet, b:DtBase, v:Object):Boolean
+      containsAnyValues(o:DtAlgeSet, b:DtBase, l:BooleanList):Boolean
+      containsAnyValues(o:DtAlgeSet, b:DtBase, l:DecimalList):Boolean
+      containsAnyValues(o:DtAlgeSet, b:DtBase, l:StringList):Boolean
+      selectEqualValue(o:DtAlgeSet, b:DtBase, v:Object):DtAlgeSet
+      selectNotEqualValue(o:DtAlgeSet, b:DtBase, v:Object):DtAlgeSet
+      selectLessThanValue(o:DtAlgeSet, b:DtBase, v:Object):DtAlgeSet
+      selectLessEqualValue(o:DtAlgeSet, b:DtBase, v:Object):DtAlgeSet
+      selectGreaterThanValue(o:DtAlgeSet, b:DtBase, v:Object):DtAlgeSet
+      selectGreaterEqualValue(o:DtAlgeSet, b:DtBase, v:Object):DtAlgeSet
+      replaceEqualValue(o:DtAlgeSet, b:DtBase, v:Object, a:Dtalge):DtAlgeSet
+      updateEqualValue(o:DtAlgeSet, b:DtBase, v:Object, a:Dtalge):Boolean
+      removeEqualValue(o:DtAlgeSet, b:DtBase, v:Object):DtAlgeSet
+      deleteEqualValue(o:DtAlgeSet, b:DtBase, v:Object):Boolean
+      selectThesaurusMax(o:DtAlgeSet, b:DtBase, t:DtStringThesaurus):DtAlgeSet
+      selectThesaurusMin(o:DtAlgeSet, b:DtBase, t:DtStringThesaurus):DtAlgeSet
+
+◆1.50.20100929 ← 1.40.20100319
+  ・内包記法(内包記述ブロック)のAADL記述で、変数への代入が省略可能となりました。
+  ・内包記法(内包記述ブロック)のイテレート式に csvFile ファイル指定子ならびに
+    txtFile ファイル指定子を記述することで、テキストファイルのイテレートが
+    可能となりました。
+  ・次のデータ型を追加しました。
+      TextFileReader
+      TextFileWriter
+      CsvFileReader
+      CsvFileWriter
+  ・次の組み込み関数を追加しました。
+      newTextFileReader(String):TextFileReader
+      newTextFileReader(String,String):TextFileReader
+      newTextFileWriter(String):TextFileWriter
+      newTextFileWriter(String,String):TextFileWriter
+      newCsvFileReader(String):CsvFileReader
+      newCsvFileReader(String,String):CsvFileReader
+      newCsvFileWriter(String):CsvFileWriter
+      newCsvFileWriter(String,String):CsvFileWriter
+      closeReader(TextFileReader)
+      closeReader(CsvFileReader)
+      closeWriter(TextFileWriter)
+      closeWriter(CsvFileWriter)
+      newLine[](TextFileWriter):Boolean
+      print[Object](TextFileWriter):Boolean
+      println[Object](TextFileWriter):Boolean
+      newRecord[](CsvFileWriter):Boolean
+      writeField[Object](CsvFileWriter):Boolean
+      writeFields[BooleanList](CsvFileWriter):Boolean
+      writeFields[DecimalList](CsvFileWriter):Boolean
+      writeFields[StringList](CsvFileWriter):Boolean
+      writeRecord[BooleanList](CsvFileWriter):Boolean
+      writeRecord[DecimalList](CsvFileWriter):Boolean
+      writeRecord[StringList](CsvFileWriter):Boolean
+
+◆1.40.20100319 ← 1.30.20091213
+  ・次のデータ型を追加しました。
+      DtBase
+      DtBasePattern
+      Dtalge
+      DtAlgeSet
+      DtStringThesaurus
+      DtBaseSet
+      DtBasePatternSet
+      DtAlgeSet
+  ・次のリテラルが利用できます('で囲まれたものは固定の文字)
+      null リテラル：'null'
+      DtBase リテラル：'<<' 名前キー ',' データ型キー ',' 属性キー ',' 主体キー '>>'
+  ・次の演算が可能となりました。
+      Dtalge : Boolean @ DtBase
+      Dtalge : Dtalge + Dtalge
+      DtBaseSet %union% DtBaseSet
+      DtBaseSet %intersection% DtBaseSet
+      DtBaseSet %difference% DtBaseSet
+      DtBasePatternSet %union% DtBasePatternSet
+      DtBasePatternSet %intersection% DtBasePatternSet
+      DtBasePatternSet %difference% DtBasePatternSet
+      DtAlgeSet %addition% DtAlgeSet
+      DtAlgeSet %subtraction% DtAlgeSet
+      DtAlgeSet %retention% DtAlgeSet
+  ・次の組み込み関数を追加しました。
+      writeTableCsvFile(Dtalge,String)
+      writeTableCsvFile(Dtalge,String,String)
+      writeTableCsvFile(DtAlgeSet,String)
+      writeTableCsvFile(DtAlgeSet,String,String)
+      containsValue[Decimal](Exalge):Boolean
+      containsValue[全データ型](Dtalge):Boolean
+      containsAnyValues[BooleanList](Dtalge):Boolean
+      containsAnyValues[DecimalList](Dtalge):Boolean
+      containsAnyValues[StringList](Dtalge):Boolean
+      containsAllValues[BooleanList](Dtalge):Boolean
+      containsAllValues[DecimalList](Dtalge):Boolean
+      containsAllValues[StringList](Dtalge):Boolean
+      containsNull(Exalge):Boolean
+      containsNull(Dtalge):Boolean
+      nullProj(Exalge):Exalge
+      nullProj(ExAlgeSet):ExAlgeSet
+      nullProj(Dtalge):Dtalge
+      nullProj(DtAlgeSet):DtAlgeSet
+      nonullProj(Exalge):Exalge
+      nonullProj(ExAlgeSet):ExAlgeSet
+      nonullProj(Dtalge):Dtalge
+      nonullProj(DtAlgeSet):DtAlgeSet
+      oneValueProj[Decimal](Exalge):Exalge
+      oneValueProj[Decimal](ExAlgeSet):ExAlgeSet
+      oneValueProj[全データ型](Dtalge):Dtalge
+      oneValueProj[全データ型](DtAlgeSet):DtAlgeSet
+      valuesProj[DecimalList](Exalge):Exalge
+      valuesProj[DecimalList](ExAlgeSet):ExAlgeSet
+      valuesProj[BooleanList](Dtalge):Dtalge
+      valuesProj[DecimalList](Dtalge):Dtalge
+      valuesProj[StringList](Dtalge):Dtalge
+      valuesProj[BooleanList](DtAlgeSet):DtAlgeSet
+      valuesProj[DecimalList](DtAlgeSet):DtAlgeSet
+      valuesProj[StringList](DtAlgeSet):DtAlgeSet
+      isNull(全データ型):Boolean
+      isEmpty(Dtalge):Boolean
+      isEmpty(DtStringThesaurus):Boolean
+      isEmpty(DtBaseSet):Boolean
+      isEmpty(DtBasePatternSet):Boolean
+      isEmpty(DtAlgeSet):Boolean
+      getBases(Dtalge):DtBaseSet
+      getBases(DtAlgeSet):DtBaseSet
+      getOneBase(Dtalge):DtBase
+      getNameKey(DtBase):String
+      getTypeKey(DtBase):String
+      getAttributeKey(DtBase):String
+      getSubjectKey(DtBase):String
+      getNameKey(DtBasePattern):String
+      getTypeKey(DtBasePattern):String
+      getAttributeKey(DtBasePattern):String
+      getSubjectKey(DtBasePattern):String
+      newDtBasePattern(String, String):DtBasePattern
+      newDtBasePattern(String, String, String):DtBasePattern
+      newDtBasePattern(String, String, String, String):DtBasePattern
+      newDtBasePattern(StringList):DtBasePattern
+      toDtBasePattern(DtBase):DtBasePattern
+      toDtBasePattern(DtBaseSet):DtBasePatternSet
+      thesconv(Dtalge, DtBase, 全データ型, 全データ型):Dtalge
+      thesconv(Dtalge, DtBase, DtStringThesaurus, StringList):Dtalge
+      getBoolean[DtBase](Dtalge):Boolean
+      getDecimal[DtBase](Dtalge):Decimal
+      getString[DtBase](Dtalge):String
+      getMatchedBases[DtBasePattern](DtBaseSet):DtBaseSet
+      getMatchedBases[DtBasePatternSet](DtBaseSet):DtBaseSet
+      getMatchedBases[DtBasePattern](Dtalge):DtBaseSet
+      getMatchedBases[DtBasePatternSet](Dtalge):DtBaseSet
+      getMatchedBases[DtBasePattern](DtAlgeSet):DtBaseSet
+      getMatchedBases[DtBasePatternSet](DtAlgeSet):DtBaseSet
+      proj[DtBase](Dtalge):Dtalge
+      proj[DtBaseSet](Dtalge):Dtalge
+      proj[DtBase](DtAlgeSet):DtAlgeSet
+      proj[DtBaseSet](DtAlgeSet):DtAlgeSet
+      patternProj[DtBasePattern](Dtalge):Dtalge
+      patternProj[DtBasePatternSet](Dtalge):Dtalge
+      patternProj[DtBasePattern](DtAlgeSet):DtAlgeSet
+      patternProj[DtBasePatternSet](DtAlgeSet):DtAlgeSet
+      contains[String](DtStringThesaurus):Boolean
+      containsAny[StringList](DtStringThesaurus):Boolean
+      containsAll[StringList](DtStringThesaurus):Boolean
+      containsRelation[String, String](DtStringThesaurus):Boolean
+      isComparable[String, String](DtStringThesaurus):Boolean
+      isClassificationSet[StringList](DtStringThesaurus):Boolean
+      containsBase[DtBase](Dtalge):Boolean
+      containsAllBases[DtBaseSet](Dtalge):Boolean
+      contains[DtBase](DtBaseSet):Boolean
+      contains[DtBasePattern](DtBasePatternSet):Boolean
+      contains[Dtalge](DtAlgeSet):Boolean
+      cast[データ型](式):データ型
+
+◆1.30.20091213 ← 1.22.20090310
+  ・package キーワードを追加しました。
+      →AADLソースコード先頭で、Javaコード生成時のパッケージ名が指定可能となりました。
+  ・const 変数を定義可能としました。
+      →変数宣言において、const キーワードにより再代入禁止変数が定義可能となりました。
+  ・program ブロック外での const 変数宣言を可能としました。
+      →AADLソースコード先頭で、ソース内共通定数(再代入禁止変数)が定義可能となりました。
+  ・組み込み関数 pow(Decimal,Decimal):Decimal の実装を変更しました。
+      →java.math.BigDecimal#pow(BigDecimal,BigDecimal) から
+        java.lang.Math#pow(double,double) に内部実装が変更されたため、
+        演算結果の精度が変更されました。
+  ・次の定数を追加しました。
+      ATTR_AGGRE     = exalge2.ExTransfer#ATTR_AGGRE
+      ATTR_HAT       = exalge2.ExTransfer#ATTR_HAT
+      ATTR_RATIO     = exalge2.ExTransfer#ATTR_RATIO
+      ATTR_MULTIPLY  = exalge2.ExTransfer#ATTR_MULTIPLY
+  ・内包記法の条件式にブロック文を記述可能としました。
+  ・次のデータ型を追加しました。
+      ExTransfer
+      ExBasePattern
+      ExBasePatternSet
+  ・次の演算が可能となりました。
+      ExBasePattern %addition% ExBasePattern
+      ExBasePattern %subtraction% ExBasePattern
+      ExBasePattern %union% ExBasePattern
+      ExBasePattern %intersection% ExBasePattern
+      ExBasePattern %difference% ExBasePattern
+  ・次の組み込み関数を追加しました。
+      isEmpty(String):Boolean
+      isEmpty(ExTransfer):Boolean
+      isEmpty(ExBasePatternSet):Boolean
+      newExBasePattern(String):ExBasePattern
+      newExBasePattern(String,String):ExBasePattern
+      newExBasePattern(String,String,String):ExBasePattern
+      newExBasePattern(String,String,String,String):ExBasePattern
+      newExBasePattern(StringList):ExBasePattern
+      getNameKey(ExBasePattern):String
+      getUnitKey(ExBasePattern):String
+      getTimeKey(ExBasePattern):String
+      getSubjectKey(ExBasePattern):String
+      toExBasePattern(ExBase):ExBasePattern
+      toExBasePattern(ExBaseSet):ExBasePatternSet
+      toExBase(ExBasePattern):ExBase
+      toExBase(ExBasePatternSet):ExBaseSet
+      aggreTransfer(Exalge,ExBasePattern,ExBasePattern):Exalge
+      aggreTransfer(Exalge,ExBasePatternSet,ExBasePattern):Exalge
+      transform(Exalge,ExBasePattern,ExBasePattern):Exalge
+      transform(Exalge,ExBasePatternSet,ExBasePattern):Exalge
+      transfer(Exalge,ExTransfer):Exalge
+      transform(ExTransfer,ExBase):ExBaseSet
+      transform(ExTransfer,ExBaseSet):ExBaseSet
+      getTransferFromPatterns(ExTransfer):ExBasePatternSet
+      getTransferToPatterns(ExTransfer):ExBasePatternSet
+      getTransferTotalValue(ExTransfer,ExBasePattern):Decimal
+      getTransferValue(ExTransfer,ExBasePattern,ExBasePattern):Decimal
+      getTransferAttribute(ExTransfer,ExBasePattern,ExBasePattern):String
+      println():Boolean
+      contains[ExBasePattern](ExBasePatternSet):Boolean
+      contains[ExBasePattern,ExBasePattern](ExTransfer):Boolean
+      containsFrom[ExBasePattern](ExTransfer):Boolean
+      containsTo[ExBasePattern](ExTransfer):Boolean
+      lookup[ExBasePattern](ExTransfer):ExBasePatternSet
+      lookup[ExBasePatternSet](ExTransfer):ExBasePatternSet
+      inverseLookup[ExBasePattern](ExTransfer):ExBasePatternSet
+      inverseLookup[ExBasePatternSet](ExTransfer):ExBasePatternSet
+      proj[ExBasePattern](ExTransfer):ExTransfer
+      proj[ExBasePatternSet](ExTransfer):ExTransfer
+      inverseProj[ExBasePattern](ExTransfer):ExTransfer
+      inverseProj[ExBasePatternSet](ExTransfer):ExTransfer
+      canConvertToDoubleValue(Decimal):Boolean
+      doubleValue(Decimal):Decimal
+      bigpow(Decimal,Decimal):Decimal
+  ・csvFile()とtxtFile()の標準エンコーディングを実行時に指定可能とする
+    実行モジュールを生成するように変更しました。
+  ・コンパイラーオプション '-jarpropfile' を追加しました。このオプションは、
+    '-jarpropfile' に続けてファイルパスを記述し、そのパスが指すファイルを
+    任意のプロパティファイルとして jar パッケージ内に含めます。この機能は
+    AADLエディタとの連携を強化するため、新設されました。
+  ・JDK1.6を指定してAADLソースファイルをコンパイルすると、JDK1.5が指定されている
+    環境ではコンパイルしたAADLモジュールが実行できない問題を修正しました。
+
+◆1.22.20090310 ← 1.21.20090130
+  ・次の組み込み関数を追加しました。
+      isEmpty(TransTable):Boolean
+      isEmpty(TransMatrix):Boolean
+      removeHat(ExBase):ExBase
+      removeHat(ExBaseSet):ExBaseSet
+      setHat(ExBase):ExBase
+      setHat(ExBaseSet):ExBaseSet
+      generalProj[ExBase](Exalge):Exalge
+      generalProj[ExBaseSet](Exalge):Exalge
+      generalProj[ExBase](ExAlgeSet):ExAlgeSet
+      generalProj[ExBaseSet](ExAlgeSet):ExAlgeSet
+      getNoHatBases(ExBaseSet):ExBaseSet
+      getNoHatBases(Exalge):ExBaseSet
+      getNoHatBases(ExAlgeSet):ExBaseSet
+      getHatBases(ExBaseSet):ExBaseSet
+      getHatBases(Exalge):ExBaseSet
+      getHatBases(ExAlgeSet):ExBaseSet
+      getBasesWithRemoveHat(Exalge):ExBaseSet
+      getBasesWithRemoveHat(ExAlgeSet):ExBaseSet
+      getBasesWithSetHat(Exalge):ExBaseSet
+      getBasesWithSetHat(ExAlgeSet):ExBaseSet
+      getOneBase(Exalge):ExBase
+      containsAllBases[ExBaseSet](Exalge):Boolean
+      invElement(Exalge):Exalge
+      aggreTransfer(Exalge,ExBase,ExBase):Exalge
+      aggreTransfer(Exalge,ExBaseSet,ExBase):Exalge
+      transform(Exalge,ExBase,ExBase):Exalge
+      transform(Exalge,ExBaseSet,ExBase):Exalge
+      transform(TransTable,ExBase):ExBase
+      transform(TransTable,ExBaseSet):ExBaseSet
+      transform(TransMatrix,ExBase):ExBaseSet
+      transform(TransMatrix,ExBaseSet):ExBaseSet
+  ・交換代数元の積(要素積)を*演算子によって演算可能としました。
+      Exalge = Exalge * Exalge
+  ・交換代数元の商(要素商)を/演算子によって演算可能としました。
+      Exalge = Exalge / Exalge
+  ・TransTable ならびに TransMatrix の比較(==、!=)において、
+    インスタンスの内容(値)によって同値検証するよう修正しました。
+
+◆1.21.20090130 ← 1.21.20081225
+  ・Java1.6の環境において、AADLコンパイル時に警告が表示される問題を修正しました。
+
+◆1.21.20081225 ← 1.20.20081001
+  ・例外発生時のプロセス終了コードを(1)に変更しました。
+
+◆1.20.20081001 ← 1.11.20080619
+  ・プログラム・ブロックで'return'キーワードによって任意のDecimal型整数値を
+    返すように変更しました。
+  ・次の組み込み関数を追加しました。
+      xmlTransform(xmlFilename:String,xsltFilename:String,destFilename:String,verbose:Boolean)
+
+◆1.11.20080619 ← 1.10.20080529
+  ・AADLで大きなコードを記述したとき、javaコンパイルエラー(コードが大きすぎ
+    ます)が発生する問題を修正しました。
+
+◆1.10.20080529 ← 1.00.20071130
+  ・AADLプログラム引数の上限を$9から$99へ拡張しました。
+  ・String型、StringList型データのテキストファイル入出力機能(txtFile記述子)を
+    追加しました。
+  ・次の組み込み関数を追加しました。
+      isNoHat(ExBase):Boolean
+      isHatExBase(ExBase):Boolean
+      getNameKey(ExBase):String
+      getUnitKey(ExBase):String
+      getTimeKey(ExBase):String
+      getSubjectKey(ExBase):String
+      getBases(Exalge):ExBaseSet
+      getBases(ExAlgeSet):ExBaseSet
+      inverse(Exalge):Exalge
+      normalizae(Exalge):Exalge
+      getDecimalScale(Decimal):Decimal
+      setDecimalScale(Decimal,Decimal):Decimal
+      isDecimal(String):Boolean
+      toDecimal(String):Decimal
+      toString(全データ型):String
+      println(全データ型):Boolean
+      proj[ExBase](ExAlgeSet):ExAlgeSet
+      proj[ExBaseSet](ExAlgeSet):ExAlgeSet
+      patternProj[ExBase](Exalge):Exalge
+      patternProj[ExBaseSet](Exalge):Exalge
+      patternProj[ExBase](ExAlgeSet):ExAlgeSet
+      patternProj[ExBaseSet](ExAlgeSet):ExAlgeSet
+      getMatchedBases[ExBase](ExBaseSet):ExBaseSet
+      getMatchedBases[ExBaseSet](ExBaseSet):ExBaseSet

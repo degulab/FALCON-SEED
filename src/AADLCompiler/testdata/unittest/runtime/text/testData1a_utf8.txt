@@ -1,0 +1,6 @@
+1.About AADL
+
+Algebraic Accounting Description Language (AADL) is the specification description language that has expressions very near to exchange algebra.
+The description of AADL is transferred into a JAVA program by the specialized pre-processor (AADL compiler),so that the program is converted into an executable file format (JAR) using the JAVA platform.
+For this reason, the AADL compiler itself is also implemented by JAVA.
+In this Description Guide, the description methods used by AADL are described and how to use the AADL compiler is explained.
