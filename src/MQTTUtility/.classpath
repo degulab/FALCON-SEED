@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" output="runtimeBin" path="fusesource"/>
+	<classpathentry kind="src" output="filterBin" path="filter"/>
+	<classpathentry kind="src" output="unittestbin" path="unittest"/>
+	<classpathentry kind="src" output="runtimeBin" path="runtime"/>
+	<classpathentry kind="src" output="clientBin" path="client/src"/>
+	<classpathentry kind="src" output="clientBin" path="client/resource"/>
+	<classpathentry kind="src" output="brokerBin" path="broker/resource"/>
+	<classpathentry kind="src" output="brokerBin" path="broker/src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="lib/MQTT/client/hawtbuf-1.9.jar" sourcepath="download/fusesource/hawtbuf/hawtbuf-1.9-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/MQTTUtility201305/download/fusesource/hawtbuf/hawtbuf-1.9-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/MQTT/client/hawtdispatch-1.17.jar" sourcepath="download/fusesource/hawtdispatch/hawtdispatch-1.17-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/MQTTUtility201305/download/fusesource/hawtdispatch/hawtdispatch-1.17-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/MQTT/client/hawtdispatch-transport-1.17.jar" sourcepath="download/fusesource/hawtdispatch/hawtdispatch-transport-1.17-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/MQTTUtility201305/download/fusesource/hawtdispatch/hawtdispatch-transport-1.17-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/MQTT/broker/moquette/moquette-broker-0.1-jar-with-dependencies.jar" sourcepath="download/moquette/moquette-mqtt-9df266983989.zip"/>
+	<classpathentry kind="lib" path="testlib/aadlrt/Exalge2.jar"/>
+	<classpathentry kind="lib" path="testlib/aadlrt/Dtalge.jar"/>
+	<classpathentry kind="lib" path="testlib/aadlrt/aadlrt.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

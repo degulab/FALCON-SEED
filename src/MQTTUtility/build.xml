@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+  Copyright 2007-2014  SSAC(Systems of Social Accounting Consortium)
+  <author> Yasunari Ishizuka (PieCake,Inc.)
+  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
+  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
+-->
+<project name="mqttutil" default="create" basedir=".">
+	<property name="dist.dir" location="${basedir}/jar" />
+	<property name="build.dir" location="${dist.dir}/classes" />
+	<property name="lib.dir" location="${basedir}/lib" />
+	<property name="dist.aadlrt.dir" location="${dist.dir}/lib/aadlrt" />
+	<property name="dist.broker.dir" location="${dist.dir}/lib/MQTT/broker/moquette" />
+	<property name="mqttutil.lib.dir" location="${dist.dir}/fusesource" />
+	<property name="mqttutil.build.dir" location="${dist.dir}/runtime" />
+	<property name="mqttclient.src.dir" location="${basedir}/fusesource" />
+	<property name="mqttutil.src.dir" location="${basedir}/runtime" />
+	<property name="broker.build.dir" location="${dist.dir}/broker" />
+	<property name="broker.src.dir" location="${basedir}/broker/src" />
+	<property name="broker.rsc.dir" location="${basedir}/broker/resource" />
+	
+	<fileset id="fset.moquette.lib" dir="${lib.dir}/MQTT/broker/moquette">
+		<include name="*.jar" />
+	</fileset>
+
+	<!--init property-->
+	<target name="init" >
+		<property name="mqttutil.title" value="AADL MQTT Runtime library" />
+		<property name="mqttutil.version" value="0.4.0.20140529" />
+		<property name="mqttutil.name" value="mqttutil" />
+		<property name="broker.title" value="Moquette Micro Broker" />
+		<property name="broker.version" value="0.3.2.20131022" />
+		<property name="broker.name" value="moquette-launcher" />
+		<property name="broker.main.class" value="ssac.falconseed.mqtt.broker.MoquetteBrokerMain" />
+		<property name="dist.title" value="${mqttutil.title}" />
+		<property name="dist.version" value="${mqttutil.version}" />
+		<property name="dist.name" value="${mqttutil.name}" />
+		<!-- create directories -->
+		<mkdir dir="${dist.dir}" />
+		<mkdir dir="${dist.aadlrt.dir}" />
+		<mkdir dir="${dist.broker.dir}" />
+		<copy todir="${dist.broker.dir}">
+			<fileset refid="fset.moquette.lib" />
+		</copy>
+		<!-- unjar dependencies -->
+		<mkdir dir="${mqttutil.build.dir}" />
+		<mkdir dir="${mqttutil.lib.dir}" />
+		<unjar src="${lib.dir}/MQTT/client/hawtbuf-1.9.jar" dest="${mqttutil.lib.dir}">
+			<patternset>
+				<exclude name="META-INF/**" />
+			</patternset>
+		</unjar>
+		<unjar src="${lib.dir}/MQTT/client/hawtdispatch-1.17.jar" dest="${mqttutil.lib.dir}">
+			<patternset>
+				<exclude name="META-INF/**" />
+			</patternset>
+		</unjar>
+		<unjar src="${lib.dir}/MQTT/client/hawtdispatch-transport-1.17.jar" dest="${mqttutil.lib.dir}">
+			<patternset>
+				<exclude name="META-INF/**" />
+			</patternset>
+		</unjar>
+
+		<!-- setup library paths -->
+		<path id="broker.lib.path">
+			<fileset dir="${dist.broker.dir}">
+				<include name="**/*.jar" />
+				<exclude name="**/${broker.name}.jar" />
+			</fileset>
+		</path>
+	</target>
+
+	<!--build classes-->
+	<!-- for AADL MQTT Runtime library -->
+	<target name="mkmqttrtclass" depends="init">
+		<!-- compile -->
+		<javac destdir="${mqttutil.build.dir}" includeantruntime="no" fork="yes" compiler="javac1.6" encoding="UTF8" source="1.6">
+			<compilerarg line="-deprecation -g:none" />
+			<classpath>
+				<pathelement path="${mqttutil.lib.dir}"/>
+			</classpath>
+			<src path="${mqttclient.src.dir}" />
+			<src path="${mqttutil.src.dir}" />
+		</javac>
+	</target>
+	<!-- for Moquette Broker Launcher -->
+	<target name="mkmoquetteclass" depends="init">
+		<!-- create directory -->
+		<mkdir dir="${broker.build.dir}" />
+		
+		<!-- broker -->
+		<javac destdir="${broker.build.dir}" includeantruntime="no" fork="yes" compiler="javac1.6" encoding="UTF-8" source="1.6">
+			<compilerarg line="-deprecation -g:lines" />
+			<src path="${broker.src.dir}" />
+			<classpath refid="broker.lib.path" />
+		</javac>
+		<copy todir="${broker.build.dir}">
+			<fileset dir="${broker.rsc.dir}" />
+		</copy>
+	</target>
+
+	<!-- create -->
+	<target name="create" depends="mkmqttrtclass, mkmoquetteclass">
+		<!-- create jar file (AADL MQTT Runtime) -->
+		<jar destfile="${dist.aadlrt.dir}/${mqttutil.name}.jar">
+			<fileset dir="${mqttutil.lib.dir}" />
+			<fileset dir="${mqttutil.build.dir}" />
+			<manifest>
+				<attribute name="Specification-Title" value="${mqttutil.title}" />
+				<attribute name="Specification-Version" value="${mqttutil.version}" />
+				<attribute name="Implementation-Title" value="${mqttutil.title}" />
+				<attribute name="Implementation-Version" value="${mqttutil.version}" />
+				<attribute name="Bundle-ManifestVersion" value="2" />
+				<attribute name="Bundle-License" value="http://www.apache.org/licenses/LICENSE-2.0.txt" />
+				<attribute name="Bundle-Description" value="mqtt-client provides an ASL 2.0 licensed API to MQTT. It takes care of automatically reconnecting to your MQTT server and restoring your client session if any network failures occur. Applications can use a blocking API style, a futures based API, or a callback/continuations passing API style." />
+				<attribute name="Import-Package" value="javax.net.ssl,org.fusesource.hawtbuf;version=1.9,org.fusesource.hawtdispatch,org.fusesource.hawtdispatch.transport;version=1.17,org.fusesource.hawtdispatch.util;version=1.17,org.fusesource.mqtt.cli;version=1.5,org.fusesource.mqtt.client;version=1.5,org.fusesource.mqtt.codec;version=1.5" />
+			</manifest>
+		</jar>
+		<!-- create jar file (Moquette Broker Launcher) -->
+		<pathconvert property="broker.runtime.classpath" pathsep=" " dirsep="/">
+			<path refid="broker.lib.path" />
+			<map from="${dist.broker.dir}${file.separator}" to="" />
+			<!-- map from="${dist.broker.dir}${file.separator}" to="" / -->
+		</pathconvert>
+		<jar destfile="${dist.broker.dir}/${broker.name}.jar">
+			<fileset dir="${broker.build.dir}" />
+			<manifest>
+				<attribute name="Specification-Title" value="${broker.title}" />
+				<attribute name="Specification-Version" value="${broker.version}" />
+				<attribute name="Implementation-Title" value="${broker.title}" />
+				<attribute name="Implementation-Version" value="${broker.version}" />
+				<attribute name="Main-Class" value="${broker.main.class}" />
+				<attribute name="Class-Path" value="${broker.runtime.classpath}" />
+			</manifest>
+		</jar>
+		
+		<!-- create javadoc zip
+		<zip destfile="${dist.dir}/${dist.name}-${dist.version}-javadoc.zip">
+			<fileset dir="${doc.dir}/javadoc" />
+		</zip>
+		-->
+		
+		<!-- create sources zip -->
+		<zip destfile="${dist.dir}/${dist.name}-${dist.version}-src.zip">
+			<fileset dir="${basedir}/">
+				<include name="fusesource/" />
+				<include name="runtime/" />
+				<include name="broker/" />
+				<include name="lib/MQTT/client/*.jar" />
+				<include name="lib/MQTT/broker/moquette/*.jar" />
+			</fileset>
+			<fileset file="${basedir}/build.xml" />
+			<fileset file="${basedir}/runtime_javadoc.xml" />
+			<fileset file="${basedir}/Changes_ja.txt" />
+			<fileset file="${basedir}/LICENSE" />
+		</zip>
+	</target>
+
+	<!-- clean -->
+	<target name="clean" depends="init">
+		<delete dir="${build.dir}" />
+		<delete dir="${dist.dir}/lib" />
+		<delete file="${dist.dir}/${dist.name}-*-src.zip" />
+	</target>
+
+</project>

@@ -1,0 +1,57 @@
+﻿***************************************************************************
+*  MQTT Utility Library - Change Log                                      *
+*                                               Last update : 2014/05/29  *
+***************************************************************************
+
+==========================================================================
+  MQTT Utility Library の変更履歴
+==========================================================================
+
+◆0.4.0.20140529
+	・次のクラスを追加しました。
+		ssac.aadl.runtime.mqtt.MqttCsvParameter
+			MQTTの接続先やトピックリストなどを記述したCSVフォーマットのテキストを解析するオブジェクト。
+	・次のメソッドを追加しました。
+		ssac.aadl.runtime.mqtt.MqttConnectionParams#parseServerURI(String)
+			MQTT接続先サーバーを示す文字列から、java.net.URI に変換する。
+
+◆0.3.2.20131022
+	・Broker GUI に、ログの表示／非表示を選択するチェックボックスを追加しました。
+
+◆0.3.1.20130705
+	・連続したメッセージのパブリッシュが失敗する不具合を修正しました。
+	・次のクラスを追加しました。
+		ssac.aadl.runtime.mqtt.MqttTimedOutException
+			MQTT処理における待機においてタイムアウトが発生したことを通知する例外
+	・次のクラスを削除しました。
+		ssac.aadl.runtime.mqtt.MqttResponseTimedOutException
+
+◆0.3.0.20130630
+	・ライブラリを変更し、不具合を修正しました。
+	・次のクラスを追加しました。
+		ssac.aadl.runtime.mqtt.MqDeliveryToken
+			MQTTメッセージの送信を待機するオブジェクト
+		ssac.aadl.runtime.mqtt.MqPayload
+			MQTTメッセージのバイトデータをラップするオブジェクト
+		ssac.aadl.runtime.mqtt.MqttException
+			MQTTの内部例外
+		ssac.aadl.runtime.mqtt.MqttResponseTimedOutException
+			MQTT処理における待機においてタイムアウトが発生したことを通知する例外
+
+◆0.2.0.20130515
+	・次のクラスを追加しました。
+		ssac.aadl.runtime.mqtt.MqttRuntimeException
+			MQTT内部エラーをラップするランタイム例外クラス。
+		ssac.aadl.runtime.mqtt.MqttBufferedSession
+			サブスクライブのメッセージをバッファリングするセッションオブジェクトのインタフェース。
+		ssac.aadl.runtime.mqtt.MqttArrivedMessage
+			サブスクライブによって受信したメッセージのコンテナクラス。
+		ssac.aadl.runtime.mqtt.MqttUtil
+			MQTTセッションの基本的な操作を行うためのインタフェース群。
+		ssac.aadl.runtime.mqtt.MqttPublisher
+			MQTTパブリッシュ専用のインタフェース群。
+		ssac.aadl.runtime.mqtt.MqttSubscriber
+			MQTTサブスクライブ専用のインタフェース群。
+
+◆0.1.0.20130313
+	新規作成
