@@ -1,0 +1,18 @@
+# NormalExBaseSet.csv - 2007/08/31
+#
+# hatKey, nameKey, unitKey, timeKey, subjectKey
+no_hat , りんご , 円 , ,
+ , みかん , 円
+ NO_HAT ,ばなな,円
+ , メロン, 円
+ ^ ,現金,円
+
+, りんご, 円
+, みかん, 円
+, ばなな, 円
+^, メロン, 円
+ HAT, 現金, 円
+
+hat, まぐろ, 円, Y2000, Ａ社
+^  , かつお, 円, Y2001, Ａ社
+no_hat, 現金,円, Y2002, Ｂ社

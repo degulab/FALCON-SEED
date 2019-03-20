@@ -1,0 +1,24 @@
+from_name,from_unit,from_time,from_subject,to_name,to_unit,to_time,to_subject,attribute,value
+# NormalExTransfer.csv - 2009/06/29
+りんご,,,,果物,個,,,aggre,
+みかん,,,,果物,個,,,AgGrE,
+ばなな,,,,果物,個,,,AGGRE,-0.123
+メロン,,,,高級果物,個,,,,-98.765
+マンゴー,,,,高級果物,個,,,,
+
+魚,,,,まぐろ,,,,ratio,5
+魚,,,,かつお,,,,RaTiO,3.0
+魚,,,,さんま,,,,RATIO,1.00
+魚,,,,いわし,,,,ratio,1.000
+
+肉類,,,,牛肉,,,,multiply,2
+肉類,,,,豚肉,,,,mUlTiPlY,1
+肉類,,,,鶏肉,,,,MULTIPLY,1
+
+ボールペン,円,,,ボールペン,本,,,multiply,0.0050
+シャープペン,円,,,シャープペン,本,,,multiply,0.00400
+鉛筆,円,,,鉛筆,本,,,multiply,0.0125000
+*県,,,,日本,,,,,
+
+労賃１,,,,内部保留,,,,hat,-0.456
+労賃２,,,,内部保留,,,,HAT,

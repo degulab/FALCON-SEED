@@ -1,0 +1,19 @@
+from_name,from_unit,from_time,from_subject,to_name,to_unit,to_time,to_subject,attribute,value
+# IllegalExTransfer.csv - 2009/06/16
+# illegal value
+りんご,,,,果物,,,,,
+みかん,,,,果物,,,,,
+ばなな,,,,果物,,,,,
+メロン,,,,高級果物,,,,,ab
+マンゴー,,,,高級果物,,,,,
+魚,,,,まぐろ,,,,ratio,5
+魚,,,,かつお,,,,ratio,3
+魚,,,,さんま,,,,ratio,1
+魚,,,,いわし,,,,ratio,1
+肉類,,,,牛肉,,,,multiply,2
+肉類,,,,豚肉,,,,multiply,1
+肉類,,,,鶏肉,,,,multiply,1
+ボールペン,,,,ボールペン,,,,multiply,0.005
+シャープペン,,,,シャープペン,,,,multiply,0.004
+鉛筆,,,,鉛筆,,,,multiply,0.0125
+*県,,,,日本,,,,,

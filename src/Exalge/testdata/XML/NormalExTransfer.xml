@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ExTransfer>
+  <!-- NormalExTransfer.xml - 2009/06/29 -->
+  <ExTransferElem>
+    <ElemFrom>
+      <Exbase name="りんご" />
+    </ElemFrom>
+    <ElemTo attribute="aggre">
+      <Exbase name="果物" unit="個" />
+    </ElemTo>
+  </ExTransferElem>
+  <ExTransferElem>
+    <ElemFrom>
+      <Exbase name="みかん" />
+    </ElemFrom>
+    <ElemTo attribute="AgGrE">
+      <Exbase name="果物" unit="個" />
+    </ElemTo>
+  </ExTransferElem>
+  <ExTransferElem>
+    <ElemFrom>
+      <Exbase name="ばなな" />
+    </ElemFrom>
+    <ElemTo attribute="AGGRE" value="-0.123">
+      <Exbase name="果物" unit="個" />
+    </ElemTo>
+  </ExTransferElem>
+  <ExTransferElem>
+    <ElemFrom>
+      <Exbase name="メロン" />
+    </ElemFrom>
+    <ElemTo value="-98.765">
+      <Exbase name="高級果物" unit="個" />
+    </ElemTo>
+  </ExTransferElem>
+  <ExTransferElem>
+    <ElemFrom>
+      <Exbase name="マンゴー" />
+    </ElemFrom>
+    <ElemTo>
+      <Exbase name="高級果物" unit="個" />
+    </ElemTo>
+  </ExTransferElem>
+  <ExTransferElem>
+    <ElemFrom>
+      <Exbase name="魚" />
+    </ElemFrom>
+    <ElemTo attribute="ratio" value="5">
+      <Exbase name="まぐろ"/>
+    </ElemTo>
+    <ElemTo attribute="RaTiO" value="3.0">
+      <Exbase name="かつお"/>
+    </ElemTo>
+    <ElemTo attribute="RATIO" value="1.00">
+      <Exbase name="さんま"/>
+    </ElemTo>
+    <ElemTo attribute="ratio" value="1.000">
+      <Exbase name="いわし"/>
+    </ElemTo>
+  </ExTransferElem>
+  <ExTransferElem>
+    <ElemFrom>
+      <Exbase name="肉類" />
+    </ElemFrom>
+    <ElemTo attribute="multiply" value="2">
+      <Exbase name="牛肉"/>
+    </ElemTo>
+  </ExTransferElem>
+  <ExTransferElem>
+    <ElemFrom>
+      <Exbase name="肉類" />
+    </ElemFrom>
+    <ElemTo attribute="mUlTiPlY" value="1">
+      <Exbase name="豚肉"/>
+    </ElemTo>
+  </ExTransferElem>
+  <ExTransferElem>
+    <ElemFrom>
+      <Exbase name="肉類" />
+    </ElemFrom>
+    <ElemTo attribute="MULTIPLY" value="1">
+      <Exbase name="鶏肉"/>
+    </ElemTo>
+  </ExTransferElem>
+  <ExTransferElem>
+    <ElemFrom>
+      <Exbase name="ボールペン" unit="円" />
+    </ElemFrom>
+    <ElemTo attribute="multiply" value="0.0050">
+      <Exbase name="ボールペン" unit="本" />
+    </ElemTo>
+  </ExTransferElem>
+  <ExTransferElem>
+    <ElemFrom>
+      <Exbase name="シャープペン" unit="円" />
+    </ElemFrom>
+    <ElemTo attribute="multiply" value="0.00400">
+      <Exbase name="シャープペン" unit="本" />
+    </ElemTo>
+  </ExTransferElem>
+  <ExTransferElem>
+    <ElemFrom>
+      <Exbase name="鉛筆" unit="円" />
+    </ElemFrom>
+    <ElemTo attribute="multiply" value="0.0125000">
+      <Exbase name="鉛筆" unit="本" />
+    </ElemTo>
+  </ExTransferElem>
+  <ExTransferElem>
+    <ElemFrom>
+      <Exbase name="*県" />
+    </ElemFrom>
+    <ElemTo>
+      <Exbase name="日本" />
+    </ElemTo>
+  </ExTransferElem>
+  <ExTransferElem>
+    <ElemFrom>
+      <Exbase name="労賃１" />
+    </ElemFrom>
+    <ElemTo attribute="hat" value="-0.456" >
+      <Exbase name="内部保留" />
+    </ElemTo>
+  </ExTransferElem>
+  <ExTransferElem>
+    <ElemFrom>
+      <Exbase name="労賃２" />
+    </ElemFrom>
+    <ElemTo attribute="HAT" >
+      <Exbase name="内部保留" />
+    </ElemTo>
+  </ExTransferElem>
+</ExTransfer>

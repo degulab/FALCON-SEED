@@ -1,0 +1,18 @@
+# NormalTransTable.csv - 2007/08/31
+#
+# dir, nameKey, unitKey, timeKey, subjectKey
+from, りんご, 円, *, *
+    , ばなな, 円
+,みかん,円,,
+ to , 果物,,,
+
+from, メロン
+from, マンゴー
+to , 高級果物
+
+,まぐろ
+
+,かつお
+
+to, 魚 , * , *, *
+

@@ -1,0 +1,19 @@
+#ExBasePatternSet
+hat,name,unit,time,subject
+#
+# NormalExBasePatternSet_UTF8.csv - 2009/07/22
+#
+,りんご,円
+*,みかん,円
+,ばなな,円
+NO_HAT,メロン,円
+HAT,マンゴー,円
+#
+NO_HAT,牛肉,円,Y2000,肉類
+^,豚肉,円,Y2000,肉類
+,鶏肉,円,Y2000,肉類
+,,,,
+,まぐろ
+,かつお,
+,さんま,,
+,いわし,,,

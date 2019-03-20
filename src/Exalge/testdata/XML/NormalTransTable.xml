@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<TransTable>
+  <!-- NormalTransTable.xml - 2007/08/31 -->
+  <TransTableElem>
+    <TransFrom>
+      <Exbase name="りんご " unit="円" time="*" subject="*" />
+      <Exbase name=" ばなな" unit=" 円 " />
+      <Exbase name="みかん" unit="円" time="" subject="" />
+    </TransFrom>
+    <TransTo>
+      <Exbase name="果物" unit="" time="" subject="" />
+    </TransTo>
+  </TransTableElem>
+  <TransTableElem>
+    <TransFrom>
+      <Exbase name="メロン " />
+      <Exbase name="マンゴー" />
+    </TransFrom>
+    <TransTo>
+      <Exbase name="高級果物" unit="" time="" subject="" />
+    </TransTo>
+  </TransTableElem>
+  <TransTableElem>
+    <TransTo>
+      <Exbase name="魚" />
+    </TransTo>
+    <TransFrom>
+      <Exbase name="まぐろ" />
+      <Exbase name="かつお" />
+    </TransFrom>
+  </TransTableElem>
+</TransTable>

@@ -1,0 +1,25 @@
+from_name,from_unit,from_time,from_subject,to_name,to_unit,to_time,to_subject,attribute,value
+# IllegalExTransfer.csv - 2009/07/06
+# Multiple Aggre from pattern
+りんご,,,,果物,,,,,
+みかん,,,,果物,,,,,
+ばなな,,,,果物,,,,,
+メロン,,,,高級果物,,,,,
+マンゴー,,,,高級果物,,,,,
+魚,,,,まぐろ,,,,ratio,5
+魚,,,,かつお,,,,ratio,3
+魚,,,,さんま,,,,ratio,1
+魚,,,,いわし,,,,ratio,1
+肉類,,,,牛肉,,,,multiply,2
+肉類,,,,豚肉,,,,multiply,1
+肉類,,,,鶏肉,,,,multiply,1
+野菜,,,,人参,,,,ratio,0
+野菜,,,,玉葱,,,,ratio,0
+野菜,,,,じゃが芋,,,,ratio,0
+ボールペン,,,,ボールペン,,,,multiply,0.005
+シャープペン,,,,シャープペン,,,,multiply,0.004
+鉛筆,,,,鉛筆,,,,multiply,0.0125
+*県,,,,日本,,,,,
+労賃１,,,,内部保留,,,,hat,-0.456
+労賃２,,,,内部保留,,,,HAT,
+*県,,,,関東,,,,,

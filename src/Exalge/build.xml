@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+  Copyright 2007-2014  SOARS Project.
+  <author> Hiroshi Deguchi(SOARS Project.)
+  <author> Li Hou(SOARS Project.)
+  <author> Yasunari Ishizuka(PieCake.inc,)
+-->
+<project name="Exalge2" default="create" basedir=".">
+	<property name="dist.dir" location="${basedir}/jar" />
+	<property name="build.dir" location="${dist.dir}/classes" />
+	<property name="src.dir" location="${basedir}/java" />
+	<property name="doc.dir" location="${basedir}/doc" />
+
+	<property name="title" value="Exalge package" />
+	<property name="version" value="0.984.20140529" />
+	<property name="vendor" value="SOARS Project, PieCake,Inc." />
+
+	<!--init property-->
+	<target name="init" >
+		<property name="dist.name" value="Exalge2" />
+		<mkdir dir="${dist.dir}" />
+	</target>
+
+	<!--build classes-->
+	<target name="mkclass" depends="init">
+		<!-- create directories -->
+		<mkdir dir="${build.dir}" />
+
+		<!-- compile -->
+		<javac destdir="${build.dir}" fork="yes" compiler="javac1.5" encoding="UTF8" source="1.5">
+			<compilerarg line="-deprecation -g:none" />
+			<src path="${src.dir}" />
+		</javac>
+	</target>
+
+	<!-- create -->
+	<target name="create" depends="mkclass">
+		<!-- create jar file -->
+		<jar destfile="${dist.dir}/${dist.name}.jar" basedir="${build.dir}" >
+			<manifest>
+				<attribute name="Specification-Title" value="${title}" />
+				<attribute name="Specification-Version" value="${version}" />
+				<attribute name="Specification-Vendor" value="${vendor}" />
+				<attribute name="Implementation-Title" value="${title}" />
+				<attribute name="Implementation-Version" value="${version}" />
+				<attribute name="Implementation-Vendor" value="${vendor}" />
+			</manifest>
+		</jar>
+		
+		<!-- create javadoc zip -->
+		<zip destfile="${dist.dir}/${dist.name}-${version}-javadoc.zip">
+			<fileset dir="${doc.dir}/javadoc" />
+		</zip>
+		
+		<!-- create sources zip -->
+		<zip destfile="${dist.dir}/${dist.name}-${version}-src.zip">
+			<fileset dir="${basedir}/">
+				<include name="java/" />
+				<include name="test/exalge2/" />
+				<exclude name="test/exalge2/io/xml/" />
+				<exclude name="test/exalge2/nio/" />
+				<include name="testdata/**/Illegal*" />
+				<include name="testdata/**/Normal*" />
+				<include name="testdata/txt/test*" />
+			</fileset>
+			<fileset file="${basedir}/build.xml" />
+			<fileset file="${basedir}/javadoc.xml" />
+			<fileset file="${basedir}/Changes_ja.txt" />
+			<fileset file="${basedir}/LICENSE" />
+		</zip>
+	</target>
+
+	<!-- clean -->
+	<target name="clean" depends="init">
+		<delete dir="${build.dir}" />
+		<delete>
+			<fileset dir="${dist.dir}" includes="*.jar,*-src.zip,*-javadoc.zip"/>
+		</delete>
+	</target>
+
+</project>

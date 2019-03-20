@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ExalgebraSet>
+  <!-- NormalExalgeSet.xml - 2010/02/17 -->
+  <Exalgebra>
+    <Exelem value="10">
+      <Exbase hat="no_hat" name="りんご" unit="円" time="" subject="" />
+    </Exelem>
+    <Exelem value="20">
+      <Exbase name="みかん" unit="円" time="#" subject="#" />
+    </Exelem>
+    <Exelem value="30">
+      <Exbase hat="NO_HAT" name="ばなな" unit="円" />
+    </Exelem>
+    <Exelem value="0">
+      <Exbase hat="NO_HAT" name="メロン" unit="円" />
+    </Exelem>
+    <Exelem value="60">
+      <Exbase hat="^" name="現金" unit="円" />
+    </Exelem>
+  </Exalgebra>
+  <Exalgebra>
+    <Exelem value="1">
+      <Exbase hat="" name="りんご" unit="円" />
+    </Exelem>
+    <Exelem value="2">
+      <Exbase name="みかん" unit="円" />
+    </Exelem>
+    <Exelem value="3">
+      <Exbase name="ばなな" unit="円" />
+    </Exelem>
+    <Exelem value="0">
+      <Exbase hat="^" name="メロン" unit="円" />
+    </Exelem>
+    <Exelem value="6">
+      <Exbase hat="HAT" name="現金" unit="円" />
+    </Exelem>
+  </Exalgebra>
+  <Exalgebra>
+    <Exelem value="100">
+      <Exbase hat=" hat" name="まぐろ  " unit=" 円 " time="Y2000" subject="Ａ社" />
+    </Exelem>
+    <Exelem value="200">
+      <Exbase hat=" ^ " name=" かつお " unit="円" time="Y2001" subject="Ａ社" />
+    </Exelem>
+    <Exelem value="300">
+      <Exbase hat="no_hat" name="現金" unit="円" time="Y2002" subject="Ｂ社" />
+    </Exelem>
+  </Exalgebra>
+  <Exalgebra>
+    <Exelem value=" NULL  ">
+      <Exbase hat=" hat" name="NULL基底" unit=" 円 " time="Y2010" />
+    </Exelem>
+    <Exelem value="null">
+      <Exbase hat="" name="NULL基底" unit="円" time="Y2010" />
+    </Exelem>
+  </Exalgebra>
+</ExalgebraSet>

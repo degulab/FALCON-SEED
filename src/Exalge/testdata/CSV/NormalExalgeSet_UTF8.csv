@@ -1,0 +1,21 @@
+# NormalExalgeSet.csv - 2010/02/17
+#
+# value, hatKey, nameKey, unitKey, timeKey, subjectKey
+10, no_hat , りんご , 円 , ,
+ 20 ,      , みかん , 円
+30 , NO_HAT,ばなな,円
+ 0 , , メロン, 円
+60,^,現金,円
+
+1, , りんご, 円
+2, , みかん, 円
+3, , ばなな, 円
+0,^, メロン, 円
+6, HAT, 現金, 円
+
+100, hat, まぐろ, 円, Y2000, Ａ社
+200, ^  , かつお, 円, Y2001, Ａ社
+300, no_hat, 現金,円, Y2002, Ｂ社
+
+ NULL  , hat, NULL基底, 円, Y2010,
+null,no_hat,NULL基底,円,Y2010,

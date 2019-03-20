@@ -1,0 +1,197 @@
+﻿***************************************************************************
+*  Exalge2 - Change Log                                                   *
+*                                               Last update : 2014/05/29  *
+***************************************************************************
+
+==========================================================================
+  交換代数パッケージの変更履歴
+==========================================================================
+
+◆0.984.20140529
+　・次のメソッドを追加しました。
+　　　exalge2.Exalge#strictBar()
+　　　exalge2.Exalge#strictBarLeaveZero(boolean)
+　　　exalge2.Exalge#add(ExBase,BigDecimal)
+　　　exalge2.Exalge#add(Exalge)
+　　　exalge2.Exalge#zeroProjection()
+　　　exalge2.Exalge#notzeroProjection()
+　　　exalge2.ExAlgeSet#zeroProjection()
+　　　exalge2.ExAlgeSet#notzeroProjection()
+　　　exalge2.Exalge#toCsvString()
+　　　exalge2.Exalge#fromCsvString(String)
+　　　exalge2.Exalge#toXmlString()
+　　　exalge2.Exalge#fromXmlString(String)
+　　　exalge2.ExAlgeSet#toCsvString()
+　　　exalge2.ExAlgeSet#fromCsvString(String)
+　　　exalge2.ExAlgeSet#toXmlString()
+　　　exalge2.ExAlgeSet#fromXmlString(String)
+　　　exalge2.ExBaseSet#toCsvString()
+　　　exalge2.ExBaseSet#fromCsvString(String)
+　　　exalge2.ExBaseSet#toXmlString()
+　　　exalge2.ExBaseSet#fromXmlString(String)
+　　　exalge2.ExBasePatternSet#toCsvString()
+　　　exalge2.ExBasePatternSet#fromCsvString(String)
+　　　exalge2.ExBasePatternSet#toXmlString()
+　　　exalge2.ExBasePatternSet#fromXmlString(String)
+　　　exalge2.TransTable#toCsvString()
+　　　exalge2.TransTable#fromCsvString(String)
+　　　exalge2.TransTable#toXmlString()
+　　　exalge2.TransTable#fromXmlString(String)
+　　　exalge2.TransMatrix#toCsvString()
+　　　exalge2.TransMatrix#fromCsvString(String)
+　　　exalge2.TransMatrix#toXmlString()
+　　　exalge2.TransMatrix#fromXmlString(String)
+　　　exalge2.ExTransfer#toCsvString()
+　　　exalge2.ExTransfer#fromCsvString(String)
+　　　exalge2.ExTransfer#toXmlString()
+　　　exalge2.ExTransfer#fromXmlString(String)
+
+◆0.983.20100225 ← 0.982.20091212
+  ・次のメソッドを追加しました。
+      exalge2.Exalge#containsNull()
+      exalge2.Exalge#nullProjection()
+      exalge2.Exalge#nonullProjection()
+      exalge2.Exalge#oneValueProjection(BigDecimal)
+      exalge2.Exalge#valuesProjection(Collection<? extends BigDecimal>)
+      exalge2.ExAlgeSet#nullProjection()
+      exalge2.ExAlgeSet#nonullProjection()
+      exalge2.ExAlgeSet#oneValueProjection(BigDecimal)
+      exalge2.ExAlgeSet#valuesProjection(Collection<? extends BigDecimal>)
+  ・交換代数元の値に null 値を設定可能としました。
+    ただし、値が null の場合、加算やその他の数値演算(sum や bar 等)では
+    エラー(NullPointerException)となります。
+
+◆0.982.20091212 ← 0.970.20090310
+  ・次のクラスを追加しました。
+      exalge2.ExTransfer
+  ・ExBasePatternSet のファイル入出力を可能としました。
+      →ExBasePatternSet クラスの説明を参照してください。
+  ・次のメソッドを追加しました。
+      exalge2.Exalge#getBasesByNameKey(String[])
+      exalge2.Exalge#getBasesByUnitKey(String[])
+      exalge2.Exalge#getBasesByTimeKey(String[])
+      exalge2.Exalge#getBasesBySubjectKey(String[])
+      exalge2.Exalge#projectionByNameKey(String[])
+      exalge2.Exalge#projectionByUnitKey(String[])
+      exalge2.Exalge#projectionByTimeKey(String[])
+      exalge2.Exalge#projectionBySubjectKey(String[])
+  ・CSVファイルの入出力を行うクラスの実装を一部変更しました。
+
+◆0.970.20090310 ← 0.960.20090209
+  ・次のメソッドを追加しました。
+      exalge2.ExBaseSet#getNoHatBases()
+      exalge2.ExBaseSet#getHatBases()
+      exalge2.Exalge#getNoHatBases()
+      exalge2.Exalge#getHatBases()
+      exalge2.Exalge#getBasesWithRemoveHat()
+      exalge2.Exalge#getBasesWithSetHat()
+      exalge2.Exalge#getOneBase()
+      exalge2.Exalge#containsAllBases(ExBaseSet)
+      exalge2.Exalge#multiple(Exalge)
+      exalge2.Exalge#divide(Exalge)
+      exalge2.Exalge#invElement()
+      exalge2.Exalge#aggreTransfer(ExBase,ExBase)
+      exalge2.Exalge#aggreTransfer(ExBaseSet,ExBase)
+      exalge2.Exalge#transform(ExBase,ExBase)
+      exalge2.Exalge#transform(ExBaseSet,ExBase)
+      exalge2.ExAlgeSet#getNoHatBases()
+      exalge2.ExAlgeSet#getHatBases()
+      exalge2.ExAlgeSet#getBasesWithRemoveHat()
+      exalge2.ExAlgeSet#getBasesWithSetHat()
+      exalge2.TransTable#clone()
+      exalge2.TransTable#hashCode()
+      exalge2.TransTable#equals(Object)
+      exalge2.TransTable#toString()
+      exalge2.TransTable#transform(ExBase)
+      exalge2.TransTable#transform(ExBaseSet)
+      exalge2.TransMatrix#updateTotalRatios()
+      exalge2.TransMatrix#clone()
+      exalge2.TransMatrix#hashCode()
+      exalge2.TransMatrix#equals(Object)
+      exalge2.TransMatrix#toString()
+      exalge2.TransMatrix#transform(ExBase)
+      exalge2.TransMatrix#transform(ExBaseSet)
+  ・交換代数基底キーの使用禁止文字チェックアルゴリズムを変更しました。
+  ・基底パターンによるマッチングアルゴリズムを変更しました。
+
+◆0.960.20090209 ← 0.95.20081207
+  ・次のメソッドを追加しました。
+      exalge2.ExBase#setHat()
+      exalge2.ExBase#removeHat()
+      exalge2.ExBaseSet#setHat()
+      exalge2.ExBaseSet#removeHat()
+      exalge2.Exalge#generalProjection(ExBase)
+      exalge2.Exalge#generalProjection(ExBaseSet)
+      exalge2.ExAlgeSet#generalProjection(ExBase)
+      exalge2.ExAlgeSet#generalProjection(ExBaseSet)
+  ・TransDivideRatios#divideTransfer() メソッドの例外メッセージの内容を
+    修正し、例外クラスを変更しました。
+
+◆0.95.20081207 ← 0.95.20081029
+  ・TransDivideRatios#divideTransfer() メソッドの例外メッセージの内容を
+    修正しました。
+
+◆0.95.20081029 ← 0.94.20080602
+  ・TransMatrix の按分計算方法のデフォルト挙動を、按分比率の合計値を
+    使用する(「按分比率合計値が 1 ではない」とする)計算方法から、按分
+    比率をそのまま使用する(「按分比率合計値が 1 である」とする)計算方
+    法へ変更しました。
+
+◆0.94.20080602 ← 0.94.20080529
+  ・ExBasePatternクラスのパターンマッチングに関して、ワイルドカード以外の
+    記号がJAVA正規表現の予約文字の場合に正しくマッチングできない不具合を
+    修正しました。
+
+◆0.94.20080529 ← 0.932.20080111
+  ・次のメソッドを追加しました。
+      exalge2.ExBase#toString()
+      exalge2.ExBasePattern#ExBasePattern(ExBase,boolean)
+      exalge2.Exalge#Exalge(int,float)
+      exalge2.Exalge#Exalge(int)
+      exalge2.Exalge#iterator()
+      exalge2.Exalge#normalization()
+      exalge2.Exalge#equals(Object)
+      exalge2.Exalge#hashCode()
+      exalge2.Exalge#patternProjection(ExBase)
+      exalge2.Exalge#patternProjection(ExBasePattern)
+      exalge2.Exalge#patternProjection(ExBaseSet)
+      exalge2.Exalge#patternProjection(ExBasePatternSet)
+      exalge2.ExBaseSet#addition(ExBaseSet)
+      exalge2.ExBaseSet#subtraction(ExBaseSet)
+      exalge2.ExBaseSet#getMatchedBases(ExBase)
+      exalge2.ExBaseSet#getMatchedBases(ExBasePattern)
+      exalge2.ExBaseSet#getMatchedBases(ExBaseSet)
+      exalge2.ExBaseSet#getMatchedBases(ExBasePatternSet)
+      exalge2.ExAlgeSet#addition(ExAlgeSet)
+      exalge2.ExAlgeSet#subtraction(ExAlgeSet)
+      exalge2.ExAlgeSet#getBases()
+      exalge2.ExAlgeSet#projection(ExBase)
+      exalge2.ExAlgeSet#patternProjection(ExBase)
+      exalge2.ExAlgeSet#patternProjection(ExBasePattern)
+      exalge2.ExAlgeSet#patternProjection(ExBaseSet)
+      exalge2.ExAlgeSet#patternProjection(ExBasePatternSet)
+      exalge2.io.FileUtil#stringFromTextFile(File)
+      exalge2.io.FileUtil#stringFromTextFile(File,String)
+      exalge2.io.FileUtil#stringListFromTextFile(File)
+      exalge2.io.FileUtil#stringListFromTextFile(File,String)
+      exalge2.io.FileUtil#stringToTextFile(String,File)
+      exalge2.io.FileUtil#stringToTextFile(String,File,String)
+      exalge2.io.FileUtil#stringListToTextFile(Collection<String>,File)
+      exalge2.io.FileUtil#stringListToTextFile(Collection<String>,File,String)
+      exalge2.ExBasePatternSet (新規クラス)
+  ・次のメソッドの機能を変更しました。
+      exalge2.Exalge#toString()
+      exalge2.ExAlgeSet#projection(ExBaseSet)
+  ・次のメソッドは無効となりました。
+      exalge2.ExBase#toFormattedString()
+      exalge2.Exalge#clean()
+      exalge2.Exalge#toFormattedString()
+
+◆0.932.20080111 ← 0.931.20070919
+  ・exalge2.util.ExFiscalYearTimeKey、exalge2.util.ExMonthTimeKey、
+    exalge2.util.ExQuarterTimeKeyクラスのデフォルトコンストラクタで、
+    コンピュータの日付が１月の場合に例外が発生する不具合を修正しました。
+
+◆0.931.20070919 ← 0.93.20070903
+  ・ExAlgeSetならびにExalge用CSVファイルの読み込みで、先頭カラムが数値以外の
+    場合にフォーマットエラーとなるようにしました。

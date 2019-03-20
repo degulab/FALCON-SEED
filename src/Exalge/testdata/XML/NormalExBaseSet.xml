@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ExbaseSet>
+  <!-- NormalExBaseSet.xml - 2007/08/31 -->
+      <Exbase hat="no_hat" name="りんご" unit="円" time="" subject="" />
+      <Exbase name="みかん" unit="円" time="#" subject="#" />
+      <Exbase hat="NO_HAT" name="ばなな" unit="円" />
+      <Exbase hat="NO_HAT" name="メロン" unit="円" />
+      <Exbase hat="^" name="現金" unit="円" />
+      <Exbase hat="" name="りんご" unit="円" />
+      <Exbase name="みかん" unit="円" />
+      <Exbase name="ばなな" unit="円" />
+      <Exbase hat="^" name="メロン" unit="円" />
+      <Exbase hat="HAT" name="現金" unit="円" />
+      <Exbase hat=" hat" name="まぐろ  " unit=" 円 " time="Y2000" subject="Ａ社" />
+      <Exbase hat=" ^ " name=" かつお " unit="円" time="Y2001" subject="Ａ社" />
+      <Exbase hat="no_hat" name="現金" unit="円" time="Y2002" subject="Ｂ社" />
+</ExbaseSet>

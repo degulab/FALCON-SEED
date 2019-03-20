@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<TransMatrix>
+  <!-- NormalTransMatrix.xml - 2007/08/31 -->
+  <TransMatrixElem>
+    <TransTo>
+      <DivideTo ratio="1">
+        <Exbase name="りんご " unit="円" time="*" subject="*" />
+      </DivideTo>
+      <DivideTo ratio="1 ">
+        <Exbase name="みかん" unit="円" time="" subject="" />
+      </DivideTo>
+      <DivideTo ratio=" 1">
+        <Exbase name=" ばなな" unit=" 円 " />
+      </DivideTo>
+    </TransTo>
+    <TransFrom>
+      <Exbase name="果物" unit="" time="" subject="" />
+    </TransFrom>
+  </TransMatrixElem>
+  <TransMatrixElem>
+    <TransTo>
+      <DivideTo ratio="0.3">
+        <Exbase name="メロン " unit="円" />
+      </DivideTo>
+      <DivideTo ratio="0.7">
+        <Exbase name="マンゴー" unit="円" />
+      </DivideTo>
+    </TransTo>
+    <TransFrom>
+      <Exbase name="高級果物" unit="" time="" subject="" />
+    </TransFrom>
+  </TransMatrixElem>
+  <TransMatrixElem>
+    <TransFrom>
+      <Exbase name="魚" />
+    </TransFrom>
+    <TransTo>
+      <DivideTo ratio=" 0.5 ">
+        <Exbase name="まぐろ" />
+      </DivideTo>
+      <DivideTo ratio="0.5">
+        <Exbase name="かつお" />
+      </DivideTo>
+    </TransTo>
+  </TransMatrixElem>
+</TransMatrix>
