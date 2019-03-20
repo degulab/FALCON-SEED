@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<entry key="Execute.Target.main-class">ssac.aadl.macro.examples.ProcessD2</entry>
+<entry key="Execute.Target.file">procD2.jar</entry>
+</properties>

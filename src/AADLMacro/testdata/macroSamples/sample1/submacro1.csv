@@ -1,0 +1,5 @@
+#AADLMacro,,
+#submacro1,,
+echo,,start submacro1
+echo,,...submacro1 finished!
+exit,111,return exit code=111

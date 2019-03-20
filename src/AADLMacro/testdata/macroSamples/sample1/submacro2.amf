@@ -1,0 +1,25 @@
+#AADLMacro
+#start,,,,,,,,,,,,
+echo,,$1=[${1}]
+echo,,$2=[${2}]
+echo,,phase-1,,,,,,,,,,
+java,,phase-1,modules/procA,,,,[IN],${1},[OUT],$tmp{1},,
+echo,,phase-2,,,,,,,,,,
+java,retB,phase-2,modules/procB,,,,[STR],0,[IN],$tmp{1},[OUT],$tmp{2}
+echo,,phase-3,,,,,,,,,,
+java[retB==1],,phase-3a,modules/procCa,,,,[IN],$tmp{2},[OUT],$tmp{3},,
+java[retB==2],,phase-3b,modules/procCb,,,,[IN],$tmp{2},[OUT],$tmp{3},,
+java[retB>=0],,phase-3,modules/procC,,,,[IN],$tmp{2},[OUT],$tmp{3},,
+errorcond,,,,,,,,,,,,
+echo,,phase-4,,,,,,,,,,
+&,retD1,phase-4.1,modules/procD1,,,,[STR],0,[IN],$tmp{3},[OUT],$tmp{41}
+&,retD2,phase-4.2,modules/procD2,,,,[STR],-1,[IN],$tmp{3},[OUT],$tmp{42}
+&,retD3,phase-4.3,modules/procD3,,,,[STR],1,[IN],$tmp{3},[OUT],$tmp{43}
+echo[retD1<=0],,procD1,exit code = ${retD1},,,,,,,,,
+echo[retD2<0],,procD2,exit code = ${retD2},,,,,,,,,,,
+echo[retD3<0],,procD3,exit code = ${retD3},,,,,,,,,,,
+exit[retD1<-9 || retD2<-9 || retD3<-9],-1,,,,,,,,,,,,,
+errorcond[<0],,,,,,,,,,,,,,
+echo,,final phase,,,,,,,,,,,,
+echo,,submacro1,exit code = ${retMacro},,,,,,,,,,,
+java,,,modules/procE,,,,[IN],$tmp{41},[IN],$tmp{42},[IN],$tmp{43},[OUT],${2}

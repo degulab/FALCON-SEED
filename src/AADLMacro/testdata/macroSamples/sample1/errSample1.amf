@@ -1,0 +1,24 @@
+#AADLMacro
+#start
+echo,,phase-1
+java,,phase-1,modules/procA,,,,[IN],data/dataA.csv,[OUT],temp/resultA.csv
+echo,,phase-2
+java,retB,phase-2,modules/procB,,,,[STR],10,[IN],temp/resultA.csv,[OUT],temp/resultB.csv
+echo,,phase-3
+java[retB==1],,phase-3a,modules/procCa,,,,[IN],temp/resultB.csv,[OUT],temp/resultC.csv
+java[retB==2],,phase-3b,modules/procCb,,,,[IN],temp/resultB.csv,[OUT],temp/resultC.csv
+java[retB>=0],,phase-3,modules/procC,,,,[IN],temp/resultD.csv,[OUT],temp/resultC.csv
+errorcond
+echo,,phase-4
+&,retD1,phase-4.1,modules/procD1,,,,[STR],0,[IN],temp/resultC.csv,[OUT],temp/resultD1.csv
+&,retD2,phase-4.2,modules/procD2,,,,[STR],-1,[IN],temp/resultC.csv,[OUT],temp/resultD2.csv
+&,retD3,phase-4.3,modules/procD3,,,,[STR],1,[IN],temp/resultC.csv,[OUT],temp/resultD3.csv
+echo[retD1<=0],,procD1,exit code = ${retD1}
+echo[retD2<0],,procD2,exit code = ${retD2}
+echo[retD3<0],,procD3,exit code = ${retD3}
+exit[retD1<-9 || retD2<-9 || retD3<-9],-1
+errorcond[<0]
+echo,,final phase
+macro,retMacro,execute another macro,submacro1.amf
+echo,,submacro1,exit code = ${retMacro}
+java,,,modules/procE,,,,[IN],temp/resultD1.csv,[IN],temp/resultD2.csv,[IN],temp/resultD3.csv,[OUT],result/resultE.csv

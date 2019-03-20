@@ -1,0 +1,4 @@
+#AADLMacro
+#start,,,,,,,,,,,,
+echo,,test macro arguments,,,,,,,,,,
+macro,,execute submacro,submacro2.amf,,,,[IN],data/dataA.csv,[OUT],result/resultE2.csv
