@@ -1,0 +1,12 @@
+#DtalgebraTable2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+基底01,基底01,基底01,基底02,基底02,基底02,基底03,基底03,基底03,基底04,基底04,基底04,基底05,基底05,基底05,基底06,基底06,基底06,基底07,基底07,基底07,基底08,基底08,基底08,基底09,基底09,基底09,基底0a,基底0a,基底0a,基底0b,基底0b,基底0b,基底0c,基底0c,基底0c,基底0d,基底0d,基底0d
+string,decimal,boolean,string,decimal,boolean,string,decimal,boolean,string,decimal,boolean,string,decimal,boolean,string,decimal,boolean,string,decimal,boolean,string,decimal,boolean,string,decimal,boolean,string,decimal,boolean,string,decimal,boolean,string,decimal,boolean,string,decimal,boolean
+#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#
+#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#
+,,,!%!%!%!%文字列02,123.02,FALSE,,,,文字列!%04,-975.04,FALSE,,,, !%文字列06,-1006,FALSE,,,,文字列08,-0.2108,FALSE,,,,!%N,!%N,!%N,!%n,0,FALSE,!%!%n,1.12,TRUE,!%!%,-1.13,FALSE
+文字列11,1.01,FALSE,,,,文字列13,1.03,FALSE,,,,文字列15,1.05,FALSE,,,,文字列17,1.07,FALSE,,,,文字列19,1.09,FALSE,,,,!%!%,1.11,TRUE,,,,!%!%!%文字列1d,1.13,TRUE
+,,,,,,文字列23,-2.03,TRUE, !%文字列24,-2.04,TRUE,,,,,,,文字列!%27,-2.07,FALSE,文字列28,-2.08,FALSE,,,,,,,文字列2b,-2.11,FALSE,!%!%文字列2c,-2.12,FALSE,!%!%!%文字列2d,-2.13,!%N
+!%N,3.01,FALSE,!%N,3.02,FALSE,,,,,,,!%N,3.05,TRUE,!%N,3.06,TRUE,,,,,,,!%N,3.09,FALSE,!%N,3.1,FALSE,,,,,,,!%N,3.13,FALSE
+,,,文字列42,!%N,FALSE,,,,,,,文字列45,!%N,FALSE,,,,,,,,,,文字列49,!%N,FALSE,,,,,,,,,,,,
+!%n,!%N,!%N,,,,!%n,!%N,!%n,,,,,,,,,,!%n,!%N,!%N,!%N,!%N,!%N,,,,!%N,!%N,!%N,!%N,!%n,!%N,,,,!%N,!%n,!%n
+,,,!%!%!%!%文字列02,123.02,FALSE,,,,文字列!%04,-975.04,FALSE,,,, !%文字列06,-1006,FALSE,,,,文字列08,-0.2108,FALSE,,,,!%N,!%N,!%N,!%n,0,FALSE,!%!%n,1.12,TRUE,!%!%,-1.13,FALSE

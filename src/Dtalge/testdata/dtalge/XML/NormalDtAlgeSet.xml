@@ -1,0 +1,547 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DtalgebraSet>
+<Dtalgebra>
+<Dtelem>
+<Dtvalue>北川</Dtvalue>
+<Dtbase attr="#" name="名前" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>女性</Dtvalue>
+<Dtbase attr="#" name="性別" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>29</Dtvalue>
+<Dtbase attr="#" name="年齢" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>三重県</Dtvalue>
+<Dtbase attr="#" name="都道府県" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>マンゴーミルクプリン</Dtvalue>
+<Dtbase attr="#" name="注目食品" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>0.1</Dtvalue>
+<Dtbase attr="#" name="ポイント" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>true</Dtvalue>
+<Dtbase attr="#" name="フラグ" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="備考" subject="#" type="string"/>
+</Dtelem>
+</Dtalgebra>
+<Dtalgebra>
+<Dtelem>
+<Dtvalue>上原</Dtvalue>
+<Dtbase attr="#" name="名前" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>男性</Dtvalue>
+<Dtbase attr="#" name="性別" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>35</Dtvalue>
+<Dtbase attr="#" name="年齢" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>佐賀県</Dtvalue>
+<Dtbase attr="#" name="都道府県" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>エコナクッキングオイルＳ</Dtvalue>
+<Dtbase attr="#" name="注目食品" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>-0.1</Dtvalue>
+<Dtbase attr="#" name="ポイント" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>false</Dtvalue>
+<Dtbase attr="#" name="フラグ" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>特保</Dtvalue>
+<Dtbase attr="#" name="備考" subject="#" type="string"/>
+</Dtelem>
+</Dtalgebra>
+<Dtalgebra>
+<Dtelem>
+<Dtvalue>馬場</Dtvalue>
+<Dtbase attr="#" name="名前" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>男性</Dtvalue>
+<Dtbase attr="#" name="性別" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>41</Dtvalue>
+<Dtbase attr="#" name="年齢" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>宮城県</Dtvalue>
+<Dtbase attr="#" name="都道府県" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>まぐろのたたきご飯</Dtvalue>
+<Dtbase attr="#" name="注目食品" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>123.456</Dtvalue>
+<Dtbase attr="#" name="ポイント" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="フラグ" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="備考" subject="#" type="string"/>
+</Dtelem>
+</Dtalgebra>
+<Dtalgebra>
+<Dtelem>
+<Dtvalue>富田</Dtvalue>
+<Dtbase attr="#" name="名前" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>男性</Dtvalue>
+<Dtbase attr="#" name="性別" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>14</Dtvalue>
+<Dtbase attr="#" name="年齢" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>鹿児島県</Dtvalue>
+<Dtbase attr="#" name="都道府県" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>五穀米ご飯</Dtvalue>
+<Dtbase attr="#" name="注目食品" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="ポイント" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>false</Dtvalue>
+<Dtbase attr="#" name="フラグ" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="備考" subject="#" type="string"/>
+</Dtelem>
+</Dtalgebra>
+<Dtalgebra>
+<Dtelem>
+<Dtvalue>藤原</Dtvalue>
+<Dtbase attr="#" name="名前" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>男性</Dtvalue>
+<Dtbase attr="#" name="性別" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>48</Dtvalue>
+<Dtbase attr="#" name="年齢" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>長崎県</Dtvalue>
+<Dtbase attr="#" name="都道府県" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>ハンバーグ＆白身魚フライ弁当</Dtvalue>
+<Dtbase attr="#" name="注目食品" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>-987654321.0123456789</Dtvalue>
+<Dtbase attr="#" name="ポイント" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>false</Dtvalue>
+<Dtbase attr="#" name="フラグ" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="備考" subject="#" type="string"/>
+</Dtelem>
+</Dtalgebra>
+<Dtalgebra>
+<Dtelem>
+<Dtvalue>須藤</Dtvalue>
+<Dtbase attr="#" name="名前" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>女性</Dtvalue>
+<Dtbase attr="#" name="性別" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>20</Dtvalue>
+<Dtbase attr="#" name="年齢" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>京都府</Dtvalue>
+<Dtbase attr="#" name="都道府県" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>チキンと豆腐のハンバーグ弁当</Dtvalue>
+<Dtbase attr="#" name="注目食品" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="ポイント" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>true</Dtvalue>
+<Dtbase attr="#" name="フラグ" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="備考" subject="#" type="string"/>
+</Dtelem>
+</Dtalgebra>
+<Dtalgebra>
+<Dtelem>
+<Dtvalue>萩原</Dtvalue>
+<Dtbase attr="#" name="名前" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>女性</Dtvalue>
+<Dtbase attr="#" name="性別" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>25</Dtvalue>
+<Dtbase attr="#" name="年齢" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>熊本県</Dtvalue>
+<Dtbase attr="#" name="都道府県" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>若鶏のグリルガーリックソース</Dtvalue>
+<Dtbase attr="#" name="注目食品" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>987654321987654321.01234567890123456</Dtvalue>
+<Dtbase attr="#" name="ポイント" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="フラグ" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="備考" subject="#" type="string"/>
+</Dtelem>
+</Dtalgebra>
+<Dtalgebra>
+<Dtelem>
+<Dtvalue>小沢</Dtvalue>
+<Dtbase attr="#" name="名前" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>女性</Dtvalue>
+<Dtbase attr="#" name="性別" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>45</Dtvalue>
+<Dtbase attr="#" name="年齢" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>茨城県</Dtvalue>
+<Dtbase attr="#" name="都道府県" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>ミックスサラダ</Dtvalue>
+<Dtbase attr="#" name="注目食品" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>963</Dtvalue>
+<Dtbase attr="#" name="ポイント" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>true</Dtvalue>
+<Dtbase attr="#" name="フラグ" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="備考" subject="#" type="string"/>
+</Dtelem>
+</Dtalgebra>
+<Dtalgebra>
+<Dtelem>
+<Dtvalue>栗原</Dtvalue>
+<Dtbase attr="#" name="名前" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>男性</Dtvalue>
+<Dtbase attr="#" name="性別" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>65</Dtvalue>
+<Dtbase attr="#" name="年齢" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>埼玉県</Dtvalue>
+<Dtbase attr="#" name="都道府県" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>ピオテアドリンク</Dtvalue>
+<Dtbase attr="#" name="注目食品" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>288</Dtvalue>
+<Dtbase attr="#" name="ポイント" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>true</Dtvalue>
+<Dtbase attr="#" name="フラグ" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>特保</Dtvalue>
+<Dtbase attr="#" name="備考" subject="#" type="string"/>
+</Dtelem>
+</Dtalgebra>
+<Dtalgebra>
+<Dtelem>
+<Dtvalue>岡本</Dtvalue>
+<Dtbase attr="#" name="名前" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>女性</Dtvalue>
+<Dtbase attr="#" name="性別" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>18</Dtvalue>
+<Dtbase attr="#" name="年齢" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>新潟県</Dtvalue>
+<Dtbase attr="#" name="都道府県" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>コロッケ＆唐揚げ弁当</Dtvalue>
+<Dtbase attr="#" name="注目食品" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="ポイント" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="フラグ" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="備考" subject="#" type="string"/>
+</Dtelem>
+</Dtalgebra>
+<Dtalgebra>
+<Dtelem>
+<Dtvalue>宮崎</Dtvalue>
+<Dtbase attr="#" name="名前" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>男性</Dtvalue>
+<Dtbase attr="#" name="性別" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>23</Dtvalue>
+<Dtbase attr="#" name="年齢" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>三重県</Dtvalue>
+<Dtbase attr="#" name="都道府県" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>ハンバーグ＆唐揚げ</Dtvalue>
+<Dtbase attr="#" name="注目食品" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="ポイント" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="フラグ" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="備考" subject="#" type="string"/>
+</Dtelem>
+</Dtalgebra>
+<Dtalgebra>
+<Dtelem>
+<Dtvalue>川村</Dtvalue>
+<Dtbase attr="#" name="名前" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>女性</Dtvalue>
+<Dtbase attr="#" name="性別" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>35</Dtvalue>
+<Dtbase attr="#" name="年齢" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>青森県</Dtvalue>
+<Dtbase attr="#" name="都道府県" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>日清おいしさプラスサイリウムドリンクプレーン(微糖)</Dtvalue>
+<Dtbase attr="#" name="注目食品" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="ポイント" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="フラグ" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>特保</Dtvalue>
+<Dtbase attr="#" name="備考" subject="#" type="string"/>
+</Dtelem>
+</Dtalgebra>
+<Dtalgebra>
+<Dtelem>
+<Dtvalue>西村</Dtvalue>
+<Dtbase attr="#" name="名前" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>女性</Dtvalue>
+<Dtbase attr="#" name="性別" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>68</Dtvalue>
+<Dtbase attr="#" name="年齢" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>岡山県</Dtvalue>
+<Dtbase attr="#" name="都道府県" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>ハンバーガー</Dtvalue>
+<Dtbase attr="#" name="注目食品" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>-951357</Dtvalue>
+<Dtbase attr="#" name="ポイント" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>true</Dtvalue>
+<Dtbase attr="#" name="フラグ" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="備考" subject="#" type="string"/>
+</Dtelem>
+</Dtalgebra>
+<Dtalgebra>
+<Dtelem>
+<Dtvalue>永田</Dtvalue>
+<Dtbase attr="#" name="名前" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>男性</Dtvalue>
+<Dtbase attr="#" name="性別" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>60</Dtvalue>
+<Dtbase attr="#" name="年齢" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>島根県</Dtvalue>
+<Dtbase attr="#" name="都道府県" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>ハンバーグ＆海老フライ弁当</Dtvalue>
+<Dtbase attr="#" name="注目食品" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>-1.1</Dtvalue>
+<Dtbase attr="#" name="ポイント" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>false</Dtvalue>
+<Dtbase attr="#" name="フラグ" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="備考" subject="#" type="string"/>
+</Dtelem>
+</Dtalgebra>
+<Dtalgebra>
+<Dtelem>
+<Dtvalue>三宅</Dtvalue>
+<Dtbase attr="#" name="名前" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>女性</Dtvalue>
+<Dtbase attr="#" name="性別" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>58</Dtvalue>
+<Dtbase attr="#" name="年齢" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>宮崎県</Dtvalue>
+<Dtbase attr="#" name="都道府県" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>鶏の唐揚げ</Dtvalue>
+<Dtbase attr="#" name="注目食品" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="ポイント" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="フラグ" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="備考" subject="#" type="string"/>
+</Dtelem>
+</Dtalgebra>
+<Dtalgebra>
+<Dtelem>
+<Dtvalue>市川</Dtvalue>
+<Dtbase attr="#" name="名前" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>女性</Dtvalue>
+<Dtbase attr="#" name="性別" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>60</Dtvalue>
+<Dtbase attr="#" name="年齢" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>大阪府</Dtvalue>
+<Dtbase attr="#" name="都道府県" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>和風大皿盛り合わせ</Dtvalue>
+<Dtbase attr="#" name="注目食品" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>987000000</Dtvalue>
+<Dtbase attr="#" name="ポイント" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>true</Dtvalue>
+<Dtbase attr="#" name="フラグ" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="備考" subject="#" type="string"/>
+</Dtelem>
+</Dtalgebra>
+</DtalgebraSet>

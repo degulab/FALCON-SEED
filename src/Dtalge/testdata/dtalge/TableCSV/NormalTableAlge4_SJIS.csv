@@ -1,0 +1,6 @@
+#DtalgebraTable
+名前,性別,年齢,住所,フラグ
+string,string,decimal,string,boolean
+#,#,#,#,#
+#,#,#,#,#
+

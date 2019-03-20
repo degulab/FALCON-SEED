@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DtbaseSet>
+<Dtbase attr="#" name="#" subject="#" type="boolean"/>
+<Dtbase attr="#" name="#" subject="#" type="decimal"/>
+<Dtbase attr="#" name="#" subject="#" type="string"/>
+<Dtbase attr="#" name="基底キー1" subject="#" type="boolean"/>
+<Dtbase attr="#" name="基底キー1" subject="#" type="decimal"/>
+<Dtbase attr="#" name="基底キー1" subject="#" type="string"/>
+<Dtbase attr="基底キー2" name="基底キー1" subject="#" type="boolean"/>
+<Dtbase attr="基底キー2" name="基底キー1" subject="#" type="decimal"/>
+<Dtbase attr="基底キー2" name="基底キー1" subject="#" type="string"/>
+<Dtbase attr="基底キー2" name="基底キー1" subject="基底キー3" type="boolean"/>
+<Dtbase attr="基底キー2" name="基底キー1" subject="基底キー3" type="decimal"/>
+<Dtbase attr="基底キー2" name="基底キー1" subject="基底キー3" type="string"/>
+<Dtbase attr="基底キー4" name="基底キー5" subject="基底キー2" type="boolean"/>
+<Dtbase attr="基底キー4" name="基底キー5" subject="基底キー2" type="decimal"/>
+<Dtbase attr="基底キー4" name="基底キー5" subject="基底キー2" type="string"/>
+<Dtbase attr="エスケープ" name="基底#$()=~\`[{;+:*]}./_" subject="ユニコード：ここまで" type="boolean"/>
+<Dtbase attr="エスケープ" name="基底#$()=~\`[{;+:*]}./_" subject="ユニコード：ここまで" type="decimal"/>
+<Dtbase attr="エスケープ" name="基底#$()=~\`[{;+:*]}./_" subject="ユニコード：ここまで" type="string"/>
+<Dtbase attr="基底キー(\d{1})$" name="\A\s*\Q基底キー\E\d\s*\z" subject="(\d{4})/(\d{2})/(\d{2})" type="boolean"/>
+<Dtbase attr="基底キー(\d{1})$" name="\A\s*\Q基底キー\E\d\s*\z" subject="(\d{4})/(\d{2})/(\d{2})" type="decimal"/>
+<Dtbase attr="基底キー(\d{1})$" name="\A\s*\Q基底キー\E\d\s*\z" subject="(\d{4})/(\d{2})/(\d{2})" type="string"/>
+</DtbaseSet>

@@ -1,0 +1,84 @@
+﻿***************************************************************************
+*  Dtalge - Change Log                                                    *
+*                                               Last update : 2012/06/13  *
+***************************************************************************
+
+==========================================================================
+  データ代数パッケージの変更履歴
+==========================================================================
+
+◆0.40.20120613
+　・データ代数集合CSV標準形、ならびにテーブル形式のCSV標準形のフォーマットを
+　　変更しました。旧フォーマットの読み込みは、変更前と同様です。
+  ・データ代数集合CSV標準形のテーブル形式の新フォーマット読み込みにおいて、
+  　CSVフィールドの値が空欄の場合、値も基底も存在しない要素として読み込むよう
+  　に変更しました。
+  ・次のメソッドを追加しました。
+		dtalge.Dtalge#toTableCSV(DtBaseSet, boolean, File)
+		dtalge.Dtalge#toTableCSV(DtBaseSet, boolean, File, String)
+		dtalge.Dtalge#toTableCsvWithBaseOrder(DtBaseSet, File)
+		dtalge.Dtalge#toTableCsvWithBaseOrder(DtBaseSet, File, String)
+		dtalge.Dtalge#toTableCsvWithoutNull(File)
+		dtalge.Dtalge#toTableCsvWithoutNull(File, String)
+		dtalge.DtAlgeSet#toTableCSV(DtBaseSet, boolean, File)
+		dtalge.DtAlgeSet#toTableCSV(DtBaseSet, boolean, File, String)
+		dtalge.DtAlgeSet#toTableCsvWithBaseOrder(DtBaseSet, File)
+		dtalge.DtAlgeSet#toTableCsvWithBaseOrder(DtBaseSet, File, String)
+		dtalge.DtAlgeSet#toTableCsvWithoutNull(File)
+		dtalge.DtAlgeSet#toTableCsvWithoutNull(File, String)
+
+◆0.30.20110316
+  ・DtStringThesaurus で、1つの子に対して複数の親を関係付けられるようにしました。
+  ・次のメソッドを追加しました。
+		dtalge.DtStringThesaurus#getParents(String)
+		dtalge.DtStringThesaurus#getChildren(String)
+		dtalge.Dtalge#sum(Collection<? extends Dtalge)
+		dtalge.DtAlgeSet#sum()
+		dtalge.DtAlgeSet#toStringList(DtBase)
+		dtalge.DtAlgeSet#toDistinctStringList(DtBase)
+		dtalge.DtAlgeSet#toDecimalList(DtBase)
+		dtalge.DtAlgeSet#toDistinctDecimalList(DtBase)
+		dtalge.DtAlgeSet#toBooleanList(DtBase)
+		dtalge.DtAlgeSet#toDistinctBooleanList(DtBase)
+		dtalge.DtAlgeSet#sortedAlgesByValue(DtBase,boolean)
+		dtalge.DtAlgeSet#sortAlgesByValue(DtBase,boolean)
+		dtalge.DtAlgeSet#minValue(DtBase)
+		dtalge.DtAlgeSet#maxValue(DtBase)
+		dtalge.DtAlgeSet#minDecimal(DtBase)
+		dtalge.DtAlgeSet#maxDecimal(DtBase)
+		dtalge.DtAlgeSet#containsValue(DtBase, Object)
+		dtalge.DtAlgeSet#containsAnyValues(DtBase, Collection<?>)
+		dtalge.DtAlgeSet#selectEqualValue(DtBase, Object)
+		dtalge.DtAlgeSet#selectNotEqualValue(DtBase, Object)
+		dtalge.DtAlgeSet#selectLessThanValue(DtBase, Object)
+		dtalge.DtAlgeSet#selectLessEqualValue(DtBase, Object)
+		dtalge.DtAlgeSet#selectGreaterThanValue(DtBase, Object)
+		dtalge.DtAlgeSet#selectGreaterEqualValue(DtBase, Object)
+		dtalge.DtAlgeSet#replaceEqualValue(DtBase, Object, Dtalge)
+		dtalge.DtAlgeSet#updateEqualValue(DtBase, Object, Dtalge)
+		dtalge.DtAlgeSet#removeEqualValue(DtBase, Object)
+		dtalge.DtAlgeSet#deleteEqualValue(DtBase, Object)
+		dtalge.DtAlgeSet#selectThesaurusMax(DtBase, DtStringThesaurus)
+		dtalge.DtAlgeSet#selectThesaurusMin(DtBase, DtStringThesaurus)
+
+◆0.20.20100319
+  ・データ代数集合(DtAlgeSet)ならびにデータ代数元(Dtalge)で、新しいCSV形式
+    (テーブル形式)が追加されました。
+  ・次のメソッドを追加しました。
+      dtalge.Dtalge#toTableCSV(File)
+      dtalge.Dtalge#toTableCSV(File,String)
+      dtalge.DtAlgeSet#toTableCSV(File)
+      dtalge.DtAlgeSet#toTableCSV(File,String)
+  ・次のメソッドを追加しました。
+      dtalge.Dtalge#containsNull()
+      dtalge.Dtalge#containsAnyValues(Collection<?>)
+      dtalge.Dtalge#containsAllValues(Collection<?>)
+      dtalge.Dtalge#nullProjection()
+      dtalge.Dtalge#nonullProjection()
+      dtalge.Dtalge#oneValueProjection(Object)
+      dtalge.Dtalge#valuesProjection(Collection<?>)
+      dtalge.DtAlgeSet#nullProjection()
+      dtalge.DtAlgeSet#nonullProjection()
+      dtalge.DtAlgeSet#oneValueProjection(Object)
+      dtalge.DtAlgeSet#valuesProjection(Collection<?>)
+ 

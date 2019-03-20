@@ -1,0 +1,16 @@
+#DtalgebraTable2
+名前,性別,年齢,住所,フラグ
+string,string,decimal,string,boolean
+#,#,#,#,#
+#,#,#,#,#
+北川,女性,29,三重県,true
+上原,男性,35,,false
+馬場,,41,宮城県,
+富田,男性,14,鹿児島県,false
+藤原,,,,
+須藤,女性,,,false
+萩原,女性,25,熊本県,true
+小沢,女性,,茨城県,true
+,,,,
+栗原,男性,65,埼玉県,false
+岡本,女性,18,新潟県,true
