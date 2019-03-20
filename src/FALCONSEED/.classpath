@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="common/src"/>
+	<classpathentry kind="src" path="common/resource"/>
+	<classpathentry kind="src" output="filterBin" path="filter"/>
+	<classpathentry kind="src" path="fscore/src"/>
+	<classpathentry kind="src" path="fscore/resource"/>
+	<classpathentry kind="src" output="fsmoduleBin" path="fsmodule/src"/>
+	<classpathentry kind="src" output="fsmoduleBin" path="fsmodule/resource"/>
+	<classpathentry kind="src" path="runner/src"/>
+	<classpathentry kind="src" path="runner/resource"/>
+	<classpathentry kind="src" path="editor/src"/>
+	<classpathentry kind="src" path="editor/resource"/>
+	<classpathentry kind="src" path="manager/src"/>
+	<classpathentry kind="src" path="manager/resource"/>
+	<classpathentry kind="src" path="launcher/src"/>
+	<classpathentry kind="src" path="launcher/resource"/>
+	<classpathentry kind="src" output="plotBin" path="plot/src"/>
+	<classpathentry kind="src" output="plotBin" path="plot/resource"/>
+	<classpathentry kind="src" output="poiBin" path="POI/src"/>
+	<classpathentry kind="src" output="poiBin" path="POI/resource"/>
+	<classpathentry kind="src" output="prostartupbin" path="prostartup"/>
+	<classpathentry kind="src" output="startupbin" path="startup"/>
+	<classpathentry kind="src" path="SysUtil/src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="lib" path="lib/modules/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/modules/log4j-1.2.15.jar"/>
+	<classpathentry kind="lib" path="lib_dbg/aadlrt/Exalge2.jar" sourcepath="lib_dbg/aadlrt/Exalge2-0.984.20140529-src.zip"/>
+	<classpathentry kind="lib" path="lib_dbg/aadlrt/Dtalge.jar" sourcepath="lib_dbg/aadlrt/Dtalge-0.40.20121116-src.zip"/>
+	<classpathentry kind="lib" path="lib_dbg/macro/AADLMacroEngine.jar" sourcepath="lib_dbg/macro/AADLMacroEngine-2.1.0.20140529-src.zip"/>
+	<classpathentry kind="lib" path="lib/modules/plotapplication.jar" sourcepath="lib_dbg/ptplot5.8.zip"/>
+	<classpathentry kind="lib" path="lib_dbg/aadlrt/aadlrt.jar" sourcepath="lib_dbg/aadlrt/aadlc-2.2.1.20150720-src.zip"/>
+	<classpathentry kind="lib" path="SysUtil/lib/mac/AppleJavaExtensions.jar"/>
+	<classpathentry kind="lib" path="lib/aadlrt/mqttutil.jar"/>
+	<classpathentry kind="lib" path="lib/POI/poi-3.14-20160307.jar" sourcepath="lib_src/poi-src-3.14.zip"/>
+	<classpathentry kind="lib" path="lib/POI/poi-ooxml-3.14-20160307.jar" sourcepath="lib_src/poi-src-3.14.zip"/>
+	<classpathentry kind="lib" path="lib/POI/poi-ooxml-schemas-3.14-20160307.jar" sourcepath="lib_src/poi-src-3.14.zip"/>
+	<classpathentry kind="lib" path="lib/POI/xmlbeans-2.6.0.jar" sourcepath="lib_src/poi-src-3.14.zip"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

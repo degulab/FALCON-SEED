@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>FALCON-SEED system environment.</comment>
+<entry key="system.name">FALCON-SEED</entry>
+<entry key="system.version">3.3.0</entry>
+<entry key="system.build">20160531</entry>
+<entry key="system.title">FALCON-SEED 3.3.0</entry>
+</properties>

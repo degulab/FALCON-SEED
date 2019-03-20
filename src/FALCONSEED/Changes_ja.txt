@@ -1,0 +1,423 @@
+﻿***************************************************************************
+*  FALCON-SEED - Change Log                                               *
+*                                               Last update : 2016/05/31  *
+***************************************************************************
+
+==========================================================================
+  FALCON-SEED の変更履歴
+==========================================================================
+
+◆3.3.0(20160531)
+　・Excel ファイルから CSV ファイルへ変換する機能が追加されました。
+　・以下のシステムフィルタを追加しました。
+　　　システム/DynamicScheduling/DynamicScheduling4.0
+　　　システム/DynamicScheduling/TaskPathChecker
+　・DynamicSchedulingフィルタに関するマニュアルを、更新しました。
+　　　doc/DynamicScheduling/AboutDynamicScheduling_ja.pdf
+
+◆3.2.2(20151020)
+　・汎用フィルタに関する不具合を修正しました。
+　・フィルタ実行画面が表示されなくなる不具合を修正しました。
+
+◆3.2.1(20150723)
+　・汎用フィルタに関する不具合を修正しました。
+　・AADLコンパイラーを更新しました(2.2.1.20150720)
+	  ・日付時刻書式オブジェクトの機能を一部修正しました。
+
+◆3.2.0(20150630)
+　・汎用フィルタの作成機能を追加しました。
+　・組み込みフィルタ名をすべて英語表記に修正しました。
+　・AADLコンパイラーを更新しました(2.2.0.20150529)
+	  ・次の組み込み関数を追加しました。
+	      toCsvString(o:StringList,f:Boolean):String
+	      newStringListFromCsvString(s:String):StringList
+
+◆3.1.3(20150525)
+　・フィルタ実行履歴からのフィルタマクロ作成に関する不具合を修正しました。
+
+◆3.1.2(20141020)
+　・QGIS がインストールされている場合に、モジュール・ランナーが起動しない
+　　問題に対処しました。
+
+◆3.1.0(20140529)
+　・フィルタマクロの編集において、サブフィルタの待機指定機能が追加されました。
+　　この待機指定により、サブフィルタの並列実行が可能となりました。
+　・AADLマクロエンジンを更新しました(2.1.0.20140529)
+	　・次のコマンドを追加しました。
+	　　　wait
+	　・コマンドに指定可能な次の修飾子を追加しました。
+	　　　start
+	　　　after
+　・AADLコンパイラーを更新しました(2.1.0.20140529)
+	  ・予約語に以下のキーワードを追加しました。
+	      MqttCsvParameter
+	  ・次のデータ型を追加しました。
+	      MqttCsvParameter
+	  ・次の組み込み関数を追加しました。
+	      zeroProj(o:Exalge):Exalge
+	      zeroProj(o:ExAlgeSet):ExAlgeSet
+	      notzeroProj(o:Exalge):Exalge
+	      notzeroProj(o:ExAlgeSet):ExAlgeSet
+	      newExalgeFromCsvString(s:String):Exalge
+	      newExAlgeSetFromCsvString(s:String):ExAlgeSet
+	      newExBaseSetFromCsvString(s:String):ExBaseSet
+	      newExBasePatternSetFromCsvString(s:String):ExBasePatternSet
+	      newTransTableFromCsvString(s:String):TransTable
+	      newTransMatrixFromCsvString(s:String):TransMatrix
+	      newExTransferFromCsvString(s:String):ExTransfer
+	      toCsvString(o:Exalge):String
+	      toCsvString(o:ExAlgeSet):String
+	      toCsvString(o:ExBaseSet):String
+	      toCsvString(o:ExBasePatternSet):String
+	      toCsvString(o:TransTable):String
+	      toCsvString(o:TransMatrix):String
+	      toCsvString(o:ExTransfer):String
+	      parseMqttCsvParameter(s:String):MqttCsvParameter
+	      parseMqttCsvParameter(s:String, f:Boolean):MqttCsvParameter
+	      parseMqttCsvParameter(s:String, q:Decimal):MqttCsvParameter
+	      parseMqttCsvParameter(s:String, f:Boolean, q:Decimal):MqttCsvParameter
+	      getMqttServerURI(p:MqttCsvParameter):String
+	      getMqttClientID(p:MqttCsvParameter):String
+	      getAvailableMqttClientID(p:MqttCsvParameter):String
+	      getMqttQOS(p:MqttCsvParameter):Decimal
+	      getMqttTopicList(p:MqttCsvParameter):StringList
+	      toCsvString(p:MqttCsvParameter):String
+　・MQTTライブラリを更新しました(0.4.0.20140529)
+	・次のクラスを追加しました。
+		ssac.aadl.runtime.mqtt.MqttCsvParameter
+			MQTTの接続先やトピックリストなどを記述したCSVフォーマットのテキストを解析するオブジェクト。
+	・次のメソッドを追加しました。
+		ssac.aadl.runtime.mqtt.MqttConnectionParams#parseServerURI(String)
+			MQTT接続先サーバーを示す文字列から、java.net.URI に変換する。
+　・交換代数コア・パッケージを更新しました(0.984.20140529)
+	　・次のメソッドを追加しました。
+	　　　exalge2.Exalge#strictBar()
+	　　　exalge2.Exalge#strictBarLeaveZero(boolean)
+	　　　exalge2.Exalge#add(ExBase,BigDecimal)
+	　　　exalge2.Exalge#add(Exalge)
+	　　　exalge2.Exalge#zeroProjection()
+	　　　exalge2.Exalge#notzeroProjection()
+	　　　exalge2.ExAlgeSet#zeroProjection()
+	　　　exalge2.ExAlgeSet#notzeroProjection()
+	　　　exalge2.Exalge#toCsvString()
+	　　　exalge2.Exalge#fromCsvString(String)
+	　　　exalge2.Exalge#toXmlString()
+	　　　exalge2.Exalge#fromXmlString(String)
+	　　　exalge2.ExAlgeSet#toCsvString()
+	　　　exalge2.ExAlgeSet#fromCsvString(String)
+	　　　exalge2.ExAlgeSet#toXmlString()
+	　　　exalge2.ExAlgeSet#fromXmlString(String)
+	　　　exalge2.ExBaseSet#toCsvString()
+	　　　exalge2.ExBaseSet#fromCsvString(String)
+	　　　exalge2.ExBaseSet#toXmlString()
+	　　　exalge2.ExBaseSet#fromXmlString(String)
+	　　　exalge2.ExBasePatternSet#toCsvString()
+	　　　exalge2.ExBasePatternSet#fromCsvString(String)
+	　　　exalge2.ExBasePatternSet#toXmlString()
+	　　　exalge2.ExBasePatternSet#fromXmlString(String)
+	　　　exalge2.TransTable#toCsvString()
+	　　　exalge2.TransTable#fromCsvString(String)
+	　　　exalge2.TransTable#toXmlString()
+	　　　exalge2.TransTable#fromXmlString(String)
+	　　　exalge2.TransMatrix#toCsvString()
+	　　　exalge2.TransMatrix#fromCsvString(String)
+	　　　exalge2.TransMatrix#toXmlString()
+	　　　exalge2.TransMatrix#fromXmlString(String)
+	　　　exalge2.ExTransfer#toCsvString()
+	　　　exalge2.ExTransfer#fromCsvString(String)
+	　　　exalge2.ExTransfer#toXmlString()
+	　　　exalge2.ExTransfer#fromXmlString(String)
+
+
+◆3.0.0(20140329)
+　・複数のフィルタを同時に実行する機能を追加しました。
+　・AADLコンパイラーを更新しました(2.0.0.20140323)
+　・外部からのプロセス中断要求に応答するための機能を追加しました。
+　・次の組み込み関数を追加しました。
+　　　errorprint(全データ型):Boolean
+　　　errorprintln(全データ型):Boolean
+　　　errorprintln():Boolean
+　　　checkAndAcceptTerminateRequest()
+　　　acceptTerminateReqest():Boolean
+　　　isTerminateRequested():Boolean
+　　　strictBar(o:Exalge):Exalge
+　　　strictBarLeaveZero(o:Exalge, la:Boolean):Exalge
+　・AADLマクロエンジンを更新しました(2.0.0.20140323)
+　　　・中断可能なJAVAプロセス実行機能を追加しました。
+
+◆2.1.0(20130830) with MQTT
+　・CSVファイルビューアーで、CSVファイルが正しく読み込めない不具合を修正しました。
+　・開いているCSVファイルからグラフを表示する機能を追加しました。
+　・MQTTライブラリの不具合を修正しました。
+　・「貸借CSVの交換代数標準形への変換」と「交換代数標準形の貸借CSVへの変換」フィルタの場所を移動しました。
+　・以下のシステムフィルタを追加しました。
+　　　システム/BasicFilter/Accounting/貸借CSVの交換代数標準形への変換
+　　　システム/BasicFilter/Accounting/交換代数標準形の貸借CSVへの変換
+　　　システム/BasicFilter/Accounting/aadl_filter/Bar
+　　　システム/BasicFilter/Accounting/aadl_filter/ElementProduct
+　　　システム/BasicFilter/Accounting/aadl_filter/ExTransfer
+　　　システム/BasicFilter/Accounting/aadl_filter/PatternProjection
+　　　システム/BasicFilter/Accounting/aadl_filter/Plus
+　　　システム/BasicFilter/Accounting/aadl_filter/Projection
+　　　システム/BasicFilter/Accounting/aadl_filter/Sum
+　　　システム/BasicFilter/Accounting/econ/Aggregation5
+　　　システム/BasicFilter/Accounting/econ/CarryOver
+　　　システム/BasicFilter/Accounting/econ/FlowTransfer
+　　　システム/BasicFilter/Accounting/econ/MacroYICS
+　　　システム/BasicFilter/Accounting/econ/SNAmacrodata
+　　　システム/BasicFilter/Accounting/econ/SumDMagri
+　　　システム/BasicFilter/Accounting/econ/SumDMbakery
+　　　システム/BasicFilter/Accounting/econ/SumDMgov
+　　　システム/BasicFilter/Accounting/econ/SumDMhouse
+　　　システム/BasicFilter/Accounting/econ/SumDMsteel
+　　　システム/BasicFilter/Restructure/ファイルリストによるCSVファイルのレコード連結
+　　　システム/BasicFilter/Restructure/CsvUnion
+　　　システム/BasicFilter/Restructure/CsvIntersection
+　　　システム/BasicFilter/Restructure/CsvDifference
+　　　システム/BasicFilter/Restructure/CsvCartesianProduct
+　　　システム/BasicFilter/Restructure/CsvLeftOuterJoin
+　　　システム/BasicFilter/Statistics/CSVフィールドの相関係数
+　・AADLコンパイラーを更新しました(1.90.20130827)
+　　　・AADLランタイムライブラリのいくつかの不具合を修正しました。
+
+◆2.0.3(20130423) with MQTT
+　・以下のシステムフィルタを追加しました。
+
+◆2.0.2(20130315) with MQTT
+　・MQTT対応AADL用ライブラリが組み込まれました。
+　・以下のシステムフィルタを追加しました。
+　　　システム/MQTTClient/CsvFilePublish
+　　　システム/MQTTClient/CsvFileSubscribe
+　　　システム/MQTTClient/CsvRecordPublish
+　　　システム/MQTTClient/CsvRecordSubscribe
+　・MQTT対応機能に関するマニュアルを、以下の場所に追加しました。
+　　　.mqtt_falconseed_jp.pdf
+
+◆2.0.1(20121211)
+　・以下のシステムフィルタを追加しました。
+　　　システム/DynamicScheduling/DynamicScheduling3.1
+　・DynamicSchedulingフィルタに関するマニュアルを、以下の場所に追加しました。
+　　　doc/DynamicScheduling/AboutDynamicScheduling_ja.pdf
+
+◆2.0.0(20121116)
+　・アプリケーションランチャーから、使用する言語（英語、日本語）を切り替える機能を追加しました。
+　・複数のフィルタを登録して実行する「フィルタマクロ」を作成する機能を追加しました。
+　・フィルタ実行履歴からフィルタマクロを作成する機能を追加しました。
+　・以下の BasicFilter を追加しました。
+　　　・システム/BasicFilter/Convert/CSVファイルの構造変換
+　・CSVファイルの閲覧において、JAVAの制約により最大表示レコード数を134,210,000レコードまでと
+　　しました。
+　・モジュール・ランナーのツールバーに [CSVファイルとして開く] ボタンを追加しました。
+　・各マニュアルの表記で、『Sun Microsystems』を『Oracle』に修正しました。
+
+◆1.23(20121005)
+　・AADLコンパイラーを更新しました(1.81.20121005)
+　　　・AADLコンパイル時にトークンエラーが発生してもコンパイルが成功してしまう不具合を修正しました。
+　　　・JDK1.7のJAVAコンパイラでコンパイルした際、不要な警告メッセージが出力されないようにしました。
+
+◆1.22(20120831)
+　・"モジュール実行定義"を"フィルタ"に名称変更しました。この変更に伴い、
+　　関連する名称が変更され、フィルタのアイコンが新たに設定されました。
+　・フィルタの実行履歴を保存し、履歴からフィルタを実行することが可能となりました。
+　・メニューの構成が変更されました。
+　・CSVファイルの保存などでテンポラリファイルが選択されたとき、ファイル保存
+　　ダイアログでテンポラリディレクトリ以外のディレクトリが表示されるよう変更しました。
+　・libディレクトリにある "." で始まるファイルを無視するように変更しました。
+　　Mac から USB メモリ経由でファイルをコピーした際に生成される "._" で始まる
+　　ファイルを除外するようになりました。
+　・以下の BasicFilter を追加しました。
+　　　・システム/BasicFilter/Aggregate/CSVフィールドの四則演算
+　　　・システム/BasicFilter/Restructure/CSVフィールドの並べ替え
+　　　・システム/BasicFilter/Restructure/CSVフィールドの連結
+　　　・システム/BasicFilter/Restructure/CSVレコードの連結
+　・システム領域に配置されていた SimpleCsvFilter は BasicFilter となり、
+　　システム領域のフィルタならびにデータは BasicFilter に統一されました。
+　・Mac OS X のスクリーンメニューに対応しました。
+　・アプリケーションにアイコンを設定しました。
+
+◆1.21(20120613)
+　・データ代数集合CSV 形式（標準形ならびにテーブル形式）において、null を表す特殊値が導入
+　　され、CSV テーブル形式ファイルの空欄の扱いが変更されています。また、この変更に伴い、
+　　組み込み関数追加など、AADL/ADDL コンパイラーの機能も更新されています。この変更により、
+　　データ代数形式へのエクスポートでは、新しいファイル・フォーマットでの出力となりました。
+  ・AADLコンパイラを更新しました(1.80.20120613)
+	  ・次の組み込み関数を追加しました。
+          writeTableCsvFileWithoutNull(o:Dtalge, f:String)
+          writeTableCsvFileWithoutNull(o:Dtalge, f:String, e:String)
+          writeTableCsvFileWithoutNull(o:DtAlgeSet, f:String)
+          writeTableCsvFileWithoutNull(o:DtAlgeSet, f:String, e:String)
+          writeTableCsvFileWithBaseOrder(o:Dtalge, b:DtBaseSet, f:String)
+          writeTableCsvFileWithBaseOrder(o:Dtalge, b:DtBaseSet, f:String, e:String)
+          writeTableCsvFileWithBaseOrder(o:DtAlgeSet, b:DtBaseSet, f:String)
+          writeTableCsvFileWithBaseOrder(o:DtAlgeSet, b:DtBaseSet, f:String, e:String)
+          writeTableCsvFile(o:Dtalge, b:DtBaseSet, w:Boolean, f:String)
+          writeTableCsvFile(o:Dtalge, b:DtBaseSet, w:Boolean, f:String, e:String)
+          writeTableCsvFile(o:DtAlgeSet, b:DtBaseSet, w:Boolean, f:String)
+          writeTableCsvFile(o:DtAlgeSet, b:DtBaseSet, w:Boolean, f:String, e:String)
+  ・データ代数コア・パッケージを更新しました(0.40.20120613)
+	  ・データ代数集合CSV標準形、ならびにテーブル形式のCSV標準形のフォーマットを
+	  　変更しました。旧フォーマットの読み込みは、変更前と同様です。
+	  ・データ代数集合CSV標準形のテーブル形式の新フォーマット読み込みにおいて、
+	  　CSVフィールドの値が空欄の場合、値も基底も存在しない要素として読み込むよう
+	  　に変更しました。
+	  ・次のメソッドを追加しました。
+          dtalge.Dtalge#toTableCSV(DtBaseSet, boolean, File)
+          dtalge.Dtalge#toTableCSV(DtBaseSet, boolean, File, String)
+          dtalge.Dtalge#toTableCsvWithBaseOrder(DtBaseSet, File)
+          dtalge.Dtalge#toTableCsvWithBaseOrder(DtBaseSet, File, String)
+          dtalge.Dtalge#toTableCsvWithoutNull(File)
+          dtalge.Dtalge#toTableCsvWithoutNull(File, String)
+          dtalge.DtAlgeSet#toTableCSV(DtBaseSet, boolean, File)
+          dtalge.DtAlgeSet#toTableCSV(DtBaseSet, boolean, File, String)
+          dtalge.DtAlgeSet#toTableCsvWithBaseOrder(DtBaseSet, File)
+          dtalge.DtAlgeSet#toTableCsvWithBaseOrder(DtBaseSet, File, String)
+          dtalge.DtAlgeSet#toTableCsvWithoutNull(File)
+          dtalge.DtAlgeSet#toTableCsvWithoutNull(File, String)
+
+◆1.20(20120330)
+　・AADLマクロをモジュール実行定義に指定する機能を追加しました。
+  　この機能追加に伴い、モジュール実行定義編集ダイアログや、モジュール引数設定ダイアログの
+  　外観や機能が変更されました。
+  ・モジュール実行定義の実行時に、引数に設定した値を履歴として保存する機能、ならびに、
+  　履歴から引数を設定する機能を追加しました。
+  ・形式を指定して CSV ファイルを開く際に、半角スペースを区切り文字として選択可能としました。
+
+◆1.13(20120223)
+  ・[設定]ダイアログ[ファイル・エンコーディング]の「AADL csvFile() 標準」に指定した文字コードで
+  　CSVファイルが開かれない不具合を修正。
+
+◆1.13(20120216)
+  ・ソートを行う汎用CSVフィルタを追加しました。
+  ・抽出系汎用CSVフィルタの不具合を修正しました。
+  ・サンプルフィルタのフォルダ構成を変更しました。
+  ・スタートアップガイドを修正しました。
+  ・デフォルトのユーザー定義領域の位置を、ホームディレクトリの ".FALCONSEED"
+    フォルダから、"FALCONSEED" フォルダに変更しました。
+  ・モジュール実行定義の実行時、[OUT]属性の引数にテンポラリファイルを指定
+    可能にしました。
+  ・モジュール実行定義の作成において、[IN]属性引数または[OUT]属性引数に
+    フォルダを指定可能としました。
+  ・サンプルモジュールを追加しました。
+  ・動的スケジューリング・モジュールを追加しました。
+
+◆1.12(20111031)
+  ・ドキュメントにスタートアップガイドを追加しました。また、このスタート
+  　アップガイドで使用しているサンプルモジュールを追加しました。
+
+◆1.12(20110712)
+  ・AADLコンパイラを更新しました(1.70.20110712)
+      ・AADLモジュール実行時に発生した例外の AADL 行番号が正しく出力されない不具合を修正しました。
+
+◆1.12(20110629)
+  [AADLエディタ]
+  ・「AADL開発環境～操作説明書～」のAADLエディタ検索ダイアログの説明において、
+    ［前を検索］、［次を検索］、［すべて置換］に関する説明の誤記を修正しました。
+  ・AADLコンパイラーを更新しました(1.70.20110629)
+      ・ユーザー定義関数の宣言に 'public' キーワードの指定が可能となりました。
+        このキーワードを指定すると、public メソッドとして JAVA コードが生成されます。
+        キーワードを指定しない場合は protected メソッドとして JAVA コードが生成されます。
+        この変更に伴い、生成されるJAVAコードのAADLプログラム・クラスやエントリメンバ
+        メソッドを変更しました。
+      ・内包記法(内包記述ブロック)のイテレート式に関数呼び出しが記述可能となりました。
+      ・予約語に以下のキーワードを追加しました。
+          Range
+          DecimalRange
+      ・次のデータ型を追加しました。
+          DecimalRange
+      ・次の組み込み関数を追加しました。
+          range(last:Decimal):DecimalRange
+          range(last:Decimal, includeLast:Boolean):DecimalRange
+          range(first:Decimal, last:Decimal):DecimalRange
+          range(first:Decimal, last:Decimal, includeLast:Boolean):DecimalRange
+          range(first:Decimal, last:Decimal, step:Decimal):DecimalRange
+          range(first:Decimal, last:Decimal, step:Decimal, includeLast:Boolean):DecimalRange
+          naturalNumberRange(s:String):DecimalRange
+          naturalNumberRange(s:String, max:Decimal):DecimalRange
+          isNaturalNumberRangeFormat(s:String):Boolean
+          isEmpty(r:DecimalRange):Boolean
+          isIncludeRangeLast(r:DecimalRange):Boolean
+          isIncremental(r:DecimalRange):Boolean
+          rangeFirst(r:DecimalRange):Decimal
+          rangeLast(r:DecimalRange):Decimal
+          rangeStep(r:DecimalRange):Decimal
+          rangeMin(r:DecimalRange):Decimal
+          rangeMax(r:DecimalRange):Decimal
+
+◆1.11(20110316)
+  [AADLエディタ]
+  ・AADLコンパイラーを更新しました(1.60.20110316)
+      ・DtStringThesaurus において、一つの子となる語句に、複数の親となる語句を
+        関連付けることが可能となりました。
+      ・次の組み込み関数を追加しました。
+          getThesaurusParents(t:DtStringThesaurus, w:String):StringList
+          getThesaurusChildren(t:DtStringThesaurus, w:String):StringList
+          sum(o:DtAlgeSet):Dtalge
+          toStringList(o:DtAlgeSet, b:DtBase):StringList
+          toDistinctStringList(o:DtAlgeSet, b:DtBase):StringList
+          toDecimalList(o:DtAlgeSet, b:DtBase):DecimalList
+          toDistinctDecimalList(o:DtAlgeSet, b:DtBase):DecimalList
+          toBooleanList(o:DtAlgeSet, b:DtBase):BooleanList
+          toDistinctBooleanList(o:DtAlgeSet, b:DtBase):BooleanList
+          minDecimal(o:DtAlgeSet, b:DtBase):Decimal
+          maxDecimal(o:DtAlgeSet, b:DtBase):Decimal
+          sum(o:DtAlgeSet):Dtalge
+          sortedAlgesByValue(o:DtAlgeSet, b:DtBase, asc:Boolean):DtAlgeSet
+          sortAlgesByValue(o:DtAlgeSet, b:DtBase, asc:Boolean);
+          containsValue(o:DtAlgeSet, b:DtBase, v:Object):Boolean
+          containsAnyValues(o:DtAlgeSet, b:DtBase, l:BooleanList):Boolean
+          containsAnyValues(o:DtAlgeSet, b:DtBase, l:DecimalList):Boolean
+          containsAnyValues(o:DtAlgeSet, b:DtBase, l:StringList):Boolean
+          selectEqualValue(o:DtAlgeSet, b:DtBase, v:Object):DtAlgeSet
+          selectNotEqualValue(o:DtAlgeSet, b:DtBase, v:Object):DtAlgeSet
+          selectLessThanValue(o:DtAlgeSet, b:DtBase, v:Object):DtAlgeSet
+          selectLessEqualValue(o:DtAlgeSet, b:DtBase, v:Object):DtAlgeSet
+          selectGreaterThanValue(o:DtAlgeSet, b:DtBase, v:Object):DtAlgeSet
+          selectGreaterEqualValue(o:DtAlgeSet, b:DtBase, v:Object):DtAlgeSet
+          replaceEqualValue(o:DtAlgeSet, b:DtBase, v:Object, a:Dtalge):DtAlgeSet
+          updateEqualValue(o:DtAlgeSet, b:DtBase, v:Object, a:Dtalge):Boolean
+          removeEqualValue(o:DtAlgeSet, b:DtBase, v:Object):DtAlgeSet
+          deleteEqualValue(o:DtAlgeSet, b:DtBase, v:Object):Boolean
+          selectThesaurusMax(o:DtAlgeSet, b:DtBase, t:DtStringThesaurus):DtAlgeSet
+          selectThesaurusMin(o:DtAlgeSet, b:DtBase, t:DtStringThesaurus):DtAlgeSet
+  ・データ代数コア・パッケージを更新しました(0.30.20110316)
+      ・DtStringThesaurus で、1つの子に対して複数の親を関係付けられるようにしました。
+      ・次のメソッドを追加しました。
+          dtalge.DtStringThesaurus#getParents(String)
+          dtalge.DtStringThesaurus#getChildren(String)
+          dtalge.Dtalge#sum(Collection<? extends Dtalge)
+          dtalge.DtAlgeSet#sum()
+          dtalge.DtAlgeSet#toStringList(DtBase)
+          dtalge.DtAlgeSet#toDistinctStringList(DtBase)
+          dtalge.DtAlgeSet#toDecimalList(DtBase)
+          dtalge.DtAlgeSet#toDistinctDecimalList(DtBase)
+          dtalge.DtAlgeSet#toBooleanList(DtBase)
+          dtalge.DtAlgeSet#toDistinctBooleanList(DtBase)
+          dtalge.DtAlgeSet#sortedAlgesByValue(DtBase,boolean)
+          dtalge.DtAlgeSet#sortAlgesByValue(DtBase,boolean)
+          dtalge.DtAlgeSet#minValue(DtBase)
+          dtalge.DtAlgeSet#maxValue(DtBase)
+          dtalge.DtAlgeSet#minDecimal(DtBase)
+          dtalge.DtAlgeSet#maxDecimal(DtBase)
+          dtalge.DtAlgeSet#containsValue(DtBase, Object)
+          dtalge.DtAlgeSet#containsAnyValues(DtBase, Collection<?>)
+          dtalge.DtAlgeSet#selectEqualValue(DtBase, Object)
+          dtalge.DtAlgeSet#selectNotEqualValue(DtBase, Object)
+          dtalge.DtAlgeSet#selectLessThanValue(DtBase, Object)
+          dtalge.DtAlgeSet#selectLessEqualValue(DtBase, Object)
+          dtalge.DtAlgeSet#selectGreaterThanValue(DtBase, Object)
+          dtalge.DtAlgeSet#selectGreaterEqualValue(DtBase, Object)
+          dtalge.DtAlgeSet#replaceEqualValue(DtBase, Object, Dtalge)
+          dtalge.DtAlgeSet#updateEqualValue(DtBase, Object, Dtalge)
+          dtalge.DtAlgeSet#removeEqualValue(DtBase, Object)
+          dtalge.DtAlgeSet#deleteEqualValue(DtBase, Object)
+          dtalge.DtAlgeSet#selectThesaurusMax(DtBase, DtStringThesaurus)
+          dtalge.DtAlgeSet#selectThesaurusMin(DtBase, DtStringThesaurus)
+
+◆1.10(20110218)
+  ・データファイルのツリー表示を追加しました。
+  ・モジュール実行定義のインポート／エクスポート機能を追加しました。
+  ・AADLエディタ、パッケージ・マネージャが起動可能なランチャーを追加しました。
+  ・いくつかの不具合を修正しました。
+
+◆1.00(20101220)
+  ・新規作成

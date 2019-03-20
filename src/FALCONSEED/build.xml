@@ -1,0 +1,595 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+  Copyright 2007-2016  SSAC(Systems of Social Accounting Consortium)
+  <author> Yasunari Ishizuka (PieCake,Inc.)
+  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
+  <author> Yuji Onuki (Statistics Bureau)
+  <author> Shungo Sakaki (Tokyo University of Technology)
+  <author> Akira Sasaki (HOSEI UNIVERSITY)
+  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
+-->
+<project default="mkdist" basedir=".">
+	<tstamp>
+		<format property="build.time" pattern="yyyyMMdd" locale="en" />
+	</tstamp>
+	
+	<property name="java.compile.option" value="lines,source" />
+	<!-- property name="java.compile.option" value="none" / -->
+	
+	<property name="title" value="FALCON-SEED" />
+	<property name="pro.title" value="FALCON-SEED Pro" />
+	<property name="vendor" value="FALCON-SEED project, SSAC(Systems of Social Accounting Consortium)" />
+	
+	<property name="main.version" value="20160531" />
+	<property name="common.version" value="20160531" />
+	<property name="manager.version" value="20151020" />
+	<property name="editor.version" value="20151020" />
+	<property name="fscore.version" value="20130701" />
+	<property name="runner.version" value="20160531" />
+	<property name="startup.version" value="20141020" />
+	<property name="prostartup.version" value="20141020" />
+	<property name="fsmodule.version" value="20151020" />
+	
+	<property name="common.mani.title" value="${title} - Common Library" />
+	<property name="manager.mani.title" value="${title} - Package Manager" />
+	<property name="editor.mani.title" value="${title} - AADL Editor" />
+	<property name="fscore.mani.title" value="${title} - Core Library" />
+	<property name="launcher.mani.title" value="${title} - Launcher" />
+	<property name="runner.mani.title" value="${title} - Module Runner" />
+	<property name="fsmodule.main.title" value="${title} - Generic Filter Engine" />
+	
+	<property name="lib.dir" location="${basedir}/lib" />
+	<!-- Common Library source location -->
+	<property name="src.common.dir" location="${basedir}/common/src" />
+	<property name="rsc.common.dir" location="${basedir}/common/resource" />
+	<!-- editor source location -->
+	<property name="src.editor.dir" location="${basedir}/editor/src" />
+	<property name="rsc.editor.dir" location="${basedir}/editor/resource" />
+	<!-- manager source location -->
+	<property name="src.manager.dir" location="${basedir}/manager/src" />
+	<property name="rsc.manager.dir" location="${basedir}/manager/resource" />
+	<!-- SysUtil source location -->
+	<property name="src.sysutil.dir" location="${basedir}/SysUtil/src" />
+	<property name="lib.mac.jar" location="${basedir}/SysUtil/lib/mac/AppleJavaExtensions.jar" />
+	<!-- fscore sources location -->
+	<property name="src.fscore.dir" location="${basedir}/fscore/src" />
+	<property name="rsc.fscore.dir" location="${basedir}/fscore/resource" />
+	<!-- launcher sources location -->
+	<property name="src.launcher.dir" location="${basedir}/launcher/src" />
+	<property name="rsc.launcher.dir" location="${basedir}/launcher/resource" />
+	<!-- runner sources location -->
+	<property name="src.runner.dir" location="${basedir}/runner/src" />
+	<property name="rsc.runner.dir" location="${basedir}/runner/resource" />
+	<!-- fsmodule sources location -->
+	<property name="src.fsmodule.dir" location="${basedir}/fsmodule/src" />
+	<property name="rsc.fsmodule.dir" location="${basedir}/fsmodule/resource" />
+	<!-- startup sources location -->
+	<property name="src.startup.dir" location="${basedir}/startup" />
+	<property name="src.prostartup.dir" location="${basedir}/prostartup" />
+	<!-- plot sources location -->
+	<property name="src.ptplot.dir" location="${basedir}/plot/src" />
+	<!-- property name="src.ptolemy.dir" location="${basedir}/lib_dbg/ptplot_src" / -->
+	<!-- POI sources location -->
+	<property name="src.poi.dir" location="${basedir}/POI/src" />
+	<property name="rsc.poi.dir" location="${basedir}/POI/resource" />
+	
+
+	<!-- distribution location -->
+	<property name="dist.dir" location="${basedir}/jar" />
+	<property name="dist.lib.dir" location="${dist.dir}/lib" />
+	<property name="build.dir" location="${dist.dir}/classes" />
+	<property name="module.dir" value="lib" />
+	<property name="aadlrt.dir" value="aadlrt" />
+	<property name="dist.aadlrt.dir" location="${dist.lib.dir}/${aadlrt.dir}" />
+	
+	
+	<property name="build.common.dir"   location="${build.dir}/common" />
+	<property name="build.editor.dir"   location="${build.dir}/editor" />
+	<property name="build.manager.dir"   location="${build.dir}/manager" />
+	<property name="build.fscore.dir"   location="${build.dir}/fscore" />
+	<property name="build.launcher.dir" location="${build.dir}/launcher" />
+	<property name="build.runner.dir"   location="${build.dir}/runner" />
+	<property name="build.fsmodule.dir"   location="${build.dir}/fsmodule" />
+	<property name="build.startup.dir"   location="${build.dir}/startup" />
+	<property name="build.prostartup.dir"   location="${build.dir}/prostartup" />
+	
+	<property name="common.dist.dir" location="${dist.lib.dir}" />
+	<property name="common.module.name" value="CommonLib" />
+
+	<property name="editor.dist.dir" location="${dist.lib.dir}" />
+	<property name="editor.module.name" value="EditorCore" />
+	<property name="editor.main.class"  value="ssac.aadl.editor.AADLEditor" />
+
+	<property name="manager.dist.dir" location="${dist.lib.dir}" />
+	<property name="manager.module.name" value="PackageManager" />
+	<property name="manager.main.class"  value="ssac.aadl.manager.PackageManager" />
+
+	<property name="launcher.dist.dir" location="${dist.lib.dir}" />
+	<property name="launcher.module.name" value="fslauncher" />
+	<property name="launcher.main.class"  value="ssac.falconseed.launcher.LauncherMain" />
+	
+	<property name="runner.dist.dir" location="${dist.lib.dir}" />
+	<property name="runner.module.name" value="ModuleRunner" />
+	<property name="runner.main.class"  value="ssac.falconseed.runner.ModuleRunner" />
+	
+	<property name="fsmodule.dist.dir" location="${dist.lib.dir}" />
+	<property name="fsmodule.module.name" value="GenericFilterEngine" />
+	<property name="fsmodule.main.class"  value="ssac.aadl.fs.module.generic.GenericFilterMain" />
+	
+	<property name="fscore.dist.dir" location="${dist.lib.dir}" />
+	<property name="fscore.module.name" value="FSCoreLib" />
+	
+	<property name="startup.dist.dir" location="${dist.dir}" />
+	<property name="startup.main.class"  value="ssac.falconseed.startup.FSMain" />
+	
+	<property name="prostartup.dist.dir" location="${dist.dir}" />
+	<property name="prostartup.main.class"  value="ssac.falconseed.pro.startup.FSProMain" />
+	
+	<patternset id="basic.libs">
+		<include name="**/commons-logging-*.jar" />
+		<include name="**/log4j-*.jar" />
+		<include name="**/AADLMacroEngine.jar" />
+	</patternset>
+	
+	<patternset id="common.libs">
+		<include name="**/${common.module.name}.jar" />
+	</patternset>
+	
+	<patternset id="editor.libs">
+		<include name="**/AADLMacroEngine.jar" />
+	</patternset>
+	
+	<patternset id="fscore.libs">
+		<include name="**/${fscore.module.name}.jar" />
+	</patternset>
+	
+	<patternset id="fsmodule.libs">
+		<include name="**/aadlrt.jar" />
+		<include name="**/Dtalge.jar" />
+		<include name="**/Exalge2.jar" />
+		<include name="**/mqttutil.jar" />
+	</patternset>
+	
+	<patternset id="runner.libs">
+		<include name="**/Dtalge.jar" />
+		<include name="**/AADLMacroEngine.jar" />
+		<include name="**/plotapplication.jar" />
+		<include name="**/${fsmodule.module.name}.jar" />
+		<include name="**/poi-3.14-*.jar" />
+		<include name="**/poi-ooxml-3.14-*.jar" />
+		<include name="**/poi-ooxml-schemas-3.14-*.jar" />
+		<include name="**/xmlbeans-*.jar" />
+	</patternset>
+	
+	<fileset id="lib.files" dir="${lib.dir}">
+		<include name="**/*.jar" />
+		<include name="resources/**" />
+		<include name="MQTT/**" />
+		<exclude name="sources/**" />
+		<exclude name="*.jar" />
+	</fileset>
+
+	<!-- Build -->
+	<target name="init">
+		<mkdir dir="${dist.dir}" />
+		<mkdir dir="${build.common.dir}" />
+		<mkdir dir="${build.editor.dir}" />
+		<mkdir dir="${build.manager.dir}" />
+		<mkdir dir="${build.fscore.dir}" />
+		<mkdir dir="${build.launcher.dir}" />
+		<mkdir dir="${build.runner.dir}" />
+		<mkdir dir="${build.fsmodule.dir}" />
+		<mkdir dir="${build.startup.dir}" />
+		<mkdir dir="${build.prostartup.dir}" />
+		<mkdir dir="${dist.dir}/${module.dir}" />
+		<copy todir="${dist.dir}/${module.dir}">
+			<fileset refid="lib.files" />
+		</copy>
+		<copy todir="${dist.dir}">
+			<fileset file="${basedir}/Changes_ja.txt" />
+			<fileset file="${basedir}/readme.txt" />
+		</copy>
+	</target>
+
+	<target name="clean">
+		<delete dir="${build.dir}" />
+		<delete dir="${dist.dir}/${module.dir}" />
+		<delete dir="${dist.dir}/src" />
+		<delete dir="${dist.dir}" />
+	</target>
+
+	<target name="native2ascii">
+		<native2ascii encoding="SJIS" src="${rsc.common.dir}"  dest="${rsc.common.dir}"  includes="**/*.sjis" ext=".properties" />
+		<native2ascii encoding="SJIS" src="${rsc.manager.dir}" dest="${rsc.manager.dir}" includes="**/*.sjis" ext=".properties" />
+		<native2ascii encoding="SJIS" src="${rsc.editor.dir}"  dest="${rsc.editor.dir}"  includes="**/*.sjis" ext=".properties" />
+		<native2ascii encoding="SJIS" src="${rsc.fscore.dir}"  dest="${rsc.fscore.dir}"  includes="**/*.sjis" ext=".properties" />
+		<native2ascii encoding="SJIS" src="${rsc.launcher.dir}" dest="${rsc.launcher.dir}" includes="**/*.sjis" ext=".properties" />
+		<native2ascii encoding="SJIS" src="${rsc.runner.dir}"  dest="${rsc.runner.dir}"  includes="**/*.sjis" ext=".properties" />
+		<native2ascii encoding="SJIS" src="${rsc.fsmodule.dir}"  dest="${rsc.fsmodule.dir}"  includes="**/*.sjis" ext=".properties" />
+		<native2ascii encoding="SJIS" src="${rsc.poi.dir}"  dest="${rsc.poi.dir}"  includes="**/*.sjis" ext=".properties" />
+	</target>
+	
+	<!-- Build common library jar -->
+	<target name="mkclass_common" depends="init, native2ascii">
+		<javac destdir="${build.common.dir}" includeantruntime="no" fork="yes" compiler="javac1.6" encoding="UTF-8" source="1.6">
+			<compilerarg line="-deprecation -g:${java.compile.option}" />
+			<src path="${src.common.dir}" />
+			<classpath>
+				<fileset dir="${lib.dir}">
+					<patternset refid="basic.libs" />
+				</fileset>
+			</classpath>
+		</javac>
+		<copy todir="${build.common.dir}">
+			<fileset dir="${rsc.common.dir}" />
+		</copy>
+	</target>
+	
+	<target name="mkjar_common" depends="mkclass_common">
+		<mkdir dir="${dist.dir}/${module.dir}" />
+		<copy todir="${dist.dir}/${module.dir}">
+			<fileset refid="lib.files" />
+		</copy>
+		<path id="runtime.libs">
+			<fileset dir="${dist.dir}/${module.dir}">
+				<patternset refid="basic.libs" />
+			</fileset>
+		</path>
+		<pathconvert property="runtime.classpath" pathsep=" " dirsep="/">
+			<path refid="runtime.libs" />
+			<map from="${dist.dir}\lib\" to="" />
+		</pathconvert>
+		<jar destfile="${dist.dir}/${module.dir}/${common.module.name}.jar">
+			<fileset dir="${build.common.dir}" />
+			<manifest>
+				<attribute name="Specification-Title" value="${common.mani.title}" />
+				<attribute name="Specification-Version" value="${common.version}" />
+				<attribute name="Specification-Vendor" value="${vendor}" />
+				<attribute name="Implementation-Title" value="${common.mani.title}" />
+				<attribute name="Implementation-Version" value="${common.version}" />
+				<attribute name="Implementation-Vendor" value="${vendor}" />
+				<attribute name="Class-Path" value="${runtime.classpath}" />
+			</manifest>
+		</jar>
+	</target>
+	
+	<!-- Build fscore library jar -->
+	<target name="mkclass_fscore" depends="mkjar_common">
+		<javac destdir="${build.fscore.dir}" includeantruntime="no" fork="yes" compiler="javac1.6" encoding="UTF-8" source="1.6">
+			<compilerarg line="-deprecation -g:${java.compile.option}" />
+			<src path="${src.fscore.dir}" />
+			<classpath>
+				<fileset dir="${dist.lib.dir}">
+					<patternset refid="basic.libs" />
+					<patternset refid="common.libs" />
+				</fileset>
+			</classpath>
+		</javac>
+		<copy todir="${build.fscore.dir}">
+			<fileset dir="${rsc.fscore.dir}" />
+		</copy>
+	</target>
+	
+	<target name="mkjar_fscore" depends="mkclass_fscore">
+		<jar destfile="${dist.dir}/${module.dir}/${fscore.module.name}.jar">
+			<fileset dir="${build.fscore.dir}" />
+			<manifest>
+				<attribute name="Specification-Title" value="${fscore.mani.title}" />
+				<attribute name="Specification-Version" value="${fscore.version}" />
+				<attribute name="Specification-Vendor" value="${vendor}" />
+				<attribute name="Implementation-Title" value="${fscore.mani.title}" />
+				<attribute name="Implementation-Version" value="${fscore.version}" />
+				<attribute name="Implementation-Vendor" value="${vendor}" />
+			</manifest>
+		</jar>
+	</target>
+	
+	<!-- Build Generic Filter library jar -->
+	<target name="mkclass_fsmodule" depends="mkjar_fscore">
+		<javac destdir="${build.fsmodule.dir}" includeantruntime="no" fork="yes" compiler="javac1.6" encoding="UTF-8" source="1.6">
+			<compilerarg line="-deprecation -g:${java.compile.option}" />
+			<src path="${src.fsmodule.dir}" />
+			<classpath>
+				<fileset dir="${lib.dir}">
+					<patternset refid="fsmodule.libs" />
+				</fileset>
+			</classpath>
+		</javac>
+		<copy todir="${build.fsmodule.dir}">
+			<fileset dir="${rsc.fsmodule.dir}" />
+		</copy>
+	</target>
+	
+	<target name="mkjar_fsmodule" depends="mkclass_fsmodule">
+		<path id="fsmodule.runtime.libs">
+			<fileset dir="${dist.dir}/${module.dir}">
+				<patternset refid="fsmodule.libs" />
+			</fileset>
+		</path>
+		<pathconvert property="fsmodule.runtime.classpath" pathsep=" " dirsep="/">
+			<path refid="fsmodule.runtime.libs" />
+			<map from="${dist.aadlrt.dir}/" to="" />
+		</pathconvert>
+		<jar destfile="${dist.aadlrt.dir}/${fsmodule.module.name}.jar">
+			<fileset dir="${build.fsmodule.dir}" />
+			<manifest>
+				<attribute name="Specification-Title" value="${fsmodule.main.title}" />
+				<attribute name="Specification-Version" value="${fsmodule.version}" />
+				<attribute name="Specification-Vendor" value="${vendor}" />
+				<attribute name="Implementation-Title" value="${fsmodule.main.title}" />
+				<attribute name="Implementation-Version" value="${fsmodule.version}" />
+				<attribute name="Implementation-Vendor" value="${vendor}" />
+				<attribute name="Main-Class" value="${fsmodule.main.class}" />
+				<attribute name="Class-Path" value="${fsmodule.runtime.classpath}" />
+			</manifest>
+		</jar>
+	</target>
+	
+	<!-- Build Applications -->
+	<target name="mkclass_apps" depends="mkjar_fsmodule">
+		<!-- manager -->
+		<javac destdir="${build.manager.dir}" includeantruntime="no" fork="yes" compiler="javac1.6" encoding="UTF-8" source="1.6">
+			<compilerarg line="-deprecation -g:${java.compile.option}" />
+			<src path="${src.manager.dir}" />
+			<src path="${src.sysutil.dir}" />
+			<classpath>
+				<fileset dir="${dist.lib.dir}">
+					<patternset refid="basic.libs" />
+					<patternset refid="common.libs" />
+					<patternset refid="fscore.libs" />
+				</fileset>
+				<pathelement path="${lib.mac.jar}" />
+			</classpath>
+		</javac>
+		<copy todir="${build.manager.dir}">
+			<fileset dir="${rsc.manager.dir}" />
+		</copy>
+		<!-- editor -->
+		<javac destdir="${build.editor.dir}" includeantruntime="no" fork="yes" compiler="javac1.6" encoding="UTF-8" source="1.6">
+			<compilerarg line="-deprecation -g:${java.compile.option}" />
+			<src path="${src.editor.dir}" />
+			<src path="${src.sysutil.dir}" />
+			<classpath>
+				<fileset dir="${dist.lib.dir}">
+					<patternset refid="basic.libs" />
+					<patternset refid="common.libs" />
+					<patternset refid="fscore.libs" />
+					<patternset refid="editor.libs" />
+				</fileset>
+				<pathelement path="${lib.mac.jar}" />
+			</classpath>
+		</javac>
+		<copy todir="${build.editor.dir}">
+			<fileset dir="${rsc.editor.dir}" />
+		</copy>
+		<!-- launcher -->
+		<javac destdir="${build.launcher.dir}" includeantruntime="no" fork="yes" compiler="javac1.6" encoding="UTF-8" source="1.6">
+			<compilerarg line="-deprecation -g:${java.compile.option}" />
+			<src path="${src.launcher.dir}" />
+			<src path="${src.sysutil.dir}" />
+			<classpath>
+				<fileset dir="${dist.lib.dir}">
+					<patternset refid="basic.libs" />
+					<patternset refid="common.libs" />
+					<patternset refid="fscore.libs" />
+				</fileset>
+				<pathelement path="${lib.mac.jar}" />
+			</classpath>
+		</javac>
+		<copy todir="${build.launcher.dir}">
+			<fileset dir="${rsc.launcher.dir}" />
+		</copy>
+		<!-- runner -->
+		<javac destdir="${build.runner.dir}" includeantruntime="no" fork="yes" compiler="javac1.6" encoding="UTF-8" source="1.6">
+			<compilerarg line="-deprecation -g:${java.compile.option}" />
+			<!-- src path="${src.ptolemy.dir}" / -->
+			<src path="${src.ptplot.dir}" />
+			<src path="${src.runner.dir}" />
+			<src path="${src.sysutil.dir}" />
+			<src path="${src.poi.dir}" />
+			<!-- for alpha : exlude plot source files -->
+			<!-- exclude name="ssac/falconseed/plot/**/*.java" /  -->
+			<!-- end of for alpha -->
+			<classpath>
+				<fileset dir="${dist.lib.dir}">
+					<patternset refid="basic.libs" />
+					<patternset refid="common.libs" />
+					<patternset refid="fscore.libs" />
+					<patternset refid="runner.libs" />
+				</fileset>
+				<pathelement path="${lib.mac.jar}" />
+			</classpath>
+		</javac>
+		<copy todir="${build.runner.dir}">
+			<fileset dir="${rsc.runner.dir}" />
+			<fileset dir="${rsc.poi.dir}" />
+			<!-- Excel Cell-Formatter の properties ファイルのコピー -->
+			<fileset dir="${src.poi.dir}">
+				<include name="com/**/*.properties" />
+			</fileset>
+		</copy>
+		<!-- startup -->
+		<javac destdir="${build.startup.dir}" includeantruntime="no" fork="yes" compiler="javac1.6" encoding="UTF-8" source="1.6">
+			<compilerarg line="-deprecation -g:${java.compile.option}" />
+			<src path="${src.startup.dir}" />
+		</javac>
+		<!-- pro-startup -->
+		<javac destdir="${build.prostartup.dir}" includeantruntime="no" fork="yes" compiler="javac1.6" encoding="UTF-8" source="1.6">
+			<compilerarg line="-deprecation -g:${java.compile.option}" />
+			<src path="${src.prostartup.dir}" />
+		</javac>
+	</target>
+	
+	<target name="mkjar_apps" depends="mkclass_apps">
+		<!-- manager -->
+		<path id="manager.runtime.libs">
+			<fileset dir="${dist.dir}/${module.dir}">
+				<patternset refid="basic.libs" />
+				<patternset refid="common.libs" />
+				<patternset refid="fscore.libs" />
+			</fileset>
+		</path>
+		<pathconvert property="manager.runtime.classpath" pathsep=" " dirsep="/">
+			<path refid="manager.runtime.libs" />
+			<map from="${dist.dir}\lib\" to="" />
+		</pathconvert>
+		<jar destfile="${dist.dir}/${module.dir}/${manager.module.name}.jar">
+			<fileset dir="${build.manager.dir}" />
+			<manifest>
+				<attribute name="Specification-Title" value="${manager.mani.title}" />
+				<attribute name="Specification-Version" value="${manager.version}" />
+				<attribute name="Specification-Vendor" value="${vendor}" />
+				<attribute name="Implementation-Title" value="${manager.mani.title}" />
+				<attribute name="Implementation-Version" value="${manager.version}" />
+				<attribute name="Implementation-Vendor" value="${vendor}" />
+				<attribute name="Main-Class" value="${manager.main.class}" />
+				<attribute name="Class-Path" value="${manager.runtime.classpath}" />
+			</manifest>
+		</jar>
+		<!-- editor -->
+		<path id="editor.runtime.libs">
+			<fileset dir="${dist.dir}/${module.dir}">
+				<patternset refid="basic.libs" />
+				<patternset refid="common.libs" />
+				<patternset refid="fscore.libs" />
+				<patternset refid="editor.libs" />
+			</fileset>
+		</path>
+		<pathconvert property="editor.runtime.classpath" pathsep=" " dirsep="/">
+			<path refid="editor.runtime.libs" />
+			<map from="${dist.dir}\lib\" to="" />
+		</pathconvert>
+		<jar destfile="${dist.dir}/${module.dir}/${editor.module.name}.jar">
+			<fileset dir="${build.editor.dir}" />
+			<manifest>
+				<attribute name="Specification-Title" value="${editor.mani.title}" />
+				<attribute name="Specification-Version" value="${editor.version}" />
+				<attribute name="Specification-Vendor" value="${vendor}" />
+				<attribute name="Implementation-Title" value="${editor.mani.title}" />
+				<attribute name="Implementation-Version" value="${editor.version}" />
+				<attribute name="Implementation-Vendor" value="${vendor}" />
+				<attribute name="Main-Class" value="${editor.main.class}" />
+				<attribute name="Class-Path" value="${editor.runtime.classpath}" />
+			</manifest>
+		</jar>
+		<!-- launcher -->
+		<path id="launcher.runtime.libs">
+			<fileset dir="${dist.dir}/${module.dir}">
+				<patternset refid="basic.libs" />
+				<patternset refid="common.libs" />
+				<patternset refid="fscore.libs" />
+			</fileset>
+		</path>
+		<pathconvert property="launcher.runtime.classpath" pathsep=" " dirsep="/">
+			<path refid="launcher.runtime.libs" />
+			<map from="${dist.dir}/lib/" to="" />
+		</pathconvert>
+		<jar destfile="${dist.dir}/${module.dir}/${launcher.module.name}.jar">
+			<fileset dir="${build.launcher.dir}" />
+			<manifest>
+				<attribute name="Specification-Title" value="${launcher.mani.title}" />
+				<attribute name="Specification-Version" value="${main.version}" />
+				<attribute name="Specification-Vendor" value="${vendor}" />
+				<attribute name="Implementation-Title" value="${launcher.mani.title}" />
+				<attribute name="Implementation-Version" value="${main.version}" />
+				<attribute name="Implementation-Vendor" value="${vendor}" />
+				<attribute name="Main-Class" value="${launcher.main.class}" />
+				<attribute name="Class-Path" value="${launcher.runtime.classpath}" />
+			</manifest>
+		</jar>
+		<!-- runner -->
+		<path id="runner.runtime.libs">
+			<fileset dir="${dist.dir}/${module.dir}">
+				<patternset refid="basic.libs" />
+				<patternset refid="common.libs" />
+				<patternset refid="fscore.libs" />
+				<patternset refid="runner.libs" />
+			</fileset>
+		</path>
+		<pathconvert property="runner.runtime.classpath" pathsep=" " dirsep="/">
+			<path refid="runner.runtime.libs" />
+			<map from="${dist.dir}/lib/" to="" />
+		</pathconvert>
+		<jar destfile="${dist.dir}/${module.dir}/${runner.module.name}.jar">
+			<fileset dir="${build.runner.dir}" />
+			<manifest>
+				<attribute name="Specification-Title" value="${runner.mani.title}" />
+				<attribute name="Specification-Version" value="${runner.version}" />
+				<attribute name="Specification-Vendor" value="${vendor}" />
+				<attribute name="Implementation-Title" value="${runner.mani.title}" />
+				<attribute name="Implementation-Version" value="${runner.version}" />
+				<attribute name="Implementation-Vendor" value="${vendor}" />
+				<attribute name="Main-Class" value="${runner.main.class}" />
+				<attribute name="Class-Path" value="${runner.runtime.classpath}" />
+			</manifest>
+		</jar>
+		<!-- startup -->
+		<jar destfile="${dist.dir}/FALCONSEED.jar">
+			<fileset dir="${build.startup.dir}" />
+			<manifest>
+				<attribute name="Specification-Title" value="${title}" />
+				<attribute name="Specification-Version" value="${startup.version}" />
+				<attribute name="Specification-Vendor" value="${vendor}" />
+				<attribute name="Implementation-Title" value="${title}" />
+				<attribute name="Implementation-Version" value="${startup.version}" />
+				<attribute name="Implementation-Vendor" value="${vendor}" />
+				<attribute name="Main-Class" value="${startup.main.class}" />
+			</manifest>
+		</jar>
+		<!-- pro-startup -->
+		<jar destfile="${dist.dir}/FALCONSEEDPro.jar">
+			<fileset dir="${build.prostartup.dir}" />
+			<manifest>
+				<attribute name="Specification-Title" value="${pro.title}" />
+				<attribute name="Specification-Version" value="${prostartup.version}" />
+				<attribute name="Specification-Vendor" value="${vendor}" />
+				<attribute name="Implementation-Title" value="${pro.title}" />
+				<attribute name="Implementation-Version" value="${prostartup.version}" />
+				<attribute name="Implementation-Vendor" value="${vendor}" />
+				<attribute name="Main-Class" value="${prostartup.main.class}" />
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="mkdist" depends="mkjar_apps">
+		<mkdir dir="${dist.dir}/src" />
+		<zip destfile="${dist.dir}/src/FALCONSEED-${main.version}-src.zip">
+			<fileset dir="${basedir}/">
+				<include name="common/" />
+				<include name="editor/" />
+				<include name="manager/" />
+				<include name="fscore/" />
+				<include name="fsmodule/" />
+				<include name="launcher/" />
+				<include name="runner/" />
+				<include name="startup/" />
+				<include name="prostartup/" />
+				<include name="SysUtil/" />
+				<include name="plot/" />
+				<include name="POI/" />
+				<include name="lib/**/*.jar" />
+				<include name="lib/resources/" />
+				<include name="lib/MQTT/" />
+				<exclude name="lib/*.jar" />
+			</fileset>
+			<fileset file="${basedir}/build.xml" />
+			<fileset file="${basedir}/Changes_ja.txt" />
+			<fileset file="${basedir}/readme.txt" />
+			<fileset file="${basedir}/LICENSE" />
+			<fileset file="${basedir}/LICENSE.antlr" />
+			<fileset file="${basedir}/LICENSE.ptplot" />
+		</zip>
+	</target>
+</project>
