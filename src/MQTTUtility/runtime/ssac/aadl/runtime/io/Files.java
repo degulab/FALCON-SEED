@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2010  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)Files.java	1.17	2021/08/26
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)Files.java	1.16	2010/09/27
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)Files.java	1.14	2009/12/09
@@ -64,12 +45,12 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
 import ssac.aadl.runtime.util.ArrayHelper;
-import ssac.aadl.runtime.util.Strings;
+import ssac.aadl.runtime.util.StringHelper;
 
 /**
  * ファイル操作に関する補助機能を提供するユーティリティクラス。
  * 
- * @version 1.16	2010/09/27
+ * @version 1.17
  * 
  * @since 1.00
  *
@@ -1051,7 +1032,7 @@ public final class Files
 		if (!ext.startsWith(".")) {
 			ext = "." + ext;
 		}
-		if (Strings.endsWithIgnoreCase(targetPath, ext)) {
+		if (StringHelper.endsWithIgnoreCase(targetPath, ext)) {
 			return targetPath;
 		} else {
 			return (targetPath + ext);
@@ -1278,7 +1259,7 @@ public final class Files
 			throw new IllegalArgumentException("Prefix string too short");
 		if (directory.exists() && !directory.isDirectory())
 			throw new IllegalArgumentException("'directory' is not directory.");
-		if (Strings.isNullOrEmpty(suffix)) {
+		if (StringHelper.isNullOrEmpty(suffix)) {
 			suffix = ".tmp";
 		}
 

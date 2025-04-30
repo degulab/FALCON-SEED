@@ -1,22 +1,29 @@
 /*
- * @(#)Strings.java	1.0.0	2013/02/28
+ * @(#)StringHelper.java	2.0.0	2012/09/27
+ *     - modified by Y.Ishizuka(PieCake.inc,)
+ * @(#)StringHelper.java	1.17	2010/11/19
+ *     - modified by Y.Ishizuka(PieCake.inc,)
+ * @(#)StringHelper.java	1.00	2008/10/06
  *     - created by Y.Ishizuka(PieCake.inc,)
  */
-package ssac.falconseed.mqtt.util;
+package ssac.aadl.runtime.util;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Vector;
 
+
 /**
  * 文字列操作ユーティリティ。
  * 
- * @version 1.0.0	2013/02/28
+ * @version 2.0.0	2012/09/27
+ *
+ * @since 1.00
  */
-public class StringUtil
+public final class StringHelper
 {
-	private StringUtil() {}
+	private StringHelper() {}
 	
 	//------------------------------------------------------------
 	// Constants
@@ -34,6 +41,7 @@ public class StringUtil
 	 * 指定された引数が <tt>null</tt> の場合に、空文字列を返す。
 	 * @param value		判定する <code>String</code>
 	 * @return 引数が <tt>null</tt> の場合は空文字列、それ以外の場合は引数の値を返す。
+	 * @since 2.0.0
 	 */
 	static public final String nullToEmpty(String value) {
 		return (value==null ? "" : value);
@@ -279,6 +287,7 @@ public class StringUtil
 	 * 
 	 * @param texts 文字列のコレクション
 	 * @return CSVフォーマット文字列
+	 * @since 1.17
 	 */
 	static public String buildCsvLine(Collection<? extends String> texts) {
 		if (texts == null)

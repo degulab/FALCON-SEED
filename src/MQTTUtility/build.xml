@@ -1,25 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
-
-  Copyright 2007-2014  SSAC(Systems of Social Accounting Consortium)
-  <author> Yasunari Ishizuka (PieCake,Inc.)
-  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
-  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
--->
 <project name="mqttutil" default="create" basedir=".">
 	<property name="dist.dir" location="${basedir}/jar" />
 	<property name="build.dir" location="${dist.dir}/classes" />
+	<property name="javadoc.dir" location="${dist.dir}/javadoc" />
 	<property name="lib.dir" location="${basedir}/lib" />
 	<property name="dist.aadlrt.dir" location="${dist.dir}/lib/aadlrt" />
 	<property name="dist.broker.dir" location="${dist.dir}/lib/MQTT/broker/moquette" />
@@ -38,7 +21,8 @@
 	<!--init property-->
 	<target name="init" >
 		<property name="mqttutil.title" value="AADL MQTT Runtime library" />
-		<property name="mqttutil.version" value="0.4.0.20140529" />
+		<property name="mqttutil.short.version" value="0.4.1" />
+		<property name="mqttutil.version" value="${mqttutil.short.version}.20210831" />
 		<property name="mqttutil.name" value="mqttutil" />
 		<property name="broker.title" value="Moquette Micro Broker" />
 		<property name="broker.version" value="0.3.2.20131022" />
@@ -86,8 +70,8 @@
 	<!-- for AADL MQTT Runtime library -->
 	<target name="mkmqttrtclass" depends="init">
 		<!-- compile -->
-		<javac destdir="${mqttutil.build.dir}" includeantruntime="no" fork="yes" compiler="javac1.6" encoding="UTF8" source="1.6">
-			<compilerarg line="-deprecation -g:none" />
+		<javac destdir="${mqttutil.build.dir}" includeantruntime="no" fork="yes" compiler="javac1.8" encoding="UTF8" source="1.8">
+			<compilerarg line="-deprecation -g:lines,source" />
 			<classpath>
 				<pathelement path="${mqttutil.lib.dir}"/>
 			</classpath>
@@ -101,8 +85,8 @@
 		<mkdir dir="${broker.build.dir}" />
 		
 		<!-- broker -->
-		<javac destdir="${broker.build.dir}" includeantruntime="no" fork="yes" compiler="javac1.6" encoding="UTF-8" source="1.6">
-			<compilerarg line="-deprecation -g:lines" />
+		<javac destdir="${broker.build.dir}" includeantruntime="no" fork="yes" compiler="javac1.8" encoding="UTF-8" source="1.8">
+			<compilerarg line="-deprecation -g:lines,source" />
 			<src path="${broker.src.dir}" />
 			<classpath refid="broker.lib.path" />
 		</javac>
@@ -146,14 +130,13 @@
 			</manifest>
 		</jar>
 		
-		<!-- create javadoc zip
-		<zip destfile="${dist.dir}/${dist.name}-${dist.version}-javadoc.zip">
-			<fileset dir="${doc.dir}/javadoc" />
+		<!-- create javadoc zip -->
+		<zip destfile="${dist.dir}/${mqttutil.name}-${mqttutil.short.version}-javadoc.zip">
+			<fileset dir="${javadoc.dir}" />
 		</zip>
-		-->
 		
 		<!-- create sources zip -->
-		<zip destfile="${dist.dir}/${dist.name}-${dist.version}-src.zip">
+		<zip destfile="${dist.dir}/${dist.name}-${mqttutil.short.version}-src.zip">
 			<fileset dir="${basedir}/">
 				<include name="fusesource/" />
 				<include name="runtime/" />
@@ -164,7 +147,6 @@
 			<fileset file="${basedir}/build.xml" />
 			<fileset file="${basedir}/runtime_javadoc.xml" />
 			<fileset file="${basedir}/Changes_ja.txt" />
-			<fileset file="${basedir}/LICENSE" />
 		</zip>
 	</target>
 

@@ -1,25 +1,4 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2013  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
  * @(#)MqPayload.java	0.3.0	2013/06/27
  *     - created by Y.Ishizuka(PieCake.inc,)
  */
@@ -145,6 +124,7 @@ public class MqPayload
 
 	/**
 	 * 有効データが存在しない場合に <tt>true</tt> を返す。
+	 * @return	有効なデータが存在しない場合は <tt>true</tt>
 	 */
 	public boolean isEmpty() {
 		return (_length == 0);
@@ -152,6 +132,7 @@ public class MqPayload
 
 	/**
 	 * このオブジェクトが保持するバイト配列そのものを返す。
+	 * @return バイト配列
 	 */
 	public byte[] getData() {
 		return _array;
@@ -159,6 +140,7 @@ public class MqPayload
 
 	/**
 	 * 有効データの位置を示す、バイト配列先頭からのオフセットを返す。
+	 * @return オフセット
 	 */
 	public int getOffset() {
 		return _offset;
@@ -166,6 +148,7 @@ public class MqPayload
 
 	/**
 	 * 有効データのバイト数を返す。
+	 * @return	有効データのバイト数
 	 */
 	public int getLength() {
 		return _length;
@@ -173,6 +156,7 @@ public class MqPayload
 
 	/**
 	 * 有効データのみの新しいバイト配列を返す。
+	 * @return	バイト配列
 	 */
 	public byte[] toArray() {
 		byte[] newArray = new byte[_length];
@@ -183,6 +167,7 @@ public class MqPayload
 	/**
 	 * このオブジェクトのハッシュ値を返す。
 	 * このハッシュ値は、有効データ部のみで計算される。
+	 * @return	ハッシュ値
 	 */
 	@Override
 	public int hashCode() {
@@ -200,6 +185,7 @@ public class MqPayload
 
 	/**
 	 * バイトデータ全体とオフセット、有効データ長も含めたハッシュコードを返す。
+	 * @return	ハッシュ値
 	 */
 	public int exactlyHashCode() {
 		int h = Arrays.hashCode(_array);
@@ -210,6 +196,8 @@ public class MqPayload
 
 	/**
 	 * 指定されたオブジェクトと有効データ部のみが等しいかを検査し、等しい場合に <tt>true</tt> を返す。
+	 * @param obj  比較対象のオブジェクト
+	 * @return	等しい場合は <tt>true</tt>
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -224,6 +212,8 @@ public class MqPayload
 
 	/**
 	 * 指定されたオブジェクトとバイトデータ全体、オフセット、有効データ長がすべて等しい場合に <tt>true</tt> を返す。
+	 * @param obj  比較対象のオブジェクト
+	 * @return	等しい場合は <tt>true</tt>
 	 */
 	public boolean exactlyEquals(Object obj) {
 		if (obj == this)
