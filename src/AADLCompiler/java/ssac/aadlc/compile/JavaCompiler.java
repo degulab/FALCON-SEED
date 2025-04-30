@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2012  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)JavaCompiler.java	4.0.0	2021/08/23 : for Java11
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)JavaCompiler.java	1.81	2012/10/05
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)JavaCompiler.java	1.30	2009/12/02
@@ -45,10 +26,10 @@ import ssac.aadlc.AADLMessage;
 import ssac.aadlc.io.FileUtil;
 
 /**
- * JAVA コンパイラー(1.5以上)
+ * JAVA コンパイラー(11以上)
  *
  * 
- * @version 1.81	2012/10/05
+ * @version 4.0.0
  */
 public class JavaCompiler
 {
@@ -92,7 +73,8 @@ public class JavaCompiler
 		int result;
         try {
             Class<?> c = Class.forName ("com.sun.tools.javac.Main");
-            Object compiler = c.newInstance ();
+            //Object compiler = c.newInstance ();
+            Object compiler = c.getDeclaredConstructor().newInstance();
             Method compile = c.getMethod ("compile", String[].class, PrintWriter.class);
             {
             	project.out.tracePrint("*> exec com.sun.tools.javac.Main.compile(");
@@ -164,10 +146,12 @@ public class JavaCompiler
 		// TODO: ベース Java version の指定
 		//--- source version
 		options.add("-source");
-		options.add("1.5");
+		//options.add("1.5");
+		options.add("11");
 		//--- target version
 		options.add("-target");
-		options.add("1.5");
+		//options.add("1.5");
+		options.add("11");
 		//--- debug option
 		options.add("-g:source,lines");
 		//--- encoding
@@ -183,6 +167,7 @@ public class JavaCompiler
 		if (cmdArgs.isNoWarn()) {
 			options.add("-nowarn");
 		}
+		/****
 		// TODO: JDK 1.7 コンパイラでの下位バージョンコンパイルに対する警告への対処
 		//--- ignore java 1.7 warning
 		String str = System.getProperty("java.version");
@@ -190,6 +175,7 @@ public class JavaCompiler
 			// コンパイラ(1.7)が出力するブートストラップクラスパスを指定せよという警告を無視
 			options.add("-Xlint:-options");
 		}
+		/****/
 		
 		//--- source files
 		if (project.getBaseClassFile() != null) {

@@ -1,25 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
-
-  Copyright 2007-2015  SSAC(Systems of Social Accounting Consortium)
-  <author> Yasunari Ishizuka (PieCake,Inc.)
-  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
-  <author> Yuji Onuki (Statistics Bureau)
-  <author> Shungo Sakaki (Tokyo University of Technology)
-  <author> Akira Sasaki (HOSEI UNIVERSITY)
-  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
--->
 <project name="aadlc" default="create" basedir=".">
 	<property name="dist.dir" location="${basedir}/jar" />
 	<property name="build.dir" location="${dist.dir}/classes" />
@@ -29,6 +8,8 @@
 	<property name="main.class" value="ssac.aadlc.Main" />
 	<property name="aadlrt.build.dir" location="${dist.dir}/runtime" />
 	<property name="aadlrt.src.dir" location="${basedir}/runtime" />
+	<property name="jlibsinjar.build.dir" location="${dist.dir}/jlibsinjar" />
+	<property name="jlibsinjar.src.dir" location="${basedir}/jlibsinjar" />
 
 	<path id="lib.path">
 		<fileset dir="${lib.dir}">
@@ -39,10 +20,15 @@
 	<!--init property-->
 	<target name="init" >
 		<property name="dist.title" value="AADL Compiler" />
-		<property name="dist.version" value="2.2.1.20150720" />
+		<property name="dist.short.version" value="4.0.0" />
+		<property name="dist.version" value="${dist.short.version}.20210831" />
 		<property name="dist.name" value="aadlc" />
 		<property name="aadlrt.title" value="AADL Runtime library" />
+		<property name="aadlrt.short.version" value="4.0.0" />
+		<property name="aadlrt.version" value="${aadlrt.short.version}.20210831" />
 		<property name="aadlrt.name" value="aadlrt" />
+		<property name="jlibsinjar.title" value="Libraries-in-jar utility" />
+		<property name="jlibsinjar.name" value="aadl-libsinjar-util" />
 		<mkdir dir="${dist.dir}" />
 	</target>
 
@@ -53,8 +39,9 @@
 		<mkdir dir="${aadlrt.build.dir}" />
 		
 		<!-- compile -->
-		<javac destdir="${aadlrt.build.dir}" includeantruntime="no" fork="yes" compiler="javac1.6" encoding="UTF8" source="1.6">
-			<compilerarg line="-deprecation -g:none" />
+		<!-- javac destdir="${aadlrt.build.dir}" includeantruntime="no" fork="yes" compiler="javac1.6" encoding="UTF8" source="1.6" -->
+		<javac destdir="${aadlrt.build.dir}" includeantruntime="no" fork="yes" compiler="javac10+" encoding="UTF8" source="11">
+			<compilerarg line="-deprecation -g:lines,source" />
 			<classpath refid="lib.path" />
 			<src path="${aadlrt.src.dir}" />
 		</javac>
@@ -65,13 +52,27 @@
 		<mkdir dir="${build.dir}" />
 		
 		<!-- compile -->
-		<javac destdir="${build.dir}" includeantruntime="no" fork="yes" compiler="javac1.6" encoding="UTF8" source="1.6">
-			<compilerarg line="-deprecation -g:none" />
+		<!-- javac destdir="${build.dir}" includeantruntime="no" fork="yes" compiler="javac1.6" encoding="UTF8" source="1.6" -->
+		<javac destdir="${build.dir}" includeantruntime="no" fork="yes" compiler="javac10+" encoding="UTF8" source="11">
+			<compilerarg line="-deprecation -g:lines,source" />
 			<classpath refid="lib.path" />
 			<classpath path="${aadlrt.build.dir}" />
 			<src path="${src.dir}" />
+			<src path="${jlibsinjar.src.dir}" />
 		</javac>
 	</target>
+	<!-- for Libs-in-jar utility 
+	<target name="mklijclass" depends="init">
+		- - create directory - -
+		<mkdir dir="${jlibsinjar.build.dir}" />
+		
+		- - compile - -
+		<javac destdir="${jlibsinjar.build.dir}" includeantruntime="no" fork="yes" compiler="javac10+" encoding="UTF8" source="11">
+			<compilerarg line="-deprecation -g:lines,source" />
+			<src path="${jlibsinjar.src.dir}" />
+		</javac>
+	</target>
+	-->
 
 	<!-- create -->
 	<target name="create" depends="mkrtclass, mkclass">
@@ -84,15 +85,25 @@
 				<include name="**/Exalge*.jar" />
 				<include name="**/antlr-runtime-*.jar" />
 				<include name="**/mqttutil*.jar" />
+				<include name="**/mongo-*.jar" />
 			</fileset>
 		</copy>
+		<!-- create jar file (Libs-in-jar util)
+		<jar destfile="${dist.dir}/lib/${jlibsinjar.name}.jar" basedir="${jlibsinjar.build.dir}">
+			<manifest>
+				<attribute name="Specification-Title" value="${jlibsinjar.title}" />
+				<attribute name="Specification-Version" value="${dist.version}" />
+				<attribute name="Implementation-Title" value="${jlibsinjar.title}" />
+				<attribute name="Implementation-Version" value="${dist.version}" />
+			</manifest>
+		</jar -->
 		<!-- create jar file (AADL Runtime) -->
 		<jar destfile="${dist.dir}/lib/${aadlrt.name}.jar" basedir="${aadlrt.build.dir}">
 			<manifest>
 				<attribute name="Specification-Title" value="${aadlrt.title}" />
-				<attribute name="Specification-Version" value="${dist.version}" />
+				<attribute name="Specification-Version" value="${aadlrt.version}" />
 				<attribute name="Implementation-Title" value="${aadlrt.title}" />
-				<attribute name="Implementation-Version" value="${dist.version}" />
+				<attribute name="Implementation-Version" value="${aadlrt.version}" />
 			</manifest>
 		</jar>
 		<!-- create jar file (AADL Compiler) -->
@@ -113,9 +124,10 @@
 		-->
 		
 		<!-- create sources zip -->
-		<zip destfile="${dist.dir}/${dist.name}-${dist.version}-src.zip">
+		<zip destfile="${dist.dir}/${dist.name}-${dist.short.version}-src.zip">
 			<fileset dir="${basedir}/">
 				<include name="java/" />
+				<include name="jlibsinjar/" />
 				<include name="runtime/" />
 				<include name="recource/" />
 				<include name="grammar/AADL.g" />
@@ -123,6 +135,7 @@
 				<include name="grammar/grammarBuild.bat" />
 				<include name="grammar/walkerBuild.bat" />
 				<include name="lib/*.jar" />
+				<include name="lib_src/*" />
 			</fileset>
 			<fileset file="${basedir}/build.xml" />
 			<fileset file="${basedir}/Changes_ja.txt" />

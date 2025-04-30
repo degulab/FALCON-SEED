@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="java"/>
-	<classpathentry kind="src" output="rtbin" path="runtime"/>
-	<classpathentry kind="src" output="unittestbin" path="unittest"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
-	<classpathentry kind="lib" path="lib_dbg/antlr-runtime-3.0.1.jar" sourcepath="lib_dbg/antlr-3.0.1-src.zip"/>
-	<classpathentry kind="lib" path="lib_dbg/Exalge2.jar" sourcepath="lib_dbg/Exalge2-0.984.20140529-src.zip"/>
-	<classpathentry kind="lib" path="lib_dbg/Dtalge.jar" sourcepath="lib_dbg/Dtalge-0.40.20121116-src.zip"/>
+	<classpathentry kind="src" output="binCompiler" path="java"/>
+	<classpathentry kind="src" output="binRuntime" path="runtime"/>
+	<classpathentry kind="src" output="binJLibsInJar" path="jlibsinjar/src"/>
+	<classpathentry kind="src" output="binJLibsInJar" path="jlibsinjar/resource"/>
+	<classpathentry kind="src" output="binUnitTest" path="unittest"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/antlr-runtime-3.0.1.jar" />
+	<classpathentry kind="lib" path="lib/Exalge2.jar" />
+	<classpathentry kind="lib" path="lib/Dtalge.jar" />
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3.8.1"/>
-	<classpathentry kind="lib" path="lib_dbg/mqttutil.jar" sourcepath="lib_dbg/mqttutil-0.4.0.20140529-src.zip"/>
+	<classpathentry kind="lib" path="lib/mqttutil.jar" />
+	<classpathentry kind="lib" path="lib/mongo-java-driver-3.12.10.jar" />
 	<classpathentry kind="output" path="bin"/>
 </classpath>

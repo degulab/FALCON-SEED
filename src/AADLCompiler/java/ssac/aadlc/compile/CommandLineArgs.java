@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2009  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)CommandLineArgs.java	4.0.0	2021/08/27 : for Java11
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)CommandLineArgs.java	1.30	2009/12/02
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)CommandLineArgs.java	1.10	2008/05/20
@@ -39,7 +20,7 @@ import ssac.aadlc.io.ReportPrinter;
 /**
  * AADLコンパイラーのコマンドライン引数解析クラス
  * 
- * @version 1.30	2009/12/02
+ * @version 4.0.0
  */
 public class CommandLineArgs
 {
@@ -49,18 +30,19 @@ public class CommandLineArgs
 	
 	static private final int OPT_AADLC_DEBUG		= -1;
 	
-	static private final int OPT_SHOW_VERSION	= 11;
-	static private final int OPT_SHOW_HELP		= 12;
-	static private final int OPT_FLAG_VERBOSE	= 13;
+	static private final int OPT_SHOW_VERSION		= 11;
+	static private final int OPT_SHOW_HELP			= 12;
+	static private final int OPT_FLAG_VERBOSE		= 13;
 	static private final int OPT_FLAG_NOWARN		= 14;
 	static private final int OPT_FLAG_NOMANIFEST	= 15;
-	static private final int OPT_CHECK_ONLY		= 21;
-	static private final int OPT_ENCODING		= 22;
-	static private final int OPT_USER_CLASSPATH	= 31;
-	static private final int OPT_SRCDEST_PATH	= 32;
-	static private final int OPT_DEST_NAME		= 33;
-	static private final int OPT_MANIFEST		= 34;
+	static private final int OPT_CHECK_ONLY			= 21;
+	static private final int OPT_ENCODING			= 22;
+	static private final int OPT_USER_CLASSPATH		= 31;
+	static private final int OPT_SRCDEST_PATH		= 32;
+	static private final int OPT_DEST_NAME			= 33;
+	static private final int OPT_MANIFEST			= 34;
 	static private final int OPT_JARPROPFILE		= 41;
+	static private final int OPT_GEN_FATJAR			= 51;
 	
 	//------------------------------------------------------------
 	// Fields
@@ -84,28 +66,30 @@ public class CommandLineArgs
 		optMap.put("-M",			OPT_FLAG_NOMANIFEST);
 		optMap.put("-nomanifest",	OPT_FLAG_NOMANIFEST);
 		optMap.put("-jarpropfile",	OPT_JARPROPFILE);
+		optMap.put("-fatjar",       OPT_GEN_FATJAR);
 	}
 	
-	private boolean flgDebug;				// Flag : debug
+	private boolean flgDebug;			// Flag : debug
 	
 	private boolean flgVersion;			// Flag : show version
-	private boolean flgHelp;				// Flag : show help
+	private boolean flgHelp;			// Flag : show help
 	
 	private boolean flgNoWarn;			// Flag : nowarn
 	private boolean flgVerbose;			// Flag : verbose
-	private boolean flgCheckOnly;			// Flag : compile only
+	private boolean flgCheckOnly;		// Flag : compile only
 	private boolean flgNoManifest;		// Flag : no manifest
 	
-	private String	strEncoding;			// Encoding charset name
-	private String strClassPath;			// user class path
-	private String strSourceDestPath;		// source file output path
+	private String	strEncoding;		// Encoding charset name
+	private String strClassPath;		// user class path
+	private String strSourceDestPath;	// source file output path
 	private String strDestName;			// dest file name(with path)
 	private String strManifest;			// Manifest file name(with path)
-	private String strJarPropPath;			// Jar module properties(with path)
+	private String strJarPropPath;		// Jar module properties(with path)
+	private String strFatJarPropPath;	// LibsInJarInfo file(with path) : @since 4.0.0
 	
 	private String strAADLName;			// AADL source file name(with path)
 	
-	private boolean flgTrust;				// 正常フラグ
+	private boolean flgTrust;			// 正常フラグ
 
 	//------------------------------------------------------------
 	// Constructions
@@ -200,6 +184,10 @@ public class CommandLineArgs
 		return this.strJarPropPath;
 	}
 	
+	public String getFatJarProfilePath() {
+		return this.strFatJarPropPath;
+	}
+	
 	public String getAADLFilename() {
 		return this.strAADLName;
 	}
@@ -269,6 +257,11 @@ public class CommandLineArgs
 						this.strJarPropPath = getOptionParameter(args, i++);
 						//--- check properties path
 						checkOptionJarPropertiesPath();
+						break;
+					case OPT_GEN_FATJAR :
+						this.strFatJarPropPath = getOptionParameter(args, i++);
+						//--- check file path
+						checkOptionFatjarProfilePath();
 						break;
 					default :
 						this.flgTrust = false;
@@ -344,8 +337,10 @@ public class CommandLineArgs
 		out.println("    -M -nomanifest");
 		out.println("                Do not create a manifest file entry in Jar file.");
 		out.println("                If this option specified, ignore '-m(-manifest)'.");
-		out.println("    -jarpropfile <propfile>");
-		out.println("                Set the AADL JAR properties file name.");
+		out.println("    -jarpropfile <properties-file>");
+		out.println("                Set the AADL JAR properties file path.");
+		out.println("    -fatjar <definition-file>");
+		out.println("                Set the libraries definition file path to generate Fat-jar.");
 		out.println("    -nowarn     Disable warning messages.");
 		out.println("    -verbose    Verbose output.");
 	}
@@ -372,6 +367,7 @@ public class CommandLineArgs
 		strDestName = null;
 		strManifest = null;
 		strJarPropPath = null;
+		strFatJarPropPath = null;
 		
 		strAADLName = null;
 	}
@@ -502,6 +498,41 @@ public class CommandLineArgs
 		if (!canRead) {
 			// Error
 			String msg = String.format("Jar properties file '%s' cannot read!", this.strJarPropPath);
+			throw new IllegalArgumentException(msg);
+		}
+	}
+	
+	// LibsInJarInfoFilePath option
+	private void checkOptionFatjarProfilePath() {
+		if (this.strFatJarPropPath == null)
+			return;
+		
+		// path check
+		boolean isExist = false;
+		boolean isFile  = false;
+		boolean canRead = false;
+		try {
+			File f = new File(this.strFatJarPropPath);
+			isExist = f.exists();
+			isFile  = f.isFile();
+			canRead = f.canRead();
+		} catch (Exception ex) {}
+		//--- check exists
+		if (!isExist) {
+			// Error
+			String msg = String.format("Fat-jar profile '%s' is not found!", this.strFatJarPropPath);
+			throw new IllegalArgumentException(msg);
+		}
+		//--- check is file
+		if (!isFile) {
+			// Error
+			String msg = String.format("Fat-jar profile '%s' is not File!", this.strFatJarPropPath);
+			throw new IllegalArgumentException(msg);
+		}
+		//--- check can read
+		if (!canRead) {
+			// Error
+			String msg = String.format("Fat-jar profile '%s' cannot read!", this.strFatJarPropPath);
 			throw new IllegalArgumentException(msg);
 		}
 	}

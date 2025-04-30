@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2012  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)Project.java	4.0.0	2021/08/25 : for Java11
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)Project.java	1.81	2012/10/05 - Bug fix
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)Project.java	1.30	2009/12/02
@@ -41,6 +22,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.RecognitionException;
@@ -56,12 +39,12 @@ import ssac.aadlc.core.AADLParser;
 import ssac.aadlc.core.AADLWalker;
 import ssac.aadlc.io.FileUtil;
 import ssac.aadlc.io.Reporter;
+import ssac.aadlc.tools.libsinjar.LibsInJarInfo;
 
 /**
  * AADL プロジェクト
- *
  * 
- * @version 1.81	2012/10/05
+ * @version 4.0.0
  */
 public class Project
 {
@@ -73,6 +56,9 @@ public class Project
 	static private final String WORK_DIR_SUFFIX = "wrk";
 	
 	static private final String JAR_SUFFIX = ".jar";
+	
+	static public final String JAR_METAINF_NAME  = "META-INF";
+	static public final String JAR_METAINF_ENTRY = JAR_METAINF_NAME + '/';
 
 	//------------------------------------------------------------
 	// Fields
@@ -91,12 +77,15 @@ public class Project
 	private File			dirWork;			// 作業用ディレクトリ
 	private File			dirSource;			// ソースファイル用ディレクトリ
 	private File			dirClasses;			// クラスファイル用ディレクトリ
+	private File			dirMetaInf;			// 作業用 META-INF ディレクトリ (@since 4.0.0)
 
 	private File			fileSource;			// JAVAソースファイル
 	private File			fileBaseClass;		// ベースクラスファイル
 	private File			fileManifest;		// マニフェストファイル
 	private File			fileJar;			// Jar ファイル
 	private File			fileProp;			// Jar properties file
+	private File			fileLibsInJarInfo;	// LibsInJarInfo ファイル (since 4.0.0)
+	private LibsInJarInfo	libsInJarInfo;		// LibsInJarInfo object or null
 	
 	private File			fileAADL;			// AADLソースファイル
 
@@ -145,6 +134,10 @@ public class Project
 		return this.dirClasses;
 	}
 	
+	public File getMetaInfDirectory() {
+		return this.dirMetaInf;
+	}
+	
 	public File getJavaSourceFile() {
 		return this.fileSource;
 	}
@@ -167,6 +160,27 @@ public class Project
 	
 	public File getJarPropertiesFile() {
 		return this.fileProp;
+	}
+	
+	/**
+	 * @since 4.0.0
+	 */
+	public boolean hasLibFileInfo() {
+		return (this.libsInJarInfo != null && !this.libsInJarInfo.isEmpty());
+	}
+	
+	/**
+	 * @since 4.0.0
+	 */
+	public File getLibsInJarInfoFile() {
+		return this.fileLibsInJarInfo;
+	}
+	
+	/**
+	 * @since 4.0.0
+	 */
+	public LibsInJarInfo getLibsInJarInfoObject() {
+		return this.libsInJarInfo;
 	}
 	
 	public boolean hasMainClassName() {
@@ -227,6 +241,20 @@ public class Project
 		if (cmdArgs.isHelp()) {
 			CommandLineArgs.showHelp(out.info());
 			return 1;
+		}
+		
+		// parse libsInJarInfo file (@since 4.0.0)
+		if (cmdArgs.getFatJarProfilePath() != null) {
+			try {
+				Path p = Paths.get(cmdArgs.getFatJarProfilePath()).toAbsolutePath().normalize();
+				fileLibsInJarInfo = p.toFile();
+				libsInJarInfo = new LibsInJarInfo();
+				libsInJarInfo.loadFromFile(fileLibsInJarInfo);
+			}
+			catch (Throwable ex) {
+				err.errorPrintln(ex.getMessage());
+				return (-1);
+			}
 		}
 
 		// 正常終了
@@ -451,6 +479,10 @@ public class Project
 			// クラスファイルディレクトリを生成
 			this.dirClasses = new File(this.dirWork, "classes");
 			makeDirectory(this.dirClasses);
+			
+			// 作業用 META-INF ディレクトリを生成 (@since 4.0.0)
+			this.dirMetaInf = new File(this.dirWork, JAR_METAINF_NAME);
+			makeDirectory(this.dirMetaInf);
 			
 			// Completed
 			ret = true;

@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2009  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)JavaPackager.java	4.0.0	2021/08/26
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)JavaPackager.java	1.30	2009/12/02
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)JavaPackager.java	1.00	2007/11/29
@@ -34,9 +15,20 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.FileTime;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Stack;
 import java.util.jar.Attributes;
 import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;
 import java.util.zip.ZipEntry;
@@ -44,12 +36,15 @@ import java.util.zip.ZipEntry;
 import ssac.aadlc.AADLConstants;
 import ssac.aadlc.AADLMessage;
 import ssac.aadlc.io.FileUtil;
+import ssac.aadlc.tools.libsinjar.LibFileInfo;
+import ssac.aadlc.tools.libsinjar.LibFileType;
+import ssac.aadlc.tools.libsinjar.LibsInJarInfo;
 
 /**
  * JAR パッケージング
  *
  * 
- * @version 1.30	2009/12/02
+ * @version 4.0.0
  */
 public class JavaPackager
 {
@@ -65,6 +60,7 @@ public class JavaPackager
 	//------------------------------------------------------------
 	
 	private final Project	project;		// AADL プロジェクト
+	private int	numExpandedLibFiles;
 
 	//------------------------------------------------------------
 	// Constructions
@@ -92,6 +88,15 @@ public class JavaPackager
 			if (mani == null)
 				return false;
 			setupManifest(mani);
+		}
+		
+		// expand libraries (@since 4.0.0)
+		numExpandedLibFiles = 0;
+		if (project.hasLibFileInfo()) {
+			project.out.tracePrintln("@@@@@ Expand libraries to include in jar.");
+			if (!expandLibraries()) {
+				return false;	// error
+			}
 		}
 		
 		// make Jar file
@@ -187,6 +192,224 @@ public class JavaPackager
 		project.out.debugPrintln("----- End of Manifest entry -----");
 	}
 	
+	/**
+	 * Jar に含める外部ライブラリを展開する。
+	 * @return	成功なら <tt>true</tt>
+	 */
+	private boolean expandLibraries() {
+		String newline = System.getProperty("line.separator");
+		if (newline==null || newline.isEmpty()) newline = "\n";
+		File fClassesDir = project.getClassesDirectory();
+		StringBuilder sbIncludedLibs = new StringBuilder();
+		sbIncludedLibs.append("//------------------------------------------------").append(newline);
+		sbIncludedLibs.append("// Included libraries in this jar.").append(newline);
+		sbIncludedLibs.append("//------------------------------------------------").append(newline);
+		String strIncludedLibsDescHeader = sbIncludedLibs.toString();
+		sbIncludedLibs.setLength(0);
+		
+		// Classes ディレクトリ内のエントリマップを生成(上書き禁止)
+		Set<String> excludedPathSet = new HashSet<String>();
+		collectFileEntries(excludedPathSet, fClassesDir, new DirectoryStack());
+		Path classesPath = fClassesDir.toPath();
+		
+		// Expand libraries
+		ArrayList<String> strIncludedLibsDescList = new ArrayList<String>();
+		LibsInJarInfo libsinfo = project.getLibsInJarInfoObject();
+		for (int i = libsinfo.size()-1; i >= 0; --i) {
+			//--- リスト先頭が優先順位が高いので、リスト終端から展開
+			LibFileInfo libinfo = libsinfo.get(i);
+			File libPath = libinfo.getLibFile();
+			if (libPath == null) continue;
+			
+			// expand to classes
+			if (libinfo.getFileType() == LibFileType.JAR) {
+				//--- JAR file
+				if (!expandJarFile(classesPath, excludedPathSet, libPath)) {
+					return false;	// error
+				}
+			}
+			else if (libinfo.getFileType() == LibFileType.CLASSES) {
+				//--- Classes directory
+				DirectoryStack dirStack = new DirectoryStack();
+				File[] subfiles = libPath.listFiles();
+				if (subfiles != null && subfiles.length > 0) {
+					for (File sfile : subfiles) {
+						if (!expandClassesRecursive(classesPath, excludedPathSet, sfile, dirStack)) {
+							return false;	// error
+						}
+					}
+				}
+			}
+			else {
+				continue;	// skip
+			}
+			
+			// description
+			sbIncludedLibs.append(newline);
+			sbIncludedLibs.append(libinfo.getAvailableName()).append(newline);
+			sbIncludedLibs.append("  module: ").append(libinfo.getLibFile().getName()).append(newline);
+			if (libinfo.hasLicense()) {
+				sbIncludedLibs.append("  license: ").append(libinfo.getLicenseName()).append(newline);
+			}
+			strIncludedLibsDescList.add(0, sbIncludedLibs.toString());	// 逆順
+			sbIncludedLibs.setLength(0);
+		}
+		
+		// output description text to META-INF
+		if (!strIncludedLibsDescList.isEmpty()) {
+			File destTextFile = new File(project.getMetaInfDirectory(), "included-libs.txt");
+			FileOutputStream fos = null;
+			OutputStreamWriter osw = null;
+			try {
+				fos = new FileOutputStream(destTextFile);
+				osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
+				osw.write(strIncludedLibsDescHeader);
+				for (String str : strIncludedLibsDescList) {
+					osw.write(str);
+				}
+			}
+			catch (IOException ex) {
+				project.err.errorPrintln("Failed to write information of included libraries to : %s\n  (cause) %s", destTextFile, String.valueOf(ex.getMessage()));
+				return false;
+			}
+			finally {
+				if (osw != null) {
+					try {
+						osw.close();
+					} catch (Throwable ignoreEx) {}
+				}
+				if (fos != null) {
+					try {
+						fos.close();
+					} catch (Throwable ignoreEx) {}
+				}
+			}
+		}
+		
+		// succeeded
+		numExpandedLibFiles = strIncludedLibsDescList.size();
+		return true;
+	}
+	
+	private boolean expandJarFile(Path pathDestDir, Set<String>excludedPathSet, File srcJar)
+	{
+		// Jar ファイルの情報取得
+		JarFile jf = null;
+		try {
+			jf = new JarFile(srcJar);
+			Enumeration<JarEntry> jentries = jf.entries();
+			while (jentries.hasMoreElements()) {
+				JarEntry je = jentries.nextElement();
+				if (je.isDirectory())
+					continue;	// skip Directory's entry
+				final String name = je.getName();
+				if (name.startsWith(Project.JAR_METAINF_ENTRY))
+					continue;	// skip under META-INF/
+				if (excludedPathSet.contains(name.toLowerCase()))
+					continue;	// skip excluded-path
+				//--- ensure directory
+				Path pathDestFile = pathDestDir.resolve(name);
+				java.nio.file.Files.createDirectories(pathDestFile.getParent());
+				//--- copy stream to file
+				InputStream jis = jf.getInputStream(je);
+				try {
+					java.nio.file.Files.copy(jis, pathDestFile, StandardCopyOption.REPLACE_EXISTING);
+					long ltm = je.getTime();
+					if (ltm > 0) {
+						java.nio.file.Files.setLastModifiedTime(pathDestFile, FileTime.fromMillis(ltm));
+					}
+				}
+				finally {
+					if (jis != null) {
+						try {
+							jis.close();
+						} catch (Throwable ignoreEx) {}
+					}
+				}
+			}
+		}
+		catch (IOException ex) {
+			project.err.errorPrintln("Failed to expand jar file : %s\n  (cause) %s", srcJar, String.valueOf(ex.getMessage()));
+			return false;
+		}
+		finally {
+			if (jf != null) {
+				try {
+					jf.close();
+				} catch (Throwable ignoreEx) {}
+			}
+		}
+		
+		// succeeded
+		return true;
+	}
+	
+	private boolean expandClassesRecursive(Path pathDestDir, Set<String>excludedPathSet, File srcFile, DirectoryStack dirStack)
+	{
+		if (srcFile.isDirectory()) {
+			//--- directory
+			dirStack.push(srcFile.getName());
+			try {
+				File[] subfiles = srcFile.listFiles();
+				if (subfiles != null && subfiles.length > 0) {
+					for (File sfile : subfiles) {
+						if (!expandClassesRecursive(pathDestDir, excludedPathSet, sfile, dirStack)) {
+							return false;	// error
+						}
+					}
+				}
+			}
+			finally {
+				dirStack.pop();
+			}
+		}
+		else {
+			//--- file
+			String pathString = dirStack.getEntryPathString() + srcFile.getName();
+			if (pathString.startsWith(Project.JAR_METAINF_ENTRY))
+				return true;	// skip under META-INF/
+			if (excludedPathSet.contains(pathString.toLowerCase()))
+				return true;	// skip exluded-path
+			try {
+				//--- ensure directory
+				Path pathDestFile = pathDestDir.resolve(pathString);
+				java.nio.file.Files.createDirectories(pathDestFile.getParent());
+				//--- copy file to file
+				java.nio.file.Files.copy(srcFile.toPath(), pathDestFile, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES);
+			}
+			catch (Throwable ex) {
+				project.err.errorPrintln("Failed to copy file from classes directory : %s\n  (cause) %s", srcFile, String.valueOf(ex.getMessage()));
+				return false;
+			}
+		}
+		
+		// succeeded
+		return true;
+	}
+	
+	private void collectFileEntries(Set<String> pathset, File targetDir, DirectoryStack dirStack)
+	{
+		String pathString = dirStack.getEntryPathString();
+
+		// collect Files
+		File[] files = targetDir.listFiles();
+		for (File file : files) {
+			if (file.isDirectory()) {
+				//--- in directory
+				dirStack.push(file.getName());
+				collectFileEntries(pathset, file, dirStack);
+				dirStack.pop();
+			}
+			else {
+				// file
+				//--- 比較用にすべて小文字化
+				String entryName = pathString + file.getName();
+				entryName = entryName.toLowerCase();
+				pathset.add(entryName);
+			}
+		}
+	}
+	
 	private boolean makeJar(Manifest mani) {
 		boolean ret;
 		JarOutputStream jos = null;
@@ -200,12 +423,16 @@ public class JavaPackager
 				jos = new JarOutputStream(bos, mani);
 			else
 				jos = new JarOutputStream(bos);
+			DirectoryStack ds = new DirectoryStack();
+			
+			// Write custome files in META-INF (@since 4.0.0)
+			writeCustomMetaInfEntries(jos, project.getMetaInfDirectory(), ds);
 			
 			// Write jar properties entry
 			writeJarPropertiesEntry(jos, project.getJarPropertiesFile());
 			
 			// Write jar entries
-			DirectoryStack ds = new DirectoryStack();
+			ds.clear();
 			writeJarEntries(jos, project.getClassesDirectory(), ds);
 			
 			// Finish
@@ -229,6 +456,32 @@ public class JavaPackager
 		}
 		
 		return ret;
+	}
+	
+	/**
+	 * @since 4.0.0
+	 */
+	private void writeCustomMetaInfEntries(JarOutputStream jos, File targetDir, DirectoryStack dirStack)
+		throws IOException
+	{
+		// このメソッドは recursive 呼び出し禁止
+		dirStack.push(Project.JAR_METAINF_NAME);
+		String pathString = dirStack.getEntryPathString();
+
+		// write Files
+		File[] files = targetDir.listFiles();
+		for (File file : files) {
+			if (file.isDirectory()) {
+				//--- in directory
+				dirStack.push(file.getName());
+				writeJarEntries(jos, file, dirStack);
+				dirStack.pop();
+			}
+			else {
+				//--- file
+				writeFileToJar(jos, pathString, file);
+			}
+		}
 	}
 	
 	private void writeJarPropertiesEntry(JarOutputStream jos, File propFile)
