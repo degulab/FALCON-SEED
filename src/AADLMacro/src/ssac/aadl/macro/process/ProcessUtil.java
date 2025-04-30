@@ -1,39 +1,22 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2014  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)ProcessUtil.java	2.2.0	2021/08/31 : for Java11
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)ProcessUtil.java	2.0.0	2014/03/18
  *     - created by Y.Ishizuka(PieCake.inc,)
  */
 package ssac.aadl.macro.process;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.List;
 
 import ssac.aadl.macro.util.Strings;
+import ssac.aadl.macro.util.SystemUtil;
 
 /**
  * {@link java.lang.Process} オブジェクト用ユーティリティー。
  * 
- * @version 2.0.0	2014/03/18
+ * @version 2.2.0
  * @since 2.0.0
  */
 public class ProcessUtil
@@ -92,16 +75,41 @@ public class ProcessUtil
 
 		long retValue;
 		try {
-			if (process.getClass().getName().equals("java.lang.UNIXProcess")) {
-				// get Process ID
-				Field f = process.getClass().getDeclaredField("pid");
-				f.setAccessible(true);
-				retValue = f.getInt(process);
-			} else {
-				// get Process handle
-				Field f = process.getClass().getDeclaredField("handle");
-				f.setAccessible(true);
-				retValue = f.getLong(process);
+			if (SystemUtil.getJavaMajorVersionNumber() >= 9) {
+				Class<?> clazz = Process.class;
+				Method m = clazz.getDeclaredMethod("pid");
+				//Method m = process.getClass().getDeclaredMethod("pid");
+				//@@@
+				// この場合、java.lang.ProcessImpl クラスのインスタンスから getClass() してるので、
+				// Class<ProcessImpl> となっている。
+				// さらに、getDeclaredMethod("pid") が返す Method オブジェクトにはアクセス制限がかかっている。
+				//@@@
+				// んで、以下のようにアクセス許可すると、
+				//   アクセス制限のあるメソッドにリフレクションするのは、不正アクセスだからやめやー、
+				//   WARNING: An illegal reflective access operation has occurred
+				//   WARNING: Illegal reflective access by ssac.aadl.macro.process.TestProcessId (file:---) to method java.lang.ProcessImpl.pid()
+				//   WARNING: Please consider reporting this to the maintainers of ssac.aadl.macro.process.TestProcessId
+				//   WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+				//   WARNING: All illegal access operations will be denied in a future release
+				// というワーニングが、カレントプロセス内での初回実行に限り表示される。
+				// 連続で実行すると、２回目以降はなぜか警告が出力されない。
+				//m.setAccessible(true);
+				//@@@
+				Object obj = m.invoke(process);
+				retValue = (long)obj;
+			}
+			else {
+				if (process.getClass().getName().equals("java.lang.UNIXProcess")) {
+					// get Process ID
+					Field f = process.getClass().getDeclaredField("pid");
+					f.setAccessible(true);
+					retValue = f.getInt(process);
+				} else {
+					// get Process handle
+					Field f = process.getClass().getDeclaredField("handle");
+					f.setAccessible(true);
+					retValue = f.getLong(process);
+				}
 			}
 		} catch (Throwable ex) {
 			throw new UnsupportedOperationException("Could not get Process ID or handle.", ex);
