@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ExalgebraSet>
+    <Exalgebra>
+        <Exelem value="10">
+            <Exbase hat="NO_HAT" name="りんご" subject="#" time="#" unit="円"/>
+        </Exelem>
+        <Exelem value="20">
+            <Exbase hat="NO_HAT" name="みかん" subject="#" time="#" unit="円"/>
+        </Exelem>
+        <Exelem value="30">
+            <Exbase hat="NO_HAT" name="ばなな" subject="#" time="#" unit="円"/>
+        </Exelem>
+        <Exelem value="0">
+            <Exbase hat="NO_HAT" name="メロン" subject="#" time="#" unit="円"/>
+        </Exelem>
+        <Exelem value="60">
+            <Exbase hat="HAT" name="現金" subject="#" time="#" unit="円"/>
+        </Exelem>
+    </Exalgebra>
+    <Exalgebra>
+        <Exelem value="1">
+            <Exbase hat="NO_HAT" name="りんご" subject="#" time="#" unit="円"/>
+        </Exelem>
+        <Exelem value="2">
+            <Exbase hat="NO_HAT" name="みかん" subject="#" time="#" unit="円"/>
+        </Exelem>
+        <Exelem value="3">
+            <Exbase hat="NO_HAT" name="ばなな" subject="#" time="#" unit="円"/>
+        </Exelem>
+        <Exelem value="0">
+            <Exbase hat="HAT" name="メロン" subject="#" time="#" unit="円"/>
+        </Exelem>
+        <Exelem value="6">
+            <Exbase hat="HAT" name="現金" subject="#" time="#" unit="円"/>
+        </Exelem>
+    </Exalgebra>
+    <Exalgebra>
+        <Exelem value="100">
+            <Exbase hat="HAT" name="まぐろ" subject="Ａ社" time="Y2000" unit="円"/>
+        </Exelem>
+        <Exelem value="200">
+            <Exbase hat="HAT" name="かつお" subject="Ａ社" time="Y2001" unit="円"/>
+        </Exelem>
+        <Exelem value="300">
+            <Exbase hat="NO_HAT" name="現金" subject="Ｂ社" time="Y2002" unit="円"/>
+        </Exelem>
+    </Exalgebra>
+    <Exalgebra>
+        <Exelem value="null">
+            <Exbase hat="HAT" name="NULL基底" subject="#" time="Y2010" unit="円"/>
+        </Exelem>
+        <Exelem value="null">
+            <Exbase hat="NO_HAT" name="NULL基底" subject="#" time="Y2010" unit="円"/>
+        </Exelem>
+    </Exalgebra>
+</ExalgebraSet>

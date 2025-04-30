@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ExalgebraSet>
+    <Exalgebra>
+        <Exelem value="4500">
+            <Exbase hat="NO_HAT" name="PC" subject="1" time="2022.03.01" unit="円"/>
+        </Exelem>
+        <Exelem value="19800">
+            <Exbase hat="NO_HAT" name="キーボード" subject="2" time="2022.03.01" unit="円"/>
+        </Exelem>
+        <Exelem value="5">
+            <Exbase hat="NO_HAT" name="マウス" subject="3" time="2022.03.01" unit="円"/>
+        </Exelem>
+        <Exelem value="32000">
+            <Exbase hat="NO_HAT" name="スピーカー" subject="4" time="2022.05.01" unit="円"/>
+        </Exelem>
+        <Exelem value="50000">
+            <Exbase hat="NO_HAT" name="LCDモニター" subject="5" time="2022.05.01" unit="円"/>
+        </Exelem>
+        <Exelem value="24500">
+            <Exbase hat="NO_HAT" name="デスク" subject="6" time="2022.06.30" unit="円"/>
+        </Exelem>
+        <Exelem value="86980">
+            <Exbase hat="NO_HAT" name="チェアー" subject="7" time="2022.06.30" unit="円"/>
+        </Exelem>
+        <Exelem value="2300">
+            <Exbase hat="NO_HAT" name="ラック" subject="8" time="2022.06.30" unit="円"/>
+        </Exelem>
+        <Exelem value="10">
+            <Exbase hat="NO_HAT" name="CD" subject="9" time="2022.06.30" unit="円"/>
+        </Exelem>
+        <Exelem value="100">
+            <Exbase hat="NO_HAT" name="DVD" subject="10" time="2022.06.30" unit="円"/>
+        </Exelem>
+    </Exalgebra>
+</ExalgebraSet>

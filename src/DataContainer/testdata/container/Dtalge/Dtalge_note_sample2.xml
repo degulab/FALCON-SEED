@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<DtalgebraSet>
+    <Dtalgebra>
+        <Dtelem>
+            <Dtvalue>集計結果</Dtvalue>
+            <Dtbase attr="#" name="title" subject="#" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>2022.12.22</Dtvalue>
+            <Dtbase attr="#" name="実施日" subject="#" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>担当B</Dtvalue>
+            <Dtbase attr="#" name="実施者" subject="#" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>detail</Dtvalue>
+            <Dtbase attr="#" name="明細" subject="DtAlgeSet" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>pref.codes</Dtvalue>
+            <Dtbase attr="#" name="都道府県コード" subject="DtAlgeSet" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>prices</Dtvalue>
+            <Dtbase attr="#" name="単価" subject="Exalge" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>sumEachItem</Dtvalue>
+            <Dtbase attr="#" name="品目別合計" subject="Exalge" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>sumEachCustomer</Dtvalue>
+            <Dtbase attr="#" name="顧客別合計" subject="Exalge" type="string"/>
+        </Dtelem>
+    </Dtalgebra>
+</DtalgebraSet>

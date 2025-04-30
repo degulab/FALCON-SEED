@@ -1,0 +1,9 @@
+#DtalgebraTable
+タスク名,工数,職能制約
+string,decimal,string
+#,#,#
+#,#,#
+a,1,
+b,2,
+c,4,"prof2,prof3,prof4"
+d,1,

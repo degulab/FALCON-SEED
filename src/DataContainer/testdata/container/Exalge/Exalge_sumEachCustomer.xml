@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ExalgebraSet>
+    <Exalgebra>
+        <Exelem value="20">
+            <Exbase hat="NO_HAT" name="山田" subject="#" time="#" unit="円"/>
+        </Exelem>
+        <Exelem value="250000">
+            <Exbase hat="NO_HAT" name="須藤" subject="#" time="#" unit="円"/>
+        </Exelem>
+        <Exelem value="86980">
+            <Exbase hat="NO_HAT" name="栗原" subject="#" time="#" unit="円"/>
+        </Exelem>
+    </Exalgebra>
+</ExalgebraSet>

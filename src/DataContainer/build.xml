@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Dtalge" default="create" basedir=".">
+	<property name="dist.dir" location="${basedir}/jar" />
+	<property name="build.dir" location="${dist.dir}/classes" />
+	<property name="src.dir" location="${basedir}/src" />
+	<property name="javadoc.dir" location="${dist.dir}/javadoc" />
+	<!-- property name="doc.dir" location="${basedir}/doc" /  -->
+	<property name="external.lib.bin.dir" location="${basedir}/lib/bin" />
+	<property name="external.lib.src.dir" location="${basedir}/lib/src" />
+
+	<property name="title" value="Data-Container package" />
+	<property name="short.version" value="0.2.0" />
+	<property name="version" value="${short.version}.20250228" />
+	<property name="vendor" value="Mitzba Denyosha, CUC, PieCake,Inc." />
+	
+	<!--init property-->
+	<target name="init" >
+		<property name="dist.name" value="DtContainer" />
+		<mkdir dir="${dist.dir}" />
+	</target>
+	
+	<!--class-path-->
+	<path id="external.libs">
+		<fileset dir="${external.lib.bin.dir}" includes="*.jar" />
+	</path>
+
+	<!--build classes-->
+	<target name="mkclass" depends="init">
+		<!-- create directories -->
+		<mkdir dir="${build.dir}" />
+
+		<!-- compile -->
+		<!-- javac destdir="${build.dir}" includeantruntime="no" fork="yes" compiler="javac1.8" encoding="UTF8" source="1.8" classpathref="external.libs" -->
+		<javac destdir="${build.dir}" includeantruntime="no" fork="yes" compiler="javac10+" encoding="UTF-8" source="11" classpathref="external.libs">
+			<compilerarg line="-deprecation -g:lines,source" />
+			<src path="${src.dir}" />
+		</javac>
+	</target>
+	
+	<!-- create -->
+	<target name="create" depends="mkclass">
+		<!-- create jar file -->
+		<jar destfile="${dist.dir}/${dist.name}.jar" basedir="${build.dir}" >
+			<manifest>
+				<attribute name="Specification-Title" value="${title}" />
+				<attribute name="Specification-Version" value="${version}" />
+				<attribute name="Specification-Vendor" value="${vendor}" />
+				<attribute name="Implementation-Title" value="${title}" />
+				<attribute name="Implementation-Version" value="${version}" />
+				<attribute name="Implementation-Vendor" value="${vendor}" />
+			</manifest>
+		</jar>
+		
+		<!-- create javadoc zip -->
+		<zip destfile="${dist.dir}/${dist.name}-${short.version}-javadoc.zip">
+			<fileset dir="${javadoc.dir}" />
+		</zip>
+		
+		<!-- create sources zip -->
+		<zip destfile="${dist.dir}/${dist.name}-${short.version}-src.zip">
+			<fileset dir="${basedir}/" >
+				<include name="src/" />
+				<include name="lib/bin/" />
+				<include name="lib/src/" />
+			</fileset>
+			<fileset file="${basedir}/build.xml" />
+			<fileset file="${basedir}/javadoc.xml" />
+			<fileset file="${basedir}/Changes_ja.txt" />
+		</zip>
+	</target>
+
+	<!-- clean -->
+	<target name="clean" depends="init">
+		<delete dir="${build.dir}" />
+		<delete>
+			<fileset dir="${dist.dir}" includes="*.jar,*-src.zip,*-javadoc.zip"/>
+		</delete>
+	</target>
+
+</project>

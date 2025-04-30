@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="javadoc">
+<target name="javadoc">
+	<property name="dist.name" value="DtContainer-javadoc" />
+	<property name="javadoc.dir" location="jar/javadoc" />
+	<property name="dist.dir" location="${javadoc.dir}/${dist.name}" />
+	<property name="lib.bin.dir" location="lib/bin" />
+	<property name="lib.src.dir" location="lib/src" />
+
+	<!-- delete all failes in doc/javadoc directory -->
+	<mkdir dir="${dist.dir}" />
+	<delete dir="${dist.dir}" includes="**/*" includeEmptyDirs="true" />
+	
+	<!-- class-paths -->
+	<path id="external.libs">
+		<fileset dir="${lib.bin.dir}" includes="*.jar" />
+	</path>
+
+	<!-- make javadoc -->
+	<javadoc destdir="${dist.dir}" author="true"  use="true" version="true"
+		nodeprecated="false" nodeprecatedlist="false" noindex="false"
+		additionalparam="-encoding UTF-8 -charset UTF-8 -windowtitle データコンテナ・パッケージ"
+		classpathref="external.libs"
+		access="public" source="11" nonavbar="false" notree="false" splitindex="true">
+
+		<sourcepath path="src" />
+		
+		<package name="dtalge.container" />
+		<package name="dtalge.container.util" />
+		<package name="dtalge.json" />
+		<package name="dtalge.json.io" />
+		<package name="dtalge.json.serialize" />
+		
+		<!-- 以下の方法では、除外されない
+		<packageset dir="src" defaultexcludes="yes" >
+			<include name="dtalge/container" />
+			<include name="dtalge/container.util" />
+			<exclude name="dtalge/**/internal/**" />
+		</packageset>
+		-->
+
+		<link href="https://docs.oracle.com/javase/jp/11/docs/api/" />
+		<doctitle>データコンテナ・パッケージ</doctitle>
+	</javadoc>
+</target>
+</project>

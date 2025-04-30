@@ -1,0 +1,59 @@
+﻿***************************************************************************
+*  Data-Container - Change Log                                            *
+*                                               Last update : 2025/02/28  *
+***************************************************************************
+
+==========================================================================
+  データ代数パッケージの変更履歴
+==========================================================================
+
+◆0.2.0.20250228
+　・複式記述簡易データ伝票 CSV でデータバインダーとの相互変換機能を追加しました。
+　　追加機能については、以下のクラスの JavaDoc を参照してください。
+　　　dtalge.container.util.CsvFieldConditionStringParseError
+　　　dtalge.container.util.DebitCreditItem
+　　　dtalge.container.util.DebitCreditItemDefinitionTable
+　　　dtalge.container.util.DebitCreditItemDefinitionTableCsvFormatError
+　　　dtalge.container.util.DtDebitCreditValuePair
+　　　dtalge.container.util.DtDoubleEntrySimpleSlipsCsvFormatError
+　　　dtalge.container.util.DtDoubleEntrySimpleSlipsCsvUtil
+
+◆0.1.1.20221214
+　・DtSlipSerializer および DtBinderSerializer において、JSON オブジェクトの
+　　必須キーが存在しない場合でも、正常に deserialize できてしまう問題を
+　　修正しました。
+
+◆0.1.0.20220729
+　・データコンテナ機能として、データスリップとデータバインダーを主とする
+　　クラスおよびインターフェースを追加しました。各クラスの詳細については、
+　　JavaDoc を参照してください。
+　　　dtalge.container.DtBinder
+　　　dtalge.container.DtSlip
+　　　dtalge.container.DtSlipList
+　　　dtalge.json.DtJSON
+　　　dtalge.json.DtJsonList
+　　　dtalge.json.DtJsonMap
+　　　dtalge.json.io.AbDtJsonInputReader
+　　　dtalge.json.io.AbDtJsonOutputWriter
+　　　dtalge.json.io.DtJsonFetchedToken
+　　　dtalge.json.io.DtJsonFileInputReader
+　　　dtalge.json.io.DtJsonFileOutputWriter
+　　　dtalge.json.io.DtJsonInputReader
+　　　dtalge.json.io.DtJsonIOHelper
+　　　dtalge.json.io.DtJsonOutputWriter
+　　　dtalge.json.io.DtJsonStringInputReader
+　　　dtalge.json.io.DtJsonStringOutputWriter
+　　　dtalge.json.serialize.AbDtJsonSerializer
+　　　dtalge.json.serialize.DtJsonDefaultSerializer
+　　　dtalge.json.serialize.DtJsonDtalgeSerializer
+　　　dtalge.json.serialize.DtJsonDtAlgeSetSerializer
+　　　dtalge.json.serialize.DtJsonDtBaseSerializer
+　　　dtalge.json.serialize.DtJsonDtBinderSerializer
+　　　dtalge.json.serialize.DtJsonDtSlipListSerializer
+　　　dtalge.json.serialize.DtJsonDtSlipMapSerializer
+　　　dtalge.json.serialize.DtJsonSlipSerializer
+　　　dtalge.json.serialize.DtJsonExalgeSerializer
+　　　dtalge.json.serialize.DtJsonExAlgeSetSerializer
+　　　dtalge.json.serialize.DtJsonExBaseSerializer
+　　　dtalge.json.serialize.DtJsonSerializer
+　　　dtalge.json.serialize.DtJsonSerializerManager

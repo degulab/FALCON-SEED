@@ -1,0 +1,16 @@
+#DtalgebraTable
+職能,タスク名,割付可能数
+string,string,decimal
+#,#,#
+#,#,#
+prof1,a,
+prof2,b,3
+prof2,c,5
+prof3,b,
+prof3,c,2
+prof3,d,
+prof4,c,1
+prof5,d,3
+prof6,b,
+prof6,c,
+prof6,d,

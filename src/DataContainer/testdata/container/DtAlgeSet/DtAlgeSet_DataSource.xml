@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<DtalgebraSet>
+    <Dtalgebra>
+        <Dtelem>
+            <Dtvalue>山田</Dtvalue>
+            <Dtbase attr="#" name="名前" subject="#" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>52</Dtvalue>
+            <Dtbase attr="#" name="年齢" subject="#" type="decimal"/>
+        </Dtelem>
+    </Dtalgebra>
+    <Dtalgebra>
+        <Dtelem>
+            <Dtvalue>北川</Dtvalue>
+            <Dtbase attr="#" name="名前" subject="#" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>女性</Dtvalue>
+            <Dtbase attr="#" name="性別" subject="#" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>29</Dtvalue>
+            <Dtbase attr="#" name="年齢" subject="#" type="decimal"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>P24</Dtvalue>
+            <Dtbase attr="#" name="住所コード" subject="#" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>true</Dtvalue>
+            <Dtbase attr="#" name="実施" subject="#" type="boolean"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>2</Dtvalue>
+            <Dtbase attr="#" name="数量" subject="#" type="decimal"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>9</Dtvalue>
+            <Dtbase attr="#" name="商品コード" subject="#" type="string"/>
+        </Dtelem>
+    </Dtalgebra>
+    <Dtalgebra>
+        <Dtelem>
+            <Dtvalue>上原</Dtvalue>
+            <Dtbase attr="#" name="名前" subject="#" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>男性</Dtvalue>
+            <Dtbase attr="#" name="性別" subject="#" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>35</Dtvalue>
+            <Dtbase attr="#" name="年齢" subject="#" type="decimal"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>false</Dtvalue>
+            <Dtbase attr="#" name="実施" subject="#" type="boolean"/>
+        </Dtelem>
+    </Dtalgebra>
+    <Dtalgebra>
+        <Dtelem>
+            <Dtvalue>馬場</Dtvalue>
+            <Dtbase attr="#" name="名前" subject="#" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>41</Dtvalue>
+            <Dtbase attr="#" name="年齢" subject="#" type="decimal"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>P04</Dtvalue>
+            <Dtbase attr="#" name="住所コード" subject="#" type="string"/>
+        </Dtelem>
+    </Dtalgebra>
+    <Dtalgebra>
+        <Dtelem>
+            <Dtvalue>富田</Dtvalue>
+            <Dtbase attr="#" name="名前" subject="#" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>男性</Dtvalue>
+            <Dtbase attr="#" name="性別" subject="#" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>14</Dtvalue>
+            <Dtbase attr="#" name="年齢" subject="#" type="decimal"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>P46</Dtvalue>
+            <Dtbase attr="#" name="住所コード" subject="#" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>false</Dtvalue>
+            <Dtbase attr="#" name="実施" subject="#" type="boolean"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>4</Dtvalue>
+            <Dtbase attr="#" name="数量" subject="#" type="decimal"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>3</Dtvalue>
+            <Dtbase attr="#" name="商品コード" subject="#" type="string"/>
+        </Dtelem>
+    </Dtalgebra>
+    <Dtalgebra>
+        <Dtelem>
+            <Dtvalue>藤原</Dtvalue>
+            <Dtbase attr="#" name="名前" subject="#" type="string"/>
+        </Dtelem>
+    </Dtalgebra>
+    <Dtalgebra>
+        <Dtelem>
+            <Dtvalue>須藤</Dtvalue>
+            <Dtbase attr="#" name="名前" subject="#" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>女性</Dtvalue>
+            <Dtbase attr="#" name="性別" subject="#" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>false</Dtvalue>
+            <Dtbase attr="#" name="実施" subject="#" type="boolean"/>
+        </Dtelem>
+    </Dtalgebra>
+    <Dtalgebra>
+        <Dtelem>
+            <Dtvalue>萩原</Dtvalue>
+            <Dtbase attr="#" name="名前" subject="#" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>女性</Dtvalue>
+            <Dtbase attr="#" name="性別" subject="#" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>25</Dtvalue>
+            <Dtbase attr="#" name="年齢" subject="#" type="decimal"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>P43</Dtvalue>
+            <Dtbase attr="#" name="住所コード" subject="#" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>true</Dtvalue>
+            <Dtbase attr="#" name="実施" subject="#" type="boolean"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>5</Dtvalue>
+            <Dtbase attr="#" name="数量" subject="#" type="decimal"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>5</Dtvalue>
+            <Dtbase attr="#" name="商品コード" subject="#" type="string"/>
+        </Dtelem>
+    </Dtalgebra>
+    <Dtalgebra>
+        <Dtelem>
+            <Dtvalue>小沢</Dtvalue>
+            <Dtbase attr="#" name="名前" subject="#" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>女性</Dtvalue>
+            <Dtbase attr="#" name="性別" subject="#" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>P08</Dtvalue>
+            <Dtbase attr="#" name="住所コード" subject="#" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>true</Dtvalue>
+            <Dtbase attr="#" name="実施" subject="#" type="boolean"/>
+        </Dtelem>
+    </Dtalgebra>
+    <Dtalgebra/>
+    <Dtalgebra>
+        <Dtelem>
+            <Dtvalue>栗原</Dtvalue>
+            <Dtbase attr="#" name="名前" subject="#" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>男性</Dtvalue>
+            <Dtbase attr="#" name="性別" subject="#" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>65</Dtvalue>
+            <Dtbase attr="#" name="年齢" subject="#" type="decimal"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>P11</Dtvalue>
+            <Dtbase attr="#" name="住所コード" subject="#" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>true</Dtvalue>
+            <Dtbase attr="#" name="実施" subject="#" type="boolean"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>1</Dtvalue>
+            <Dtbase attr="#" name="数量" subject="#" type="decimal"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>7</Dtvalue>
+            <Dtbase attr="#" name="商品コード" subject="#" type="string"/>
+        </Dtelem>
+    </Dtalgebra>
+    <Dtalgebra>
+        <Dtelem>
+            <Dtvalue>岡本</Dtvalue>
+            <Dtbase attr="#" name="名前" subject="#" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>女性</Dtvalue>
+            <Dtbase attr="#" name="性別" subject="#" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>18</Dtvalue>
+            <Dtbase attr="#" name="年齢" subject="#" type="decimal"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>P15</Dtvalue>
+            <Dtbase attr="#" name="住所コード" subject="#" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>true</Dtvalue>
+            <Dtbase attr="#" name="実施" subject="#" type="boolean"/>
+        </Dtelem>
+    </Dtalgebra>
+    <Dtalgebra>
+        <Dtelem>
+            <Dtvalue>佐藤</Dtvalue>
+            <Dtbase attr="#" name="名前" subject="#" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>38</Dtvalue>
+            <Dtbase attr="#" name="年齢" subject="#" type="decimal"/>
+        </Dtelem>
+    </Dtalgebra>
+</DtalgebraSet>

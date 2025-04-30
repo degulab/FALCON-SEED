@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<DtalgebraSet>
+    <Dtalgebra>
+        <Dtelem>
+            <Dtvalue>売上伝票</Dtvalue>
+            <Dtbase attr="#" name="title" subject="#" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>2022.12.21</Dtvalue>
+            <Dtbase attr="#" name="作成日" subject="#" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>担当A</Dtvalue>
+            <Dtbase attr="#" name="作成者" subject="#" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>detail</Dtvalue>
+            <Dtbase attr="#" name="明細" subject="DtAlgeSet" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>pref.codes</Dtvalue>
+            <Dtbase attr="#" name="都道府県コード" subject="DtAlgeSet" type="string"/>
+        </Dtelem>
+        <Dtelem>
+            <Dtvalue>prices</Dtvalue>
+            <Dtbase attr="#" name="単価" subject="Exalge" type="string"/>
+        </Dtelem>
+    </Dtalgebra>
+</DtalgebraSet>

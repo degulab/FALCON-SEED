@@ -1,0 +1,16 @@
+#DtalgebraTable
+資源コード,資源名,職能
+string,string,string
+#,#,#
+#,#,#
+10011,w11,prof1
+10021,w21,prof2
+10022,w22,prof2
+10031,w31,prof3
+10032,w32,prof3
+10041,w41,prof4
+10042,w42,prof4
+10043,w43,prof4
+10051,w51,prof5
+10061,w61,prof6
+10062,w62,prof6

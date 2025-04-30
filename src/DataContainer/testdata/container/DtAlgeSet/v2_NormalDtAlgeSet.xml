@@ -1,0 +1,587 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DtalgebraSet>
+<Dtalgebra>
+<Dtelem>
+<Dtvalue>文字列08</Dtvalue>
+<Dtbase attr="#" name="基底08" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>-0.2108</Dtvalue>
+<Dtbase attr="#" name="基底08" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>false</Dtvalue>
+<Dtbase attr="#" name="基底08" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>!%!%!%文字列02</Dtvalue>
+<Dtbase attr="#" name="基底02" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>123.02</Dtvalue>
+<Dtbase attr="#" name="基底02" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>false</Dtvalue>
+<Dtbase attr="#" name="基底02" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>!%</Dtvalue>
+<Dtbase attr="#" name="基底0d" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>-1.13</Dtvalue>
+<Dtbase attr="#" name="基底0d" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>false</Dtvalue>
+<Dtbase attr="#" name="基底0d" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue> !%文字列06</Dtvalue>
+<Dtbase attr="#" name="基底06" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>-1006</Dtvalue>
+<Dtbase attr="#" name="基底06" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>false</Dtvalue>
+<Dtbase attr="#" name="基底06" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>文字列!%04</Dtvalue>
+<Dtbase attr="#" name="基底04" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>-975.04</Dtvalue>
+<Dtbase attr="#" name="基底04" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>false</Dtvalue>
+<Dtbase attr="#" name="基底04" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>!%n</Dtvalue>
+<Dtbase attr="#" name="基底0c" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>1.12</Dtvalue>
+<Dtbase attr="#" name="基底0c" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>true</Dtvalue>
+<Dtbase attr="#" name="基底0c" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底0b" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>0</Dtvalue>
+<Dtbase attr="#" name="基底0b" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>false</Dtvalue>
+<Dtbase attr="#" name="基底0b" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底0a" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底0a" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底0a" subject="#" type="boolean"/>
+</Dtelem>
+</Dtalgebra>
+
+<Dtalgebra>
+<Dtelem>
+<Dtvalue>!%!%文字列1d</Dtvalue>
+<Dtbase attr="#" name="基底0d" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>1.13</Dtvalue>
+<Dtbase attr="#" name="基底0d" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>true</Dtvalue>
+<Dtbase attr="#" name="基底0d" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>文字列13</Dtvalue>
+<Dtbase attr="#" name="基底03" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>1.03</Dtvalue>
+<Dtbase attr="#" name="基底03" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>false</Dtvalue>
+<Dtbase attr="#" name="基底03" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>文字列19</Dtvalue>
+<Dtbase attr="#" name="基底09" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>1.09</Dtvalue>
+<Dtbase attr="#" name="基底09" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>false</Dtvalue>
+<Dtbase attr="#" name="基底09" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>文字列17</Dtvalue>
+<Dtbase attr="#" name="基底07" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>1.07</Dtvalue>
+<Dtbase attr="#" name="基底07" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>false</Dtvalue>
+<Dtbase attr="#" name="基底07" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>文字列15</Dtvalue>
+<Dtbase attr="#" name="基底05" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>1.05</Dtvalue>
+<Dtbase attr="#" name="基底05" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>false</Dtvalue>
+<Dtbase attr="#" name="基底05" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>!%</Dtvalue>
+<Dtbase attr="#" name="基底0b" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>1.11</Dtvalue>
+<Dtbase attr="#" name="基底0b" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>true</Dtvalue>
+<Dtbase attr="#" name="基底0b" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>文字列11</Dtvalue>
+<Dtbase attr="#" name="基底01" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>1.01</Dtvalue>
+<Dtbase attr="#" name="基底01" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>false</Dtvalue>
+<Dtbase attr="#" name="基底01" subject="#" type="boolean"/>
+</Dtelem>
+</Dtalgebra>
+
+<Dtalgebra>
+<Dtelem>
+<Dtvalue>true</Dtvalue>
+<Dtbase attr="#" name="基底03" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>-2.13</Dtvalue>
+<Dtbase attr="#" name="基底0d" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>-2.03</Dtvalue>
+<Dtbase attr="#" name="基底03" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>-2.08</Dtvalue>
+<Dtbase attr="#" name="基底08" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底0d" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue> !%文字列24</Dtvalue>
+<Dtbase attr="#" name="基底04" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>-2.11</Dtvalue>
+<Dtbase attr="#" name="基底0b" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>false</Dtvalue>
+<Dtbase attr="#" name="基底07" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>-2.12</Dtvalue>
+<Dtbase attr="#" name="基底0c" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>false</Dtvalue>
+<Dtbase attr="#" name="基底0b" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>-2.04</Dtvalue>
+<Dtbase attr="#" name="基底04" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>true</Dtvalue>
+<Dtbase attr="#" name="基底04" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>文字列!%27</Dtvalue>
+<Dtbase attr="#" name="基底07" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>文字列28</Dtvalue>
+<Dtbase attr="#" name="基底08" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>文字列23</Dtvalue>
+<Dtbase attr="#" name="基底03" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>false</Dtvalue>
+<Dtbase attr="#" name="基底08" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>文字列2b</Dtvalue>
+<Dtbase attr="#" name="基底0b" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>!%文字列2c</Dtvalue>
+<Dtbase attr="#" name="基底0c" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>-2.07</Dtvalue>
+<Dtbase attr="#" name="基底07" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>false</Dtvalue>
+<Dtbase attr="#" name="基底0c" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>!%!%文字列2d</Dtvalue>
+<Dtbase attr="#" name="基底0d" subject="#" type="string"/>
+</Dtelem>
+</Dtalgebra>
+
+<Dtalgebra>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底01" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>false</Dtvalue>
+<Dtbase attr="#" name="基底0a" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>false</Dtvalue>
+<Dtbase attr="#" name="基底02" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>3.05</Dtvalue>
+<Dtbase attr="#" name="基底05" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>true</Dtvalue>
+<Dtbase attr="#" name="基底05" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>3.09</Dtvalue>
+<Dtbase attr="#" name="基底09" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>false</Dtvalue>
+<Dtbase attr="#" name="基底09" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底0a" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>false</Dtvalue>
+<Dtbase attr="#" name="基底01" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底02" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>3.10</Dtvalue>
+<Dtbase attr="#" name="基底0a" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>3.02</Dtvalue>
+<Dtbase attr="#" name="基底02" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底0d" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底06" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>3.06</Dtvalue>
+<Dtbase attr="#" name="基底06" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>true</Dtvalue>
+<Dtbase attr="#" name="基底06" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底09" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底05" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>3.01</Dtvalue>
+<Dtbase attr="#" name="基底01" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>3.13</Dtvalue>
+<Dtbase attr="#" name="基底0d" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>false</Dtvalue>
+<Dtbase attr="#" name="基底0d" subject="#" type="boolean"/>
+</Dtelem>
+</Dtalgebra>
+
+<Dtalgebra>
+<Dtelem>
+<Dtvalue>false</Dtvalue>
+<Dtbase attr="#" name="基底09" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底05" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>false</Dtvalue>
+<Dtbase attr="#" name="基底02" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>文字列45</Dtvalue>
+<Dtbase attr="#" name="基底05" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>false</Dtvalue>
+<Dtbase attr="#" name="基底05" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>文字列42</Dtvalue>
+<Dtbase attr="#" name="基底02" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>文字列49</Dtvalue>
+<Dtbase attr="#" name="基底09" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底02" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底09" subject="#" type="decimal"/>
+</Dtelem>
+</Dtalgebra>
+
+<Dtalgebra>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底01" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底0b" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底0d" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底03" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底08" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底0a" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底03" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底07" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底03" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底07" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底08" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底0a" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底0a" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底0b" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底01" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底07" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底08" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底0b" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底0d" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底0d" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底01" subject="#" type="string"/>
+</Dtelem>
+</Dtalgebra>
+
+<Dtalgebra>
+<Dtelem>
+<Dtvalue>文字列08</Dtvalue>
+<Dtbase attr="#" name="基底08" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>-0.2108</Dtvalue>
+<Dtbase attr="#" name="基底08" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>false</Dtvalue>
+<Dtbase attr="#" name="基底08" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>!%!%!%文字列02</Dtvalue>
+<Dtbase attr="#" name="基底02" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>123.02</Dtvalue>
+<Dtbase attr="#" name="基底02" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>false</Dtvalue>
+<Dtbase attr="#" name="基底02" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>!%</Dtvalue>
+<Dtbase attr="#" name="基底0d" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>-1.13</Dtvalue>
+<Dtbase attr="#" name="基底0d" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>false</Dtvalue>
+<Dtbase attr="#" name="基底0d" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue> !%文字列06</Dtvalue>
+<Dtbase attr="#" name="基底06" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>-1006</Dtvalue>
+<Dtbase attr="#" name="基底06" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>false</Dtvalue>
+<Dtbase attr="#" name="基底06" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>文字列!%04</Dtvalue>
+<Dtbase attr="#" name="基底04" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>-975.04</Dtvalue>
+<Dtbase attr="#" name="基底04" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>false</Dtvalue>
+<Dtbase attr="#" name="基底04" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>!%n</Dtvalue>
+<Dtbase attr="#" name="基底0c" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>1.12</Dtvalue>
+<Dtbase attr="#" name="基底0c" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>true</Dtvalue>
+<Dtbase attr="#" name="基底0c" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底0b" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>0</Dtvalue>
+<Dtbase attr="#" name="基底0b" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue>false</Dtvalue>
+<Dtbase attr="#" name="基底0b" subject="#" type="boolean"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底0a" subject="#" type="string"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底0a" subject="#" type="decimal"/>
+</Dtelem>
+<Dtelem>
+<Dtvalue></Dtvalue>
+<Dtbase attr="#" name="基底0a" subject="#" type="boolean"/>
+</Dtelem>
+</Dtalgebra>
+</DtalgebraSet>

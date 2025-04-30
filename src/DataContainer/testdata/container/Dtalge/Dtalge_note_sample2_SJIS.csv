@@ -1,0 +1,9 @@
+#DtalgebraSet2
+集計結果,title,string,#,#
+2022.12.22,実施日,string,#,#
+担当B,実施者,string,#,#
+detail,明細,string,#,DtAlgeSet
+pref.codes,都道府県コード,string,#,DtAlgeSet
+prices,単価,string,#,Exalge
+sumEachItem,品目別合計,string,#,Exalge
+sumEachCustomer,顧客別合計,string,#,Exalge

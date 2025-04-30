@@ -1,0 +1,446 @@
+{
+	"note": [
+		{
+			"dtbase": {
+				"name": "title",
+				"type": "string"
+			},
+			"value": "達成率"
+		},
+		{
+			"dtbase": {
+				"name": "対象日",
+				"type": "string"
+			},
+			"value": "2022/07/01"
+		},
+		{
+			"dtbase": {
+				"name": "集計日時",
+				"type": "string"
+			},
+			"value": "2022/07/22T16:34:26+0900"
+		},
+		{
+			"dtbase": {
+				"name": "ロケール",
+				"type": "string"
+			},
+			"value": "ja_JP"
+		}
+	],
+	"objects": {
+		"rates": {
+			"!&Exalge": [
+				{
+					"exbase": {
+						"hat": false,
+						"name": "達成率",
+						"unit": "％",
+						"time": "2022/07/01",
+						"subject": "機種I"
+					},
+					"value": 73.33
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "達成率",
+						"unit": "％",
+						"time": "2022/07/01",
+						"subject": "機種J"
+					},
+					"value": 100
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "達成率",
+						"unit": "％",
+						"time": "2022/07/01",
+						"subject": "機種K"
+					},
+					"value": 100
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "達成率",
+						"unit": "％",
+						"time": "2022/07/01",
+						"subject": "機種O"
+					},
+					"value": 100
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "達成率",
+						"unit": "％",
+						"time": "2022/07/01",
+						"subject": "機種A"
+					},
+					"value": 100
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "達成率",
+						"unit": "％",
+						"time": "2022/07/01",
+						"subject": "機種C"
+					},
+					"value": 100
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "達成率",
+						"unit": "％",
+						"time": "2022/07/01",
+						"subject": "機種D"
+					},
+					"value": 100
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "達成率",
+						"unit": "％",
+						"time": "2022/07/01",
+						"subject": "機種E"
+					},
+					"value": 100
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "達成率",
+						"unit": "％",
+						"time": "2022/07/01",
+						"subject": "機種F"
+					},
+					"value": 100
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "達成率",
+						"unit": "％",
+						"time": "2022/07/01",
+						"subject": "機種G"
+					},
+					"value": 100
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "達成率",
+						"unit": "％",
+						"time": "2022/07/01",
+						"subject": "機種H"
+					},
+					"value": 100
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "達成率",
+						"unit": "％",
+						"time": "2022/07/01",
+						"subject": "機種P"
+					},
+					"value": 100
+				}
+			]
+		},
+		"counts": {
+			"!&Exalge": [
+				{
+					"exbase": {
+						"hat": false,
+						"name": "運転回数",
+						"unit": "回",
+						"time": "2022/07/01",
+						"subject": "機種I"
+					},
+					"value": 11
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "運転回数",
+						"unit": "回",
+						"time": "2022/07/01",
+						"subject": "機種J"
+					},
+					"value": 10
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "運転回数",
+						"unit": "回",
+						"time": "2022/07/01",
+						"subject": "機種K"
+					},
+					"value": 10
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "運転回数",
+						"unit": "回",
+						"time": "2022/07/01",
+						"subject": "機種L"
+					},
+					"value": 0
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "運転回数",
+						"unit": "回",
+						"time": "2022/07/01",
+						"subject": "機種M"
+					},
+					"value": 0
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "運転回数",
+						"unit": "回",
+						"time": "2022/07/01",
+						"subject": "機種N"
+					},
+					"value": 0
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "運転回数",
+						"unit": "回",
+						"time": "2022/07/01",
+						"subject": "機種O"
+					},
+					"value": 10
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "運転回数",
+						"unit": "回",
+						"time": "2022/07/01",
+						"subject": "機種A"
+					},
+					"value": 10
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "運転回数",
+						"unit": "回",
+						"time": "2022/07/01",
+						"subject": "機種B"
+					},
+					"value": 0
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "運転回数",
+						"unit": "回",
+						"time": "2022/07/01",
+						"subject": "機種C"
+					},
+					"value": 18
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "運転回数",
+						"unit": "回",
+						"time": "2022/07/01",
+						"subject": "機種D"
+					},
+					"value": 10
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "運転回数",
+						"unit": "回",
+						"time": "2022/07/01",
+						"subject": "機種E"
+					},
+					"value": 10
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "運転回数",
+						"unit": "回",
+						"time": "2022/07/01",
+						"subject": "機種F"
+					},
+					"value": 10
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "運転回数",
+						"unit": "回",
+						"time": "2022/07/01",
+						"subject": "機種G"
+					},
+					"value": 10
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "運転回数",
+						"unit": "回",
+						"time": "2022/07/01",
+						"subject": "機種H"
+					},
+					"value": 10
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "運転回数",
+						"unit": "回",
+						"time": "2022/07/01",
+						"subject": "機種P"
+					},
+					"value": 10
+				}
+			]
+		},
+		"plans": {
+			"!&Exalge": [
+				{
+					"exbase": {
+						"hat": false,
+						"name": "予定数",
+						"unit": "個",
+						"time": "2022/07/01",
+						"subject": "機種I"
+					},
+					"value": 15
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "予定数",
+						"unit": "個",
+						"time": "2022/07/01",
+						"subject": "機種J"
+					},
+					"value": 10
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "予定数",
+						"unit": "個",
+						"time": "2022/07/01",
+						"subject": "機種K"
+					},
+					"value": 10
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "予定数",
+						"unit": "個",
+						"time": "2022/07/01",
+						"subject": "機種O"
+					},
+					"value": 10
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "予定数",
+						"unit": "個",
+						"time": "2022/07/01",
+						"subject": "機種A"
+					},
+					"value": 10
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "予定数",
+						"unit": "個",
+						"time": "2022/07/01",
+						"subject": "機種C"
+					},
+					"value": 18
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "予定数",
+						"unit": "個",
+						"time": "2022/07/01",
+						"subject": "機種D"
+					},
+					"value": 10
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "予定数",
+						"unit": "個",
+						"time": "2022/07/01",
+						"subject": "機種E"
+					},
+					"value": 10
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "予定数",
+						"unit": "個",
+						"time": "2022/07/01",
+						"subject": "機種F"
+					},
+					"value": 10
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "予定数",
+						"unit": "個",
+						"time": "2022/07/01",
+						"subject": "機種G"
+					},
+					"value": 10
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "予定数",
+						"unit": "個",
+						"time": "2022/07/01",
+						"subject": "機種H"
+					},
+					"value": 10
+				},
+				{
+					"exbase": {
+						"hat": false,
+						"name": "予定数",
+						"unit": "個",
+						"time": "2022/07/01",
+						"subject": "機種P"
+					},
+					"value": 10
+				}
+			]
+		}
+	}
+}

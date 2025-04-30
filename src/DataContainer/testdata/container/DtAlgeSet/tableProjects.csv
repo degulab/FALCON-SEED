@@ -1,0 +1,8 @@
+#DtalgebraTable
+プロジェクト名,タスクパス名,開始許可時間
+string,string,decimal
+#,#,#
+#,#,#
+p1,path1,
+p2,path1,
+p3,path1,8
