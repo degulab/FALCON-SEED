@@ -70,6 +70,7 @@ package com.github.mygreen.cellformatter;
  * @author T.TSUCHIE
  *
  */
+@Deprecated
 public class JXLCellFormatter {
 //    
 //    private FormatterResolver formatterResolver = new FormatterResolver();

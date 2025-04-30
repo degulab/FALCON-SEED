@@ -33,6 +33,7 @@ package com.github.mygreen.cellformatter;
  *
  */
 //public class JXLCell implements CommonCell {
+@Deprecated
 public class JXLCell {// implements CommonCell {
 //    
 //    /** 日付の始まりが1904年開始かどうか */

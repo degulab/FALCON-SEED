@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2014  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)FSMain.java	4.0.0	2021/08/23
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)FSMain.java	2014/10/20
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)FSMain.java	2012/07/03
@@ -44,8 +25,8 @@ import javax.swing.JOptionPane;
 /**
  * FALCON-SEED ランチャー起動専用アプリケーション
  * 
- * @version 2014/10/20
- * @since 2010/12/24
+ * @version 4.0.0
+ * @since 1.0.0
  */
 public class FSMain
 {
@@ -63,7 +44,8 @@ public class FSMain
 	
 	static private final String APP_NAME = "FALCON-SEED";
 	
-	static private final String SYSPROP_ENDORSED_DIRS	= "java.endorsed.dirs";
+	// unsupported "java.endorsed.dirs" over Java9
+	//static private final String SYSPROP_ENDORSED_DIRS	= "java.endorsed.dirs";
 
 	//------------------------------------------------------------
 	// Fields
@@ -251,8 +233,9 @@ public class FSMain
 		if (!_lVMOptions.isEmpty()) {
 			cmdlist.addAll(_lVMOptions);
 		}
-		//--- java endorsed dirs
-		cmdlist.add(buildJavaEndorsedDirs(fLauncher));
+		// unsupported "java.endorsed.dirs" over Java9
+		////--- java endorsed dirs
+		//cmdlist.add(buildJavaEndorsedDirs(fLauncher));
 		//--- for Apple Mac
 		String osname = System.getProperty("os.name");
 		if (0 <= osname.indexOf("Mac")) {
@@ -354,7 +337,8 @@ public class FSMain
 		return sb.toString();
 	}
 
-	/**
+	// unsupported "java.endorsed.dirs" over Java9
+	/*
 	 * &quot;java.endorsed.dirs&quot; に、&quot;lib/modules&quot; ディレクトリを
 	 * 追加した、新しいプロパティを指定する文字列を生成する。
 	 * <p><b>注意：</b>
@@ -367,7 +351,7 @@ public class FSMain
 	 * @param fLauncher	FALCON-SEED アプリケーションランチャーライブラリのパス(存在していること)
 	 * @return	生成されたプロパティ指定を示す文字列
 	 * @since 2014/10/17
-	 */
+	 *
 	static private String buildJavaEndorsedDirs(final File fLauncher) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("-D");
@@ -387,6 +371,7 @@ public class FSMain
 		
 		return sb.toString();
 	}
+	/*** ***/
 
 	//------------------------------------------------------------
 	// Inner classes

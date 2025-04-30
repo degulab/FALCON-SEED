@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2012  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)MEDLocalFileTreePanel.java	4.0.0	2021/08/27 : for Java11
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)MEDLocalFileTreePanel.java	2.0.0	2012/10/29
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)MEDLocalFileTreePanel.java	1.20	2012/03/08
@@ -70,11 +51,13 @@ import ssac.util.swing.tree.JTreePopupMenu;
 /**
  * モジュール実行定義ローカルファイルを管理するツリーコンポーネント。
  * 
- * @version 2.0.0	2012/10/29
+ * @version 4.0.0
  * @since 1.20
  */
 public class MEDLocalFileTreePanel extends JPanel
 {
+	private static final long serialVersionUID = 1L;
+
 	//------------------------------------------------------------
 	// Constants
 	//------------------------------------------------------------
@@ -982,6 +965,8 @@ public class MEDLocalFileTreePanel extends JPanel
 		
 		// ツリー生成
 		FileTree newTree = new FileTree(model, _hTree){
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void onTreeSelectionAdjusted() {
 				super.onTreeSelectionAdjusted();
@@ -1008,6 +993,7 @@ public class MEDLocalFileTreePanel extends JPanel
 	
 	static public class FileTreeStatusBar extends JPanel
 	{
+		private static final long serialVersionUID = 1L;
 		static private final String Blank = " ";
 		private JLabel lblMessage;
 		

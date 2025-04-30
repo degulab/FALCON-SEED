@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2009  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)AadlJarProperties.java	4.0.0	2021/08/27 : for Java11
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)AadlJarProperties.java	1.14	2009/12/09
  *     - created by Y.Ishizuka(PieCake.inc,)
  */
@@ -37,7 +18,7 @@ import ssac.util.properties.JavaXmlPropertiesModel;
 /**
  * AADL実行モジュール(JARファイル)に含めるプロパティ。
  * 
- * @version 1.14	2009/12/09
+ * @version 4.0.0
  * @since 1.14
  */
 public class AadlJarProperties extends ExProperties
@@ -56,6 +37,11 @@ public class AadlJarProperties extends ExProperties
 	static private final String KEY_ARGS_NUM  = KEY_ARGS + ".num";
 	static private final String KEY_ARGS_TYPE = KEY_ARGS + ".type";
 	static private final String KEY_ARGS_DESC = KEY_ARGS + ".desc";
+	static private final String	KEY_FATJAR_ENABLED  = AADL_PROFILE + ".fatjar";
+	static private final String KEY_FATJAR_LIB		= "aadl.fatjar.lib";
+	static private final String	KEY_FATJAR_LIB_NUM		= KEY_FATJAR_LIB + ".num";
+	static private final String KEY_FATJAR_LIB_FILE		= KEY_FATJAR_LIB + ".file";
+	static private final String KEY_FATJAR_LIB_LICENSE	= KEY_FATJAR_LIB + ".license";
 
 	//------------------------------------------------------------
 	// Fields
@@ -69,7 +55,7 @@ public class AadlJarProperties extends ExProperties
 		super(new JavaXmlPropertiesModel());
 	}
 	
-	public AadlJarProperties(File srcFile, CompileSettings settings) {
+	public AadlJarProperties(File srcFile, CompileSettings settings, EditorBuildOptions options) {
 		super(new JavaXmlPropertiesModel());
 		setSourceFilename(srcFile.getName());
 		setRevision(settings.getNextRevision());
@@ -77,6 +63,9 @@ public class AadlJarProperties extends ExProperties
 		setDescription(settings.getDescription());
 		setNote(settings.getNote());
 		setArgumentDetails(settings.getArgumentDetails());
+		if (options != null) {
+			setEnableFatJar(options.isEnabledAadlCompileFatJar());
+		}
 	}
 
 	//------------------------------------------------------------
@@ -229,6 +218,105 @@ public class AadlJarProperties extends ExProperties
 		//--- 総数を保存
 		setInteger(KEY_ARGS_NUM, newNumDetails);
 	}
+	
+	//
+	// Jar with libraries
+	//
+	
+	/**
+	 * Jar に関連ライブラリを含むかどうかの設定を返す。
+	 * @return	Jar に関連ライブラリが含まれる場合は <tt>true</tt>
+	 * @since 4.0.0
+	 */
+	public boolean isEnabledFatJar()
+	{
+		return getBooleanValue(KEY_FATJAR_ENABLED, false);
+	}
+	
+	/**
+	 * Jar に関連ライブラリを含むかどうかを設定する。
+	 * @param toEnable	関連ライブラリを含む場合は <tt>true</tt>
+	 * @since 4.0.0
+	 */
+	public void setEnableFatJar(boolean toEnable)
+	{
+		if (toEnable) {
+			setBooleanValue(KEY_FATJAR_ENABLED, toEnable);
+		}
+		else {
+			// デフォルト値のプロパティは削除
+			clearProperty(KEY_FATJAR_ENABLED);
+		}
+	}
+	
+	/**
+	 * @since 4.0.0
+	 */
+	public void clearFatJarIncludedLibraries()
+	{
+		int num = getNumFatJarIncludedLibraries();
+		if (num > 0) {
+			for (int i = num -1; i >= 0; --i) {
+				clearProperty(getFatJarLibFilenameKey(i));
+				clearProperty(getFatJarLibLicenseKey(i));
+			}
+		}
+	}
+	
+	/**
+	 * @since 4.0.0
+	 */
+	public int getNumFatJarIncludedLibraries()
+	{
+		return getIntegerValue(KEY_FATJAR_LIB_NUM, 0);
+	}
+	
+	/**
+	 * @since 4.0.0
+	 */
+	public String getFatJarIncludedLibraryFilename(int index)
+	{
+		return getString(getFatJarLibFilenameKey(index), null);
+	}
+	
+	/**
+	 * @since 4.0.0
+	 */
+	public String getFatJarIncludedLibraryLicense(int index)
+	{
+		return getString(getFatJarLibLicenseKey(index), null);
+	}
+	
+	/**
+	 * @since 4.0.0
+	 */
+	public void addFatJarIncludedLibrary(String libFilename, String libLicense)
+	{
+		if (libFilename == null || libFilename.isEmpty())
+			throw new IllegalArgumentException("libFilename is null or empty.");
+		
+		int nextIndex = getIntegerValue(KEY_FATJAR_LIB_NUM, 0);
+		setString(getFatJarLibFilenameKey(nextIndex), libFilename);
+		if (libLicense != null && !libLicense.isEmpty())
+			setString(getFatJarLibLicenseKey(nextIndex), libLicense);
+		else
+			clearProperty(getFatJarLibLicenseKey(nextIndex));
+		setIntegerValue(KEY_FATJAR_LIB_NUM, nextIndex+1);
+	}
+	
+	/**
+	 * @since 4.0.0
+	 */
+	public void addIncludedLibrary(LibFileInfo libinfo)
+	{
+		int nextIndex = getIntegerValue(KEY_FATJAR_LIB_NUM, 0);
+		setString(getFatJarLibFilenameKey(nextIndex), libinfo.getLibFile().getName());
+		if (libinfo.hasLicense())
+			setString(getFatJarLibLicenseKey(nextIndex), libinfo.getLicenseName());
+		else
+			clearProperty(getFatJarLibLicenseKey(nextIndex));
+		setIntegerValue(KEY_FATJAR_LIB_NUM, nextIndex+1);
+	}
 
 	//------------------------------------------------------------
 	// Internal methods
@@ -240,5 +328,13 @@ public class AadlJarProperties extends ExProperties
 	
 	static protected final String getArgsDescKey(int index) {
 		return (KEY_ARGS_DESC + Integer.toString(index+1));
+	}
+	
+	static protected final String getFatJarLibFilenameKey(int index) {
+		return (KEY_FATJAR_LIB_FILE + Integer.toString(index+1));
+	}
+	
+	static protected final String getFatJarLibLicenseKey(int index) {
+		return (KEY_FATJAR_LIB_LICENSE + Integer.toString(index+1));
 	}
 }

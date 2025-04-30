@@ -1,29 +1,10 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2009  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
- * @(#)CompileMonitorPane.java	1.00	2008/03/24
- *     - created by Y.Ishizuka(PieCake.inc,)
+ * @(#)CompileMonitorPane.java	4.0.0	2021/08/28 : for Java11
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)CompileMonitorPane.java	1.10	2008/12/05
  *     - modified by Y.Ishizuka(PieCake.inc,)
+ * @(#)CompileMonitorPane.java	1.00	2008/03/24
+ *     - created by Y.Ishizuka(PieCake.inc,)
  */
 package ssac.aadl.editor.view.console;
 
@@ -33,6 +14,7 @@ import javax.swing.JLabel;
 import ssac.aadl.editor.AADLEditor;
 import ssac.aadl.editor.EditorMessages;
 import ssac.aadl.editor.document.IEditorDocument;
+import ssac.aadl.module.setting.EditorBuildOptions;
 import ssac.util.Strings;
 import ssac.util.io.Files;
 import ssac.util.logging.AppLogger;
@@ -41,7 +23,7 @@ import ssac.util.process.CommandExecutor;
 /**
  * 情報ビューのコンパイル・メッセージ・パネル
  * 
- * @version 1.10	2008/12/05
+ * @version 4.0.0
  */
 public class CompileMonitorPane extends AbstractMonitorPane
 {
@@ -49,11 +31,18 @@ public class CompileMonitorPane extends AbstractMonitorPane
 	// Definitions
 	//------------------------------------------------------------
 	
+	private static final long serialVersionUID = -8851152435012933108L;
+	
 	//------------------------------------------------------------
 	// Fields
 	//------------------------------------------------------------
 	
 	private IEditorDocument	targetModel;
+	/**
+	 * AADLEditor の操作に応じたオプションを保持するオブジェクト
+	 * @since 4.0.0
+	 */
+	private EditorBuildOptions	_buildOptions;
 
 	//------------------------------------------------------------
 	// Constructions
@@ -75,12 +64,27 @@ public class CompileMonitorPane extends AbstractMonitorPane
 		return targetModel;
 	}
 	
-	public void setTargetDocument(IEditorDocument newModel) {
+	/**
+	 * AADLEditor の操作によって設定されたビルドオプションを返す。
+	 * @return	ビルドオプション、未設定なら <tt>null</tt>
+	 * @since 4.0.0
+	 */
+	public EditorBuildOptions getEditorBuildOptions() {
+		return _buildOptions; 
+	}
+	
+	/**
+	 * ビルド対象の AADL ソースドキュメントを設定する。
+	 * @param newModel		ビルド対象の AADL ソースドキュメント
+	 * @param buildoptions	AADLEditor の操作に応じたオプション
+	 */
+	public void setTargetDocument(IEditorDocument newModel, EditorBuildOptions buildoptions) {
 		if (isRunning()) {
 			throw new RuntimeException("Already running executor!");
 		}
 		
 		this.targetModel = newModel;
+		this._buildOptions = buildoptions;
 		this.executor = null;
 		
 		// update display
@@ -96,7 +100,7 @@ public class CompileMonitorPane extends AbstractMonitorPane
 			}
 			
 			// create new executor
-			CommandExecutor newExec = targetModel.createCompileExecutor();
+			CommandExecutor newExec = targetModel.createCompileExecutor(_buildOptions);
 			//CommandExecutor newExec = ExecutorFactory.createCompileExecutor(this.srcModel);
 			
 			// clear status

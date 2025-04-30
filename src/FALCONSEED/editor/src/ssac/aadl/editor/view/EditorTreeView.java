@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2014  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)EditorTreeView.java	4.0.0	2021/08/27 : for Java11
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)EditorTreeView.java	3.1.0	2014/05/19
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)EditorTreeView.java	1.17	2011/02/02
@@ -89,6 +70,7 @@ import ssac.util.Objects;
 import ssac.util.Strings;
 import ssac.util.io.DefaultFile;
 import ssac.util.io.Files;
+import ssac.util.io.JarFileInfo;
 import ssac.util.io.VirtualFile;
 import ssac.util.logging.AppLogger;
 import ssac.util.swing.IDialogResult;
@@ -100,7 +82,7 @@ import ssac.util.swing.tree.DnDTree;
 /**
  * エディタのツリービュー
  * 
- * @version 3.1.0	2014/05/19
+ * @version 4.0.0
  * @since 1.14
  */
 public class EditorTreeView extends JPanel implements IMenuActionHandler
@@ -1452,6 +1434,8 @@ public class EditorTreeView extends JPanel implements IMenuActionHandler
 
 	private ModuleTree createTreeComponent() {
 		ModuleTree newTree = new ModuleTree(null, _hTree){
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void onTreeSelectionAdjusted() {
 				super.onTreeSelectionAdjusted();
@@ -2071,6 +2055,7 @@ public class EditorTreeView extends JPanel implements IMenuActionHandler
 	
 	protected class ModulePropertyPanel extends JPanel
 	{
+		private static final long serialVersionUID = 1L;
 		private final JLabel		_cName;
 		private final JScrollPane	_cScroll;
 		private final JEditorPane	_cInfo;
@@ -2151,6 +2136,9 @@ public class EditorTreeView extends JPanel implements IMenuActionHandler
 					AadlJarProfile jarprop = null;
 					try {
 						jarprop = new AadlJarProfile(node.getFileObject());
+						if (jarprop.isFatJar()) {
+							_cName.setText(node.getFilename() + JarFileInfo.FATJAR_SUFFIX_LABEL);
+						}
 					}
 					catch (Throwable ex) {
 						AppLogger.debug("EditroTreeView.ModulePropertyPanel#setTargetFile("

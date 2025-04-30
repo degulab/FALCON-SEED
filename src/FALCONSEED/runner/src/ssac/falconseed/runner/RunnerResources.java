@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2015  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)RunnerResources.java	3.4.0	2020/03/13
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)RunnerResources.java	3.2.1	2015/07/08
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)RunnerResources.java	3.1.0	2014/05/12
@@ -45,7 +26,7 @@ import javax.swing.ImageIcon;
 /**
  * モジュールランナーのリソース。
  * 
- * @version 3.2.1
+ * @version 3.4.0
  */
 public class RunnerResources
 {
@@ -108,6 +89,11 @@ public class RunnerResources
 	static public final Icon ICON_MACROCOMMAND_IF	= getResourceIcon("images/iconMacroCmdIf.png");
 	static public final Icon ICON_MACROCOMMAND_NEXT	= getResourceIcon("images/iconMacroCmdNext.png");
 	static public final Icon ICON_MACROCOMMAND_WAIT	= getResourceIcon("images/iconMacroCmdWait.png");
+	
+	static public final Icon ICON_DB_CREATE			= getResourceIcon("images/iconDbCreate.png");
+	static public final Icon ICON_DB_NEW_IMPORT		= getResourceIcon("images/iconDbNewImport.png");
+	static public final Icon ICON_DB_IMPORT			= getResourceIcon("images/iconDbImport.png");
+	static public final Icon ICON_DB_EXPORT			= getResourceIcon("images/iconDbExport.png");
 	
 	//------------------------------------------------------------
 	// Fields

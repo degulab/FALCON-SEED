@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2012  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)LanguageSelectorDlg.java	4.0.0	2021/08/23 : for Java11
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)LanguageSelectorDlg.java	2.0.0	2012/11/06
  *     - created by Y.Ishizuka(PieCake.inc,)
  */
@@ -63,6 +44,8 @@ public class LanguageSelectorDlg extends JDialog
 	// Constants
 	//------------------------------------------------------------
 	
+	private static final long serialVersionUID = 605864300059790095L;
+	
 	static protected final String DLG_TITLE	= "Language";
 	static protected final String CMB_TITLE	= "Language";
 	
@@ -85,7 +68,7 @@ public class LanguageSelectorDlg extends JDialog
 	protected String		_lang;
 	private Map<String,String> _language_name_map = new HashMap<String,String>();
 	private Map<String,String> _language_map = new TreeMap<String,String>();
-	private JComboBox _language_comboBox = null;
+	private JComboBox<String> _language_comboBox = null;
 
 	//------------------------------------------------------------
 	// Constructions
@@ -216,7 +199,7 @@ public class LanguageSelectorDlg extends JDialog
 
 		panel.add( Box.createHorizontalStrut( 5));
 
-		_language_comboBox = new JComboBox( ( String[])_language_map.keySet().toArray( new String[ 0]));
+		_language_comboBox = new JComboBox<String>( ( String[])_language_map.keySet().toArray( new String[ 0]));
 		_language_comboBox.setPreferredSize( new Dimension( 200, _language_comboBox.getPreferredSize().height));
 		String lang = _language_name_map.get(defaultLanguage);
 		if (lang == null) {

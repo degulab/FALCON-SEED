@@ -1,25 +1,8 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2016  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)SpreadSheetTable.java	5.1.0	2023/01/25
+ *     - modified by Y.Ishizuka(PieCake.inc,)
+ * @(#)SpreadSheetTable.java	4.0.0	2021/08/23 : for Java11
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)SpreadSheetTable.java	3.3.1	2016/06/02 (Java's bug fixed)
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)SpreadSheetTable.java	3.2.0	2015/06/22
@@ -95,7 +78,7 @@ import ssac.util.swing.menu.MenuItemResource;
 /**
  * スプレッドシートのテーブル・コンポーネント。
  * 
- * @version 3.3.1
+ * @version 5.1.0
  * @since 1.10
  */
 public class SpreadSheetTable extends JTable
@@ -1497,6 +1480,42 @@ public class SpreadSheetTable extends JTable
 	}
 
 	//------------------------------------------------------------
+	// Table edit action finished handler
+	//------------------------------------------------------------
+	
+	/**
+	 * メニューアクセラレーターやコマンドなどで、テーブルセルの切り取りが行われた後に呼び出されるイベントハンドラー。
+	 * @since 5.1.0
+	 */
+	protected void onFinishedTableEditCutAction() {
+		// for override
+	}
+	
+	/**
+	 * メニューアクセラレーターやコマンドなどで、テーブルセルのコピーが行われた後に呼び出されるイベントハンドラー。
+	 * @since 5.1.0
+	 */
+	protected void onFinishedTableEditCopyAction() {
+		// for override
+	}
+	
+	/**
+	 * メニューアクセラレーターやコマンドなどで、テーブルセルの貼り付けが行われた後に呼び出されるイベントハンドラー。
+	 * @since 5.1.0
+	 */
+	protected void onFinishedTableEditPasteAction() {
+		// for override
+	}
+	
+	/**
+	 * メニューアクセラレーターやコマンドなどで、テーブルセルの削除が行われた後に呼び出されるイベントハンドラー。
+	 * @since 5.1.0
+	 */
+	protected void onFinishedTableEditDeleteAction() {
+		// for override
+	}
+
+	//------------------------------------------------------------
 	// Internal methods
 	//------------------------------------------------------------
 
@@ -1720,6 +1739,7 @@ public class SpreadSheetTable extends JTable
 		if (TableEditPasteActionName.equals(commandKey)) {
 			// ペースト処理
 			pasteFromClipboard();
+			
 		}
 		else if (TableEditCutActionName.equals(commandKey)
 				|| TableEditCopyActionName.equals(commandKey)
@@ -1770,6 +1790,15 @@ public class SpreadSheetTable extends JTable
 				}
 				//--- 選択を解除
 				clearSelection();
+				//--- 完了
+				if (TableEditCutActionName.equals(commandKey)) {
+					onFinishedTableEditCutAction();
+				} else {
+					onFinishedTableEditDeleteAction();
+				}
+			}
+			else if (TableEditCopyActionName.equals(commandKey)) {
+				onFinishedTableEditCopyAction();
 			}
 		}
 		
@@ -1863,6 +1892,7 @@ public class SpreadSheetTable extends JTable
 		catch (UnsupportedFlavorException ex) {
 			AppLogger.error("Unsupported String flavor in System clipboard data.", ex);
 		}
+		onFinishedTableEditPasteAction();
 	}
 
 	/**
@@ -1974,6 +2004,8 @@ public class SpreadSheetTable extends JTable
 	 * 実行される。
 	 */
 	static class EditActionHandler extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+
 		public EditActionHandler(String commandKey, String name) {
 			super(name);
 			putValue(ACTION_COMMAND_KEY, commandKey);
@@ -2001,6 +2033,8 @@ public class SpreadSheetTable extends JTable
 	 * 何らかのアクションを実行することはない。
 	 */
 	static class MenuAcceleratorActionHandler extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+
 		public MenuAcceleratorActionHandler() {
 			super(MenuAccelerationActionName);
 		}

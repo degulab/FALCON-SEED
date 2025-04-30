@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2012  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)PreferenceDialog.java	4.0.0	2021/08/23 : for Java11
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)PreferenceDialog.java	2.0.0	2012/10/05
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)PreferenceDialog.java	1.14	2009/12/09
@@ -54,6 +35,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -83,7 +65,7 @@ import ssac.util.swing.StaticTextComponent;
 /**
  * 設定ダイアログ
  * 
- * @version 2.0.0	2012/10/05
+ * @version 4.0.0
  */
 public class PreferenceDialog extends BasicDialog
 {
@@ -91,9 +73,16 @@ public class PreferenceDialog extends BasicDialog
 	// Definitions
 	//------------------------------------------------------------
 	
+	private static final long serialVersionUID = 198303244755767490L;
+
 	static private final Dimension DM_MIN_SIZE = new Dimension(580, 420);
 	
 	static private final String FONT_SAMPLE_TEXT = "ABCabcあいう亜居宇";
+	
+	static protected final int TABIDX_GENERAL = 0;
+	static protected final int TABIDX_FONT = 1;
+	static protected final int TABIDX_ENCODING = 2;
+	static protected final int TABIDX_DEBUG = 3;
 	
 	//------------------------------------------------------------
 	// Fields
@@ -392,9 +381,9 @@ public class PreferenceDialog extends BasicDialog
 		
 		if (info != null) {
 			strHome = info.getHomePath();
-			strVersion = info.getVersion();
+			strVersion = info.getVersionString();
 			strCommand = info.getCommandPath();
-			strCompiler = info.getCompilerPath();
+			strCompiler = info.getCompilerVersionString();
 		}
 		
 		if (strVersion == null)
@@ -455,7 +444,56 @@ public class PreferenceDialog extends BasicDialog
 		return new Font(strFontFamily, Font.PLAIN, fSize);
 	}
 	
+	/**
+	 * 設定内容の正当性を確認する。
+	 * @return	設定が正当なら <tt>true</tt>
+	 * @since 4.0.0
+	 */
+	private boolean validateSettings()
+	{
+		// JDK location
+		JavaInfo targetJavaInfo = (this.rbCustomJavaHome.isSelected() ? this.customJavaInfo : AppSettings.getInstance().getDefaultJavaInfo());
+		//--- check available Java
+		if (targetJavaInfo == null || !targetJavaInfo.existJavaCommand()) {
+			if (tab.getSelectedIndex() != TABIDX_GENERAL) {
+				tab.setSelectedIndex(TABIDX_GENERAL);
+			}
+			AADLEditor.showErrorMessage(this, EditorMessages.getInstance().msgUnspecifiedTargetJava);
+			return false;
+		}
+		//--- check compiler
+		if (!targetJavaInfo.existJavaCompiler()) {
+			if (tab.getSelectedIndex() != TABIDX_GENERAL) {
+				tab.setSelectedIndex(TABIDX_GENERAL);
+			}
+			String msg = EditorMessages.getInstance().confirmJavaCompilerNotFound;
+			int ret = AADLEditor.showConfirmMessageBox(this, EditorMessages.getInstance().PreferenceDlg_Title_TargetJDK, msg, JOptionPane.OK_CANCEL_OPTION);
+			if (ret != JOptionPane.OK_OPTION) {
+				return false;
+			}
+		}
+		//--- check version
+		if (targetJavaInfo.getMajorVersionNumber() < AppSettings.LEAST_JAVA_MAJOR_NUMBER) {
+			if (tab.getSelectedIndex() != TABIDX_GENERAL) {
+				tab.setSelectedIndex(TABIDX_GENERAL);
+			}
+			String msg = String.format(EditorMessages.getInstance().confirmUnsupportedJavaVersion, String.valueOf(AppSettings.LEAST_JAVA_MAJOR_NUMBER));
+			int ret = AADLEditor.showConfirmMessageBox(this, EditorMessages.getInstance().PreferenceDlg_Title_TargetJDK, msg, JOptionPane.OK_CANCEL_OPTION);
+			if (ret != JOptionPane.OK_OPTION) {
+				return false;
+			}
+		}
+		
+		// validated
+		return true;
+	}
+	
 	private boolean applySettings() {
+		// validation
+		if (!validateSettings()) {
+			return false;
+		}
+		
 		// store properties from GUI
 		storePreferences();
 		

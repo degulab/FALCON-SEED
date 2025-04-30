@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2016  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)RunnerMenuResources.java	3.4.0	2020/03/15
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)RunnerMenuResources.java	3.3.0	2016/05/31
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)RunnerMenuResources.java	3.2.1	2015/07/08
@@ -57,7 +38,7 @@ import ssac.util.swing.menu.MenuItemResource;
  * このクラスのインスタンスはアプリケーション内で唯一となる。
  * このインスタンスは、インスタンス取得時に自動的に生成される。
  * 
- * @version 3.3.0
+ * @version 3.4.0
  */
 public class RunnerMenuResources
 {
@@ -145,7 +126,12 @@ public class RunnerMenuResources
 	static public final String ID_TOOL_CHART_MENU		= "tool.chart";
 	static public final String ID_TOOL_CHART_SCATTER	= "tool.chart.scatter";
 	static public final String ID_TOOL_CHART_LINE		= "tool.chart.line";
-	static public final String ID_TOOL_EXCEL2CSV		= "tool.excel2csv";
+	//static public final String ID_TOOL_EXCEL2CSV		= "tool.excel2csv";
+	static public final String ID_TOOL_CONVERT_MENU			= "tool.convert";
+	static public final String ID_TOOL_CONVERT_EXCEL2CSV	= "tool.convert.excel2csv";
+	static public final String ID_TOOL_CONVERT_JSON2CSV		= "tool.convert.json2csv";
+	static public final String ID_TOOL_CONVERT_CSV2JSON		= "tool.convert.csv2json";
+	static public final String ID_TOOL_MONGODB				= "tool.mongodb";
 	
 	//--- [Help] menu item IDs
 	static public final String ID_HELP_MENU	= "help";
@@ -762,13 +748,58 @@ public class RunnerMenuResources
                 /* mnemonic    */ KeyEvent.VK_L,
                 /* accelerator */ null);
 		mrmap.put(mr.getCommandKey(), mr);
-		//--- Tool-Excel2csv
-		mr = new MenuItemResource(ID_TOOL_EXCEL2CSV,
-                /* name        */ RunnerMessages.getInstance().menuToolExcel2Csv,
+//		//--- Tool-Excel2csv
+//		mr = new MenuItemResource(ID_TOOL_EXCEL2CSV,
+//                /* name        */ RunnerMessages.getInstance().menuToolExcel2Csv,
+//                /* icon        */ CommonResources.ICON_BLANK,
+//                /* tooltip     */ null,
+//                /* description */ null,
+//                /* mnemonic    */ KeyEvent.VK_E,
+//                /* accelerator */ null);
+//		mrmap.put(mr.getCommandKey(), mr);
+		//--- Tool - Convert
+		mr = new MenuItemResource(ID_TOOL_CONVERT_MENU,
+                /* name        */ RunnerMessages.getInstance().menuToolConvertMenu,
+                /* icon        */ CommonResources.ICON_BLANK,
+                /* tooltip     */ null,
+                /* description */ null,
+                /* mnemonic    */ KeyEvent.VK_C,
+                /* accelerator */ null);
+		mrmap.put(mr.getCommandKey(), mr);
+		//--- Tool - Convert - Excel2csv
+		mr = new MenuItemResource(ID_TOOL_CONVERT_EXCEL2CSV,
+                /* name        */ RunnerMessages.getInstance().menuToolConvertExcel2Csv,
                 /* icon        */ CommonResources.ICON_BLANK,
                 /* tooltip     */ null,
                 /* description */ null,
                 /* mnemonic    */ KeyEvent.VK_E,
+                /* accelerator */ null);
+		mrmap.put(mr.getCommandKey(), mr);
+		//--- Tool - Convert - Json2csv
+		mr = new MenuItemResource(ID_TOOL_CONVERT_JSON2CSV,
+                /* name        */ RunnerMessages.getInstance().menuToolConvertJson2Csv,
+                /* icon        */ CommonResources.ICON_BLANK,
+                /* tooltip     */ null,
+                /* description */ null,
+                /* mnemonic    */ KeyEvent.VK_J,
+                /* accelerator */ null);
+		mrmap.put(mr.getCommandKey(), mr);
+		//--- Tool - Convert - Csv2json
+		mr = new MenuItemResource(ID_TOOL_CONVERT_CSV2JSON,
+                /* name        */ RunnerMessages.getInstance().menuToolConvertCsv2Json,
+                /* icon        */ CommonResources.ICON_BLANK,
+                /* tooltip     */ null,
+                /* description */ null,
+                /* mnemonic    */ KeyEvent.VK_C,
+                /* accelerator */ null);
+		mrmap.put(mr.getCommandKey(), mr);
+		//--- Tool - MongoDB
+		mr = new MenuItemResource(ID_TOOL_MONGODB,
+                /* name        */ RunnerMessages.getInstance().menuToolMongoDB,
+                /* icon        */ CommonResources.ICON_BLANK,
+                /* tooltip     */ null,
+                /* description */ null,
+                /* mnemonic    */ KeyEvent.VK_M,
                 /* accelerator */ null);
 		mrmap.put(mr.getCommandKey(), mr);
 	}

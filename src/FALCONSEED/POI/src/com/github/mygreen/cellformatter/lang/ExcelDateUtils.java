@@ -1,6 +1,7 @@
 package com.github.mygreen.cellformatter.lang;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -148,7 +149,8 @@ public class ExcelDateUtils {
          */
         long utcDay = value.getTime();
         BigDecimal numValue = new BigDecimal(utcDay);
-        numValue = numValue.divide(new BigDecimal(SECONDS_IN_DAYS * 1000), 17, BigDecimal.ROUND_HALF_UP);
+        //numValue = numValue.divide(new BigDecimal(SECONDS_IN_DAYS * 1000), 17, BigDecimal.ROUND_HALF_UP);
+        numValue = numValue.divide(new BigDecimal(SECONDS_IN_DAYS * 1000), 17, RoundingMode.HALF_UP);
         
         if(startDate1904) {
             // 1904年始まりの場合

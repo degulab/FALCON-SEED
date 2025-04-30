@@ -1,27 +1,8 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2009  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)EditorMenuResources.java	4.0.0	2021/08/27 : for Java11
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)EditorMenuResources.java	1.14	2009/12/09
- *     - created by Y.Ishizuka(PieCake.inc,)
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)EditorMenuResources.java	1.10	2008/11/28
  *     - created by Y.Ishizuka(PieCake.inc,)
  */
@@ -43,7 +24,7 @@ import ssac.util.swing.menu.MenuItemResource;
  * このクラスのインスタンスはアプリケーション内で唯一となる。
  * このインスタンスは、インスタンス取得時に自動的に生成される。
  * 
- * @version 1.14	2009/12/09
+ * @version 4.0.0
  * 
  * @since 1.10
  */
@@ -100,16 +81,18 @@ public class EditorMenuResources
 	static public final String ID_FIND_PREV	= "find.prev";
 	
 	//--- [Build] menu item IDs
-	static public final String ID_BUILD_MENU			= "build";
-	static public final String ID_BUILD_COMPILE		= "build.compile";
-	static public final String ID_BUILD_COMPILE_RUN	= "build.compile.run";
-	static public final String ID_BUILD_RUN			= "build.run";
-	static public final String ID_BUILD_RUNASJAR		= "build.runas.jar";
-	static public final String ID_BUILD_COMPILEINDIR	= "build.compile.indir";
-	static public final String ID_BUILD_OPTION		= "build.option";
+	static public final String ID_BUILD_MENU				= "build";
+	static public final String ID_BUILD_COMPILE				= "build.compile.srconly";
+	static public final String ID_BUILD_COMPILE_FATJAR		= "build.compile.fatjar";
+	static public final String ID_BUILD_COMPILE_RUN			= "build.compile.run";
+	static public final String ID_BUILD_COMPILE_FATJAR_RUN	= "build.compile.fatjar.run";
+	static public final String ID_BUILD_RUN					= "build.run";
+	static public final String ID_BUILD_RUNASJAR			= "build.runas.jar";
+	static public final String ID_BUILD_COMPILEINDIR		= "build.compile.indir";
+	static public final String ID_BUILD_OPTION				= "build.option";
 	
 	//--- [Help] menu item IDs
-	static public final String ID_HELP_MENU	= "help";
+	static public final String ID_HELP_MENU		= "help";
 	static public final String ID_HELP_ABOUT	= "help.about";
 
 	/**
@@ -541,13 +524,31 @@ public class EditorMenuResources
                 /* mnemonic    */ KeyEvent.VK_R,
                 /* accelerator */ null);
 		mrmap.put(mr.getCommandKey(), mr);
-		//--- Build-CompileRun
+		//--- Build-Compile-Run
 		mr = new MenuItemResource(ID_BUILD_COMPILE_RUN,
                 /* name        */ EditorMessages.getInstance().menuBuildCompileAndRun,
                 /* icon        */ EditorResources.ICON_BUILD_COMPRUN,
                 /* tooltip     */ EditorMessages.getInstance().tipBuildCompileAndRun,
                 /* description */ null,
                 /* mnemonic    */ KeyEvent.VK_A,
+                /* accelerator */ null);
+		mrmap.put(mr.getCommandKey(), mr);
+		//--- Build-Compile (with-libs)
+		mr = new MenuItemResource(ID_BUILD_COMPILE_FATJAR,
+                /* name        */ EditorMessages.getInstance().menuBuildCompileFatJar,
+                /* icon        */ CommonResources.ICON_BLANK,
+                /* tooltip     */ null,
+                /* description */ null,
+                /* mnemonic    */ KeyEvent.VK_F,
+                /* accelerator */ null);
+		mrmap.put(mr.getCommandKey(), mr);
+		//--- Build-Compile-with-libs-Run
+		mr = new MenuItemResource(ID_BUILD_COMPILE_FATJAR_RUN,
+                /* name        */ EditorMessages.getInstance().menuBuildCompileFatJarAndRun,
+                /* icon        */ CommonResources.ICON_BLANK,
+                /* tooltip     */ null,
+                /* description */ null,
+                /* mnemonic    */ KeyEvent.VK_T,
                 /* accelerator */ null);
 		mrmap.put(mr.getCommandKey(), mr);
 		//--- Build-RunAsJar

@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2010  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)CsvParameters.java	3.4.0	2020/03/14
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)CsvParameters.java	1.17	2010/11/19
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)CsvParameters.java	1.16	2010/09/27
@@ -39,7 +20,7 @@ import ssac.util.Validations;
  * 設定されている。
  * 
  * 
- * @version 1.17	2010/11/19
+ * @version 3.4.0
  * @since 1.16
  */
 public class CsvParameters implements Cloneable
@@ -54,6 +35,8 @@ public class CsvParameters implements Cloneable
 
 	/** ヘッダ行の有無 **/
 	private boolean		_headerLine;
+	/** ヘッダー行とするレコード行数 **/
+	private int			_numHeaderLines;
 	/** データ型の自動判別を行うことを示すフラグ **/
 	private boolean		_autoDetectDataType;
 	/** フィールド区切り文字 **/
@@ -71,6 +54,7 @@ public class CsvParameters implements Cloneable
 	
 	public CsvParameters() {
 		this._headerLine = false;
+		this._numHeaderLines = 0;
 		this._autoDetectDataType = true;
 		this._delimiter = CsvUtil.CSV_DELIMITER_CHAR;
 		this._quote     = CsvUtil.CSV_QUOTE_CHAR;
@@ -109,6 +93,24 @@ public class CsvParameters implements Cloneable
 	 */
 	public void setUseHeaderLine(boolean toUse) {
 		this._headerLine = toUse;
+	}
+	
+	/**
+	 * ヘッダ行を使用する場合のヘッダー行数を取得する。
+	 * @return	設定されているヘッダー行数
+	 * @since 3.4.0
+	 */
+	public int getHeaderLineCount() {
+		return _numHeaderLines;
+	}
+	
+	/**
+	 * ヘッダ行を使用する場合のヘッダー行数を指定する。
+	 * @param count	ヘッダ行数
+	 * @since 3.4.0
+	 */
+	public void setHeaderLineCount(int count) {
+		_numHeaderLines = count;
 	}
 
 	/**
@@ -226,6 +228,7 @@ public class CsvParameters implements Cloneable
 	 */
 	public void setParameters(final CsvParameters newParams) {
 		this._headerLine = newParams._headerLine;
+		this._numHeaderLines = newParams._numHeaderLines;
 		this._autoDetectDataType = newParams._autoDetectDataType;
 		this._delimiter = newParams._delimiter;
 		this._quote     = newParams._quote;
@@ -239,6 +242,7 @@ public class CsvParameters implements Cloneable
 	 */
 	public void getParameters(CsvParameters params) {
 		params._headerLine = this._headerLine;
+		params._numHeaderLines = this._numHeaderLines;
 		params._autoDetectDataType = this._autoDetectDataType;
 		params._delimiter = this._delimiter;
 		params._quote     = this._quote;
@@ -262,6 +266,7 @@ public class CsvParameters implements Cloneable
 		int result = 1;
 		//--- header line
         result = 31 * result + (_headerLine ? 1231 : 1237);
+        result = 31 * result + _numHeaderLines;
 		//--- auto detect data type
         result = 31 * result + (_autoDetectDataType ? 1231 : 1237);
 		//--- delimiter
@@ -285,6 +290,7 @@ public class CsvParameters implements Cloneable
 		if (obj instanceof CsvParameters) {
 			CsvParameters param = (CsvParameters)obj;
 			if (param._headerLine==this._headerLine
+				&& param._numHeaderLines==this._numHeaderLines
 				&& param._autoDetectDataType==this._autoDetectDataType
 				&& param._delimiter==this._delimiter
 				&& param._quote==this._quote
@@ -305,6 +311,8 @@ public class CsvParameters implements Cloneable
 		sb.append(getClass().getName());
 		sb.append("[headerLine(");
 		sb.append(_headerLine);
+		sb.append("), number of headerLines(");
+		sb.append(_numHeaderLines);
 		sb.append("), autoDetectDataType(");
 		sb.append(_autoDetectDataType);
 		sb.append("), delimiter(");

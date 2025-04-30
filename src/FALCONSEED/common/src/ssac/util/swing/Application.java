@@ -1,34 +1,21 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2009  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
+ * @(#)Application.java	4.0.0	2021/08/23
+ *     - modified by Y.Ishizuka(PieCake.inc,)
+ * @(#)Application.java	1.00	2008/03/24
+ *     - created by Y.Ishizuka(PieCake.inc,)
  */
 package ssac.util.swing;
 
 import java.awt.Component;
+import java.awt.Window;
 
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 /**
  * アプリケーションのコンテキストとなるクラス。
  * 
- * @version 1.00 2008/03/24
+ * @version 4.0.0
  */
 public abstract class Application implements Runnable
 {
@@ -45,6 +32,7 @@ public abstract class Application implements Runnable
 	static protected String msgboxTitleInfo = "Information";
 	static protected String msgboxTitleWarn = "Warning";
 	static protected String msgboxTitleError = "Error";
+	static protected String msgboxTitleConfirm = "Confirmation";
 	
 	protected FrameWindow mainFrame;
 
@@ -89,13 +77,36 @@ public abstract class Application implements Runnable
 	
 	static public void showMessageBox(String title, String message, int messageType)
 	{
-		JOptionPane.showMessageDialog(getApplicationMainFrame(), message, title, messageType);
+		//JOptionPane.showMessageDialog(getApplicationMainFrame(), message, title, messageType);
+		showMessageBox(getApplicationMainFrame(), title, message, messageType);
 	}
 	
 	static public void showMessageBox(Component parentComponent, String title,
 										String message, int messageType)
 	{
+		if (parentComponent != null && !(parentComponent instanceof Window)) {
+			Window w = SwingUtilities.getWindowAncestor(parentComponent);
+			if (w != null) {
+				parentComponent = w;
+			}
+		}
 		JOptionPane.showMessageDialog(parentComponent, message, title, messageType);
+	}
+	
+	static public int showConfirmMessageBox(String title, String message, int optionType)
+	{
+		return showConfirmMessageBox(getApplicationMainFrame(), title, message, optionType);
+	}
+	
+	static public int showConfirmMessageBox(Component parentComponent, String title, String message, int optionType)
+	{
+		if (parentComponent != null && !(parentComponent instanceof Window)) {
+			Window w = SwingUtilities.getWindowAncestor(parentComponent);
+			if (w != null) {
+				parentComponent = w;
+			}
+		}
+		return JOptionPane.showConfirmDialog(parentComponent, message, title, optionType);
 	}
 
 	static public void showInfoMessage(String message) {

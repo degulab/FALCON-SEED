@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2016  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)FileChooserManager.java	3.4.0	2020/03/13
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)FileChooserManager.java	3.3.0	2016/05/06
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)FileChooserManager.java	2.0.0	2012/10/12
@@ -62,7 +43,7 @@ import ssac.util.swing.Application;
  * このクラスのインスタンスはアプリケーションで唯一であり、
  * すべての操作は静的メソッドから行う。
  * 
- * @version 3.3.0
+ * @version 3.4.0
  */
 public class FileChooserManager
 {
@@ -90,6 +71,7 @@ public class FileChooserManager
 	private final ExtensionFileFilter filterMExecDef;
 	private final ExtensionFileFilter filterPngImage;
 	private final ExtensionFileFilter filterGraphVizDot;
+	private final ExtensionFileFilter filterJSON;
 
 	//------------------------------------------------------------
 	// Constructions
@@ -116,6 +98,8 @@ public class FileChooserManager
 											RunnerMessages.getInstance().extPNG);
 		filterGraphVizDot = new ExtensionFileFilter(RunnerMessages.getInstance().descExtDOT,
 											RunnerMessages.getInstance().extDOT);
+		filterJSON = new ExtensionFileFilter(RunnerMessages.getInstance().descExtJSON,
+											RunnerMessages.getInstance().extJSON);
 	}
 
 	//------------------------------------------------------------
@@ -264,6 +248,10 @@ public class FileChooserManager
 		}
 		
 		return retFile;
+	}
+	
+	static public final ExtensionFileFilter getJsonFileFilter() {
+		return getInstance().filterJSON;
 	}
 	
 	static public final ExtensionFileFilter getCsvFileFilter() {
@@ -433,6 +421,10 @@ public class FileChooserManager
 		JFileChooser fc = FileDialogManager.createFileChooser(JFileChooser.FILES_ONLY, multiple, initialFile, filters);
 		fc.setDialogTitle(dialogTitle);
 		fc.setApproveButtonText(null);
+		//--- @since 3.4.0
+		if (initialFile != null) {
+			fc.setSelectedFile(initialFile);
+		}
 		
 		int ret = fc.showOpenDialog(parentComponent);
 		if (ret != JFileChooser.APPROVE_OPTION) {
@@ -493,6 +485,9 @@ public class FileChooserManager
 		JFileChooser fc = FileDialogManager.createFileChooser(JFileChooser.FILES_ONLY, false, initialFile, filters);
 		fc.setDialogTitle(dialogTitle);
 		fc.setApproveButtonText(null);
+		if (initialFile != null && !initialFile.isDirectory()) {
+			fc.setSelectedFile(initialFile);
+		}
 
 		int ret = fc.showSaveDialog(parentComponent);
 		if (ret != JFileChooser.APPROVE_OPTION) {
@@ -539,6 +534,8 @@ public class FileChooserManager
 		if (0 <= System.getProperty("os.name").indexOf("Mac")) {
 			//--- for Mac OS X
 			chooser = new JFileChooser(){
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void approveSelection() {
 					File f = getSelectedFile();

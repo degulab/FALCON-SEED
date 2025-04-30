@@ -1,11 +1,86 @@
 ﻿***************************************************************************
 *  FALCON-SEED - Change Log                                               *
-*                                               Last update : 2016/05/31  *
+*                                               Last update : 2025/02/28  *
 ***************************************************************************
 
 ==========================================================================
   FALCON-SEED の変更履歴
 ==========================================================================
+
+◆5.2.0(20250228)
+　・データコンテナエディタに、データバインダー(DtBinder) と複式記述簡易データ伝票 CSV ファイルとの
+　　相互変換(インポート/エクスポート)機能を追加しました。
+　・モジュールランナーのシステムフィルタとして、複式記述簡易データ伝票 CSV ファイルのノート部に対する
+　　条件（ノート部項目検索条件）により、当該レコードのみを抽出し交換代数の CSV 標準形として
+　　出力する以下のフィルタを追加しました。
+　　　　・システム/BasicFilter/Accounting/DoubleEntrySimpleSlipsCsvToExAlgeSetByNoteItems
+
+◆5.1.0(20230130)
+　・データコンテナエディタに、次の機能を追加しました。
+　　　・交換代数元(Exalge)の編集機能
+　　　・データ代数元(Dtalge)の編集機能
+　　　・データコンテナ構造(ツリー)の、切り取り(カット)、コピー、貼り付け(ペースト)機能
+　・上記機能の追加に伴い、データオブジェクトの簡易閲覧機能である「データオブジェクト
+　　情報ビュー」を廃止しました。
+
+◆5.0.0(20221226)
+　・データコンテナ編集機能を提供するデータコンテナ・エディタを追加しました(1.0.0.20221226)
+　・データコンテナ・パッケージを追加しました(0.1.1.20221214)
+　　このパッケージは、データスリップならびにデータバインダーの Java 実装であり、
+　　次のクラスが含まれています。
+　　　dtalge.container.DtBinder
+　　　dtalge.container.DtSlip
+　　　dtalge.container.DtSlipList
+　　また、データコンテナの JSON シリアライズ／デシリアライズのための
+　　インターフェースとして、次のクラスが含まれています。
+　　　dtalge.json.DtJSON
+　　　dtalge.json.DtJsonList
+　　　dtalge.json.DtJsonMap
+　　　dtalge.json.serialize.AbDtJsonSerializer
+　　　dtalge.json.serialize.DtJsonDefaultSerializer
+　　　dtalge.json.serialize.DtJsonDtalgeSerializer
+　　　dtalge.json.serialize.DtJsonDtAlgeSetSerializer
+　　　dtalge.json.serialize.DtJsonDtBaseSerializer
+　　　dtalge.json.serialize.DtJsonDtBinderSerializer
+　　　dtalge.json.serialize.DtJsonDtSlipListSerializer
+　　　dtalge.json.serialize.DtJsonDtSlipMapSerializer
+　　　dtalge.json.serialize.DtJsonSlipSerializer
+　　　dtalge.json.serialize.DtJsonExalgeSerializer
+　　　dtalge.json.serialize.DtJsonExAlgeSetSerializer
+　　　dtalge.json.serialize.DtJsonExBaseSerializer
+　　　dtalge.json.serialize.DtJsonSerializer
+　　　dtalge.json.serialize.DtJsonSerializerManager
+　　各クラスの機能については、以下の Javadoc を参照してください。
+　　　doc/DtContainer-javadoc/index.html
+
+◆4.0.0(20210831)
+　・Java 11 に対応しました。
+　　この対応により、Java 11 より古い Java バージョンでは実行できません。
+　　また、以下のライブラリも Java 11 に対応しました。
+　　　　AADLコンパイラー (aadlc.jar : 4.0.0.20210831)
+　　　　AADLランタイムライブラリ (aadlrt.jar : 4.0.0.20210831)
+　　　　AADLマクロエンジン(AADLMacroEngine.jar : 2.2.0.20210831)
+　　　　交換代数ライブラリ(Exalge2.jar : 0.993.20210831)
+　　　　データ代数ライブラリ(Dtalge.jar : 0.5.2.20210831)
+　　　　MQTTユーティリティ(mqttutil.jar : 0.4.1.20210831)
+　・AADLコンパイラーに、単独実行モジュール(関連ライブラリをすべて含む Jar : Fat-jar)の
+　　出力機能を追加しました。
+　　　　AADLコンパイラー (aadlc.jar : 4.0.0.20210831)
+　・AADLエディタに、単独実行モジュール(関連ライブラリをすべて含む Jar : Fat-jar)の
+　　出力機能を追加しました。
+
+◆3.4.0(20200319)
+　・CSVとJSONの相互変換機能が追加されました。
+　・MongoDBに対するJSONファイルのインポート/エクスポート機能が追加されました。
+　・以下のライブラリについて、いくつかの不具合を修正しました。
+　　　交換代数ライブラリ(exalge2.jar)
+　　　データ代数ライブラリ(dtalge.jar)
+
+◆3.3.1(20191030)
+　・交換代数ライブラリ(exalge2.jar)に、MongoDBアクセス機能が追加されました。
+　　※AADL/ADDL組み込み関数は変更されていません。
+　・データ代数ライブラリ(dtalge.jar)に、MongoDBアクセス機能が追加されました。
+　　※AADL/ADDL組み込み関数は変更されていません。
 
 ◆3.3.0(20160531)
 　・Excel ファイルから CSV ファイルへ変換する機能が追加されました。

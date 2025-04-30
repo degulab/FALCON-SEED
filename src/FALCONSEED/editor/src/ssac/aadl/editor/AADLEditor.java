@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2015  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)AADLEditor.java	4.0.0	2021/08/27 : for Java11
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)AADLEditor.java	3.2.2	2015/10/20 (Bug fixed)
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)AADLEditor.java	3.1.0	2014/05/29
@@ -83,7 +64,6 @@ import ssac.aadl.editor.view.EditorFrame;
 import ssac.aadl.editor.view.dialog.WorkspaceChooser;
 import ssac.aadl.module.ModuleFileManager;
 import ssac.falconseed.common.FSEnvironment;
-import ssac.util.MacUtilities;
 import ssac.util.Strings;
 import ssac.util.logging.AppLogger;
 import ssac.util.swing.Application;
@@ -94,7 +74,7 @@ import ssac.util.swing.table.SpreadSheetTable;
 /**
  * AADLエディタのアプリケーション・メインクラス
  * 
- * @version 3.2.2	2015/10/20
+ * @version 4.0.0
  */
 public class AADLEditor extends Application
 {
@@ -104,8 +84,8 @@ public class AADLEditor extends Application
 	
 	static public final String NAME = "AADL Editor";
 	
-	static public final String VERSION = "3.2.2";
-	static public final String BUILD = "20151020";
+	static public final String VERSION = "4.0.0";
+	static public final String BUILD = "20210831";
 	
 	static public final String SIMPLE_VERSION_INFO
 									= NAME + " " + VERSION + "(" + BUILD + ")";
@@ -281,10 +261,17 @@ public class AADLEditor extends Application
 			// 設定情報の初期化
 			AppSettings.initialize();
 			
+			// Look & Feel の初期化
+			JFrame.setDefaultLookAndFeelDecorated(false);	// Frame概観は、ネイティブに依存
+			String needLF = AppSettings.getInstance().getNeedLookAndFeelClassName();
+			if (!SwingTools.setupLookAndFeel(needLF)) {
+				AppLogger.warn("Failed to setup Look & Feel.");
+			}
+			
 			// 実行環境のチェック
-			if (AppSettings.getInstance().getCurrentJavaCompilerFile() == null) {
-				AppLogger.warn(EditorMessages.getInstance().msgNotFoundJDK);
-				showWarningMessage(null, EditorMessages.getInstance().msgNotFoundJDK);
+			if (!AppSettings.getInstance().existCurrentJavaCompiler()) {
+				AppLogger.warn(EditorMessages.getInstance().msgNotFoundJDKonStart);
+				showWarningMessage(null, EditorMessages.getInstance().msgNotFoundJDKonStart);
 			}
 			if (AppLogger.isInfoEnabled()) {
 				String strmsg;
@@ -311,10 +298,6 @@ public class AADLEditor extends Application
 				sb.append("\n      Home=");
 				f = AppSettings.getInstance().getCurrentJavaHomeFile();
 				sb.append(f != null ? f.getAbsolutePath() : "null");
-				//--- Compiler
-				sb.append("\n      Compiler=");
-				f = AppSettings.getInstance().getCurrentJavaCompilerFile();
-				sb.append(f != null ? f.getAbsolutePath() : "null");
 				//--- Command
 				sb.append("\n      Command=");
 				f = AppSettings.getInstance().getCurrentJavaCommandFile();
@@ -323,17 +306,19 @@ public class AADLEditor extends Application
 				sb.append("\n      Version=");
 				strmsg = AppSettings.getInstance().getCurrentJavaVersion();
 				sb.append(strmsg != null ? strmsg : "null");
+				//--- Compiler.jar
+				sb.append("\n      Compiler.jar=");
+				f = AppSettings.getInstance().getCurrentJavaCompilerJarFile();
+				sb.append(f != null ? f.getAbsolutePath() : "null");
+				//--- Compiler.version
+				sb.append("\n      Compiler.version=");
+				strmsg = AppSettings.getInstance().getCurrentJavaCompilerVersion();
+				sb.append(strmsg != null ? strmsg : "null");
+				//--- end
 				sb.append("\n..... end of information");
 				AppLogger.info(sb.toString());
 			}
 		
-			// Look & Feel の初期化
-			JFrame.setDefaultLookAndFeelDecorated(false);	// Frame概観は、ネイティブに依存
-			String needLF = AppSettings.getInstance().getNeedLookAndFeelClassName();
-			if (!SwingTools.setupLookAndFeel(needLF)) {
-				AppLogger.error("Failed to setup Look & Feel.");
-				return;
-			}
 			//--- Check Look & Feel
 			if (AppLogger.isInfoEnabled()) {
 				UIManager.LookAndFeelInfo[] lfi = UIManager.getInstalledLookAndFeels();
@@ -414,9 +399,10 @@ public class AADLEditor extends Application
 					frame.setIconImage(imgIcon);
 				}
 				frame.initialComponent();
-				if (MacUtilities.isMac()) {
-					MacUtilities.setupScreenMenuHandler(frame);
-				}
+				// 以下は、サポートされない @since 4.0.0
+				//if (MacUtilities.isMac()) {
+				//	MacUtilities.setupScreenMenuHandler(frame);
+				//}
 			
 				// メインフレームの表示
 				this.mainFrame.setVisible(true);

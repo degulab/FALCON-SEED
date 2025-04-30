@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2015  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)CommonResources.java	3.4.0	2020/03/11
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)CommonResources.java	3.2.0	2015/06/22
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)CommonResources.java	3.1.0	2014/05/14
@@ -43,6 +24,7 @@ import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JToggleButton;
 import javax.swing.border.Border;
 
 import ssac.util.swing.MenuToggleButton;
@@ -50,7 +32,7 @@ import ssac.util.swing.MenuToggleButton;
 /**
  * アプリケーション共通のリソース
  * 
- * @version 3.2.0
+ * @version 3.4.0
  * @since 1.14
  */
 public class CommonResources
@@ -248,6 +230,13 @@ public class CommonResources
 	
 	static public JButton createIconButton(Icon icon, String tooltip) {
 		JButton btn = new JButton(icon);
+		btn.setMargin(ICON_BUTTON_MARGIN);
+		btn.setToolTipText(tooltip);
+		return btn;
+	}
+	
+	static public JToggleButton createToggleIconButton(Icon icon, String tooltip) {
+		JToggleButton btn = new JToggleButton(icon);
 		btn.setMargin(ICON_BUTTON_MARGIN);
 		btn.setToolTipText(tooltip);
 		return btn;

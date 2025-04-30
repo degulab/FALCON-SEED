@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2015  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)ModuleConfig.java	4.0.0	2021/08/27 : for Java11
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)ModuleConfig.java	3.2.1	2015/07/23
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)ModuleConfig.java	3.2.0	2015/06/29
@@ -61,6 +42,7 @@ import ssac.util.Classes;
 import ssac.util.Objects;
 import ssac.util.Strings;
 import ssac.util.io.DefaultFile;
+import ssac.util.io.JarFileInfo;
 import ssac.util.io.VirtualFile;
 import ssac.util.process.ClassPathSet;
 import ssac.util.process.CommandExecutor;
@@ -72,7 +54,7 @@ import ssac.util.process.InterruptibleCommandExecutor;
  * このオブジェクトのクローン時には、ユーザー定義データはシャローコピーとなり、
  * 編集時データはディープコピーとなる。
  * 
- * @version 3.2.1	2015/07/23
+ * @version 4.0.0
  * @since 1.22
  */
 public class ModuleRuntimeData extends AbModuleConfig<ModuleArgConfig> implements IModuleResult<ModuleArgConfig>, Cloneable
@@ -1163,11 +1145,16 @@ public class ModuleRuntimeData extends AbModuleConfig<ModuleArgConfig> implement
 		// 現在実行可能なモジュールは、AADLモジュール(JAR)のみ
 		//***********************************************
 		
+		// Fat-jar かどうかを判定し、Fat-jar なら外部ライブラリをクラスパスに追加しないようにする : @since 4.0.0
+		boolean fatjar = JarFileInfo.isFatJarFile(fModule);
+		
 		// ClassPath
 		ClassPathSet pathSet = new ClassPathSet();
 		//pathSet.appendPaths(userClassPaths);
 		pathSet.addPath(fModule);
-		pathSet.appendPaths(execLibraries);
+		if (!fatjar) {
+			pathSet.appendPaths(execLibraries);
+		}
 		CommandExecutor.appendClassPath(cmdList, pathSet);
 		
 		// Main class
@@ -1397,11 +1384,16 @@ public class ModuleRuntimeData extends AbModuleConfig<ModuleArgConfig> implement
 		// 現在実行可能なモジュールは、AADLモジュール(JAR)のみ
 		//***********************************************
 		
+		// Fat-jar かどうかを判定し、Fat-jar なら外部ライブラリをクラスパスに追加しないようにする : @since 4.0.0
+		boolean fatjar = JarFileInfo.isFatJarFile(fModule);
+		
 		// ClassPath
 		ClassPathSet pathSet = new ClassPathSet();
 		//pathSet.appendPaths(userClassPaths);
 		pathSet.addPath(fModule);
-		pathSet.appendPaths(execLibraries);
+		if (!fatjar) {
+			pathSet.appendPaths(execLibraries);
+		}
 		InterruptibleCommandExecutor.appendClassPath(cmdList, pathSet);
 		
 		// Main class

@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2011  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)SourceModel.java	4.0.0	2021/08/28 : for Java11
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)SourceModel.java	1.17	2011/02/02
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)SourceModel.java	1.16	2010/09/27
@@ -63,6 +44,10 @@ import ssac.aadl.editor.setting.AppSettings;
 import ssac.aadl.editor.view.JEncodingComboBox;
 import ssac.aadl.module.setting.AadlJarProperties;
 import ssac.aadl.module.setting.CompileSettings;
+import ssac.aadl.module.setting.EditorBuildOptions;
+import ssac.aadl.module.setting.LibFileInfo;
+import ssac.aadl.module.setting.LibFileType;
+import ssac.aadl.module.setting.LibsInJarInfo;
 import ssac.util.Objects;
 import ssac.util.Strings;
 import ssac.util.Validations;
@@ -74,7 +59,7 @@ import ssac.util.process.CommandExecutor;
 /**
  * AADLソースのドキュメントモデル。
  * 
- * @version 1.17	2011/02/02
+ * @version 4.0.0
  * 
  * @since 1.10
  */
@@ -84,10 +69,11 @@ public class SourceModel extends PlainDocument implements IEditorTextDocument
 	// Constants
 	//------------------------------------------------------------
 
+	private static final long serialVersionUID = 1L;
+
 	//------------------------------------------------------------
 	// Fields
 	//------------------------------------------------------------
-
 	/**
 	 * このドキュメントのマネージャインスタンス
 	 */
@@ -463,10 +449,59 @@ public class SourceModel extends PlainDocument implements IEditorTextDocument
 		return true;
 	}
 	
-	static public ProcessBuilder createCompileProcessBuilder(File sourcefile, CompileSettings compilesettings)
+	static public ProcessBuilder createCompileProcessBuilder(File sourcefile, CompileSettings compilesettings, EditorBuildOptions buildOptions)
 	{
+		// Check user class paths
+		File[] userClassPaths = compilesettings.getClassPathFiles();
+		for (File file : userClassPaths) {
+			if (file == null)
+				throw new IllegalArgumentException("User class path file is null.");
+			if (!file.exists())
+				throw new IllegalArgumentException("User class path file is not found : \"" + file.getPath() + "\"");
+		}
+
 		// create AADL jar module properties, and save to Temp file
-		AadlJarProperties props = new AadlJarProperties(sourcefile, compilesettings);
+		AadlJarProperties props = new AadlJarProperties(sourcefile, compilesettings, buildOptions);
+		
+		// Jar 単一化のためのライブラリ情報を生成
+		String strLibsInJarInfoPath = null;	//--- null なら単一化しない
+		LibsInJarInfo libsinfo = null;	//--- null なら単一化しない
+		if (buildOptions.isEnabledAadlCompileFatJar()) {
+			// 単一化
+			//--- 標準 AADL ランタイムライブラリ情報を取得(cloned)
+			libsinfo = AppSettings.getDefaultAadlExecLibsInfo().getClonedObject();
+			//--- ユーザークラスパスを追加
+			for (int i = 0; i < userClassPaths.length; ++i) {
+				File file = userClassPaths[i];
+				if (file != null && file.exists()) {
+					LibFileInfo info;
+					if (file.isDirectory()) {
+						// classes directory
+						info = new LibFileInfo(LibFileType.CLASSES);
+					}
+					else {
+						// jar file
+						info = new LibFileInfo(LibFileType.JAR);
+					}
+					info.setLibFile(file);;
+					libsinfo.add(i, info);	// 標準ライブラリよりも前に追加
+				}
+			}
+			//--- AADL jar module properties へ、単一化ライブラリ情報を追加
+			for (LibFileInfo elem : libsinfo) {
+				props.addIncludedLibrary(elem);
+			}
+			//--- AADLコンパイラへの引数とするため、ライブラリ情報をテンポラリファイルに保存
+			try {
+				File tempProp = libsinfo.saveToTempFile();
+				strLibsInJarInfoPath = tempProp.getAbsolutePath();
+			}
+			catch (Throwable ex) {
+				throw new IllegalStateException("Cannot create Libraries' property file for Jar-with-libs.", ex);
+			}
+		}
+		
+		// save AADL jar module properties to temporary file
 		String strPropPath = null;
 		try {
 			File tempProp = props.saveToTempFile();
@@ -509,12 +544,11 @@ public class SourceModel extends PlainDocument implements IEditorTextDocument
 		}
 		
 		// Check application settings
-		//File javaCompiler = compilesettings.getTargetJavaCompilerFile();
-		File javaCompiler = AppSettings.getInstance().getCurrentJavaCompilerFile();
-		if (javaCompiler == null)
-			throw new IllegalStateException("Java compiler file is null.");
-		if (!javaCompiler.exists())
-			throw new IllegalStateException("Java compiler file is not found : \"" + javaCompiler.getPath() + "\"");
+		//--- Java compiler jar
+		File javaCompilerJar = AppSettings.getInstance().getCurrentJavaCompilerJarFile();
+		if (javaCompilerJar != null && !javaCompilerJar.exists())
+			throw new IllegalStateException("Java compiler jar file is not found : \"" + javaCompilerJar.getPath() + "\"");
+		//--- default libraries
 		String[] cmpLibraries = AppSettings.getInstance().getCompileLibraries();
 		for (String path : cmpLibraries) {
 			if (Strings.isNullOrEmpty(path))
@@ -525,25 +559,22 @@ public class SourceModel extends PlainDocument implements IEditorTextDocument
 		
 		// ClassPath
 		ClassPaths libPaths = new ClassPaths();
-		libPaths.addPath(javaCompiler);
+		//--- Java-compiler-jar's class-path
+		if (javaCompilerJar != null) {
+			// JavaCompilerJar(=tools.jar) が指定されている場合のみ、クラスパスに含める
+			libPaths.addPath(javaCompilerJar);
+		}
+		//--- libraries' class-paths
 		libPaths.appendPaths(cmpLibraries);
 		ExecutorFactory.addClassPath(cmdList, libPaths);
 		
-		// main class
+		// main class (AADL-Compiler)
 		ExecutorFactory.addMainClassName(cmdList, "ssac.aadlc.Main");
-		
-		// Check user class paths
-		File[] userClassPaths = compilesettings.getClassPathFiles();
-		for (File file : userClassPaths) {
-			if (file == null)
-				throw new IllegalArgumentException("User class path file is null.");
-			if (!file.exists())
-				throw new IllegalArgumentException("User class path file is not found : \"" + file.getPath() + "\"");
-		}
 		
 		// User class paths
 		libPaths.clear();
 		libPaths.appendPaths(userClassPaths);
+		//--- ユーザークラスパスを引数に追加
 		ExecutorFactory.addClassPath(cmdList, libPaths);
 		
 		// Options
@@ -610,6 +641,12 @@ public class SourceModel extends PlainDocument implements IEditorTextDocument
 		cmdList.add("-jarpropfile");
 		cmdList.add(strPropPath);
 		
+		// set Jar-with-libs properties option
+		if (libsinfo != null) {
+			cmdList.add("-fatjar");
+			cmdList.add(strLibsInJarInfoPath);
+		}
+		
 		// source file
 		cmdList.add(sourcefile.getAbsolutePath());
 		
@@ -621,7 +658,7 @@ public class SourceModel extends PlainDocument implements IEditorTextDocument
 		return builder;
 	}
 
-	public CommandExecutor createCompileExecutor()
+	public CommandExecutor createCompileExecutor(EditorBuildOptions buildOptions)
 	{
 		// check exist target
 		if (targetFile == null)
@@ -631,8 +668,57 @@ public class SourceModel extends PlainDocument implements IEditorTextDocument
 		if (!targetFile.isFile())
 			throw new IllegalArgumentException("Target is not file : \"" + targetFile.getPath() + "\"");
 		
+		// Check user class paths
+		File[] userClassPaths = settings.getClassPathFiles();
+		for (File file : userClassPaths) {
+			if (file == null)
+				throw new IllegalArgumentException("User class path file is null.");
+			if (!file.exists())
+				throw new IllegalArgumentException("User class path file is not found : \"" + file.getPath() + "\"");
+		}
+		
 		// create AADL jar module properties, and save to Temp file
-		AadlJarProperties props = new AadlJarProperties(targetFile, settings);
+		AadlJarProperties props = new AadlJarProperties(targetFile, settings, buildOptions);
+		
+		// Jar 単一化のためのライブラリ情報を生成
+		String strLibsInJarInfoPath = null;	//--- null なら単一化しない
+		LibsInJarInfo libsinfo = null;	//--- null なら単一化しない
+		if (buildOptions.isEnabledAadlCompileFatJar()) {
+			// 単一化
+			//--- 標準 AADL ランタイムライブラリ情報を取得(cloned)
+			libsinfo = AppSettings.getDefaultAadlExecLibsInfo().getClonedObject();
+			//--- ユーザークラスパスを追加
+			for (int i = 0; i < userClassPaths.length; ++i) {
+				File file = userClassPaths[i];
+				if (file != null && file.exists()) {
+					LibFileInfo info;
+					if (file.isDirectory()) {
+						// classes directory
+						info = new LibFileInfo(LibFileType.CLASSES);
+					}
+					else {
+						// jar file
+						info = new LibFileInfo(LibFileType.JAR);
+					}
+					info.setLibFile(file);;
+					libsinfo.add(i, info);	// 標準ライブラリよりも前に追加
+				}
+			}
+			//--- AADL jar module properties へ、単一化ライブラリ情報を追加
+			for (LibFileInfo elem : libsinfo) {
+				props.addIncludedLibrary(elem);
+			}
+			//--- AADLコンパイラへの引数とするため、ライブラリ情報をテンポラリファイルに保存
+			try {
+				File tempProp = libsinfo.saveToTempFile();
+				strLibsInJarInfoPath = tempProp.getAbsolutePath();
+			}
+			catch (Throwable ex) {
+				throw new IllegalStateException("Cannot create Libraries' property file for Jar-with-libs.", ex);
+			}
+		}
+		
+		// save AADL jar module properties to temporary file
 		String strPropPath = null;
 		try {
 			File tempProp = props.saveToTempFile();
@@ -675,12 +761,9 @@ public class SourceModel extends PlainDocument implements IEditorTextDocument
 		}
 		
 		// Check application settings
-		//File javaCompiler = settings.getTargetJavaCompilerFile();
-		File javaCompiler = AppSettings.getInstance().getCurrentJavaCompilerFile();
-		if (javaCompiler == null)
-			throw new IllegalStateException("Java compiler file is null.");
-		if (!javaCompiler.exists())
-			throw new IllegalStateException("Java compiler file is not found : \"" + javaCompiler.getPath() + "\"");
+		//--- Java compiler jar
+		File javaCompilerJar = AppSettings.getInstance().getCurrentJavaCompilerJarFile();
+		//--- default libraries
 		String[] cmpLibraries = AppSettings.getInstance().getCompileLibraries();
 		for (String path : cmpLibraries) {
 			if (Strings.isNullOrEmpty(path))
@@ -691,25 +774,22 @@ public class SourceModel extends PlainDocument implements IEditorTextDocument
 		
 		// ClassPath
 		ClassPaths libPaths = new ClassPaths();
-		libPaths.addPath(javaCompiler);
+		//--- Java-compiler-jar's class-path
+		if (javaCompilerJar != null) {
+			// JavaCompilerJar(=tools.jar) が指定されている場合のみ、クラスパスに含める
+			libPaths.addPath(javaCompilerJar);
+		}
+		//--- libraries' class-paths
 		libPaths.appendPaths(cmpLibraries);
 		ExecutorFactory.addClassPath(cmdList, libPaths);
 		
-		// main class
+		// main class (AADL-Compiler)
 		ExecutorFactory.addMainClassName(cmdList, "ssac.aadlc.Main");
-		
-		// Check user class paths
-		File[] userClassPaths = settings.getClassPathFiles();
-		for (File file : userClassPaths) {
-			if (file == null)
-				throw new IllegalArgumentException("User class path file is null.");
-			if (!file.exists())
-				throw new IllegalArgumentException("User class path file is not found : \"" + file.getPath() + "\"");
-		}
 		
 		// User class paths
 		libPaths.clear();
 		libPaths.appendPaths(userClassPaths);
+		//--- ユーザークラスパスを引数に追加
 		ExecutorFactory.addClassPath(cmdList, libPaths);
 		
 		// Options
@@ -775,6 +855,12 @@ public class SourceModel extends PlainDocument implements IEditorTextDocument
 		// set Jar properties option
 		cmdList.add("-jarpropfile");
 		cmdList.add(strPropPath);
+		
+		// set Jar-with-libs properties option
+		if (libsinfo != null) {
+			cmdList.add("-fatjar");
+			cmdList.add(strLibsInJarInfoPath);
+		}
 		
 		// source file
 		cmdList.add(targetFile.getAbsolutePath());
@@ -1109,15 +1195,18 @@ public class SourceModel extends PlainDocument implements IEditorTextDocument
 		// Jar ファイル情報を取得
 		String[] strMainClasses;
 		String strMainClassName;
+		boolean jarWithLibs;
 		try {
 			JarFileInfo jfi = new JarFileInfo(fileDestJar, libClassPaths);
 			strMainClasses = jfi.mainClasses();
 			strMainClassName = jfi.getManifestMainClass();
+			jarWithLibs = jfi.isJarWithLibs();
 		}
 		catch (Throwable ex) {
 			AppLogger.debug(ex);
 			strMainClasses = null;
 			strMainClassName = null;
+			jarWithLibs = false;
 		}
 		if (strMainClasses == null) {
 			// 更新不可
@@ -1148,6 +1237,7 @@ public class SourceModel extends PlainDocument implements IEditorTextDocument
 		// 設定情報を更新
 		compilesettings.setTargetFile(fileDestJar.getAbsoluteFile());
 		compilesettings.setTargetMainClass(strTargetMainClass);
+		compilesettings.setTargetFatJar(jarWithLibs);
 		compilesettings.incrementNextRevision();
 		//--- 変更を保存
 		try {

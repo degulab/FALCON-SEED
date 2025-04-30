@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2016  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)RunnerMessages.java	3.4.0	2020/03/17
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)RunnerMessages.java	3.3.0	2016/05/31
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)RunnerMessages.java	3.2.1	2015/07/22
@@ -57,7 +38,7 @@ import ssac.util.logging.AppLogger;
 /**
  * モジュールランナーの文字列リソース。
  * 
- * @version 3.3.0
+ * @version 3.4.0
  */
 public class RunnerMessages extends FieldResource
 {
@@ -115,6 +96,8 @@ public class RunnerMessages extends FieldResource
 	public String extJar		= ".jar";
 	public String descExtZip	= "ZIP file (*.zip)";
 	public String extZip		= ".zip";
+	public String descExtJSON	= "JSON file (*.json)";
+	public String extJSON		= ".json";
 	public String descExtCSV	= "CSV file (*.csv)";
 	public String extCSV		= ".csv";
 	public String descExtXML	= "XML file (*.xml)";
@@ -205,7 +188,12 @@ public class RunnerMessages extends FieldResource
 	public String menuToolChartMenu		= "Chart";
 	public String menuToolChartScatter	= "Scatter...";
 	public String menuToolChartLine		= "Line...";
-	public String menuToolExcel2Csv		= "Excel to CSV...";
+	//public String menuToolExcel2Csv		= "Excel to CSV...";
+	public String menuToolConvertMenu		= "Convert";
+	public String menuToolConvertExcel2Csv	= "Excel to CSV...";
+	public String menuToolConvertJson2Csv	= "JSON to CSV...";
+	public String menuToolConvertCsv2Json	= "CSV to JSON...";
+	public String menuToolMongoDB			= "MongoDB Tool...";
 	//--- [Help] menu
 	public String menuHelp		= "Help";
 	public String menuHelpAbout	= "About...";
@@ -847,6 +835,121 @@ public class RunnerMessages extends FieldResource
 	public String Excel2csv_msgConfigDestFileIsDir		= "Cannot set the folder to the destination file.";
 	//public String Excel2csv_msgFailedToRenameResults	= "変換結果の一時ファイルからの置き換えに失敗しました。";
 	public String Excel2csv_msgFailedToRenameResults	= "Failed to replace temporary to destination file.";
+
+	//==============================
+	// JSON-CSV Conversion
+	// @since 3.4.0
+	//==============================
+	//public String ConversionJsonCsvConfig_label_delimiter		= "Fileld delimiter";
+	public String ConversionJsonCsvConfig_label_delimiter		= "フィールド区切り文字";
+	//public String ConversionJsonCsvConfig_label_datamodel		= "Data model";
+	public String ConversionJsonCsvConfig_label_datamodel		= "データ形式";
+	//public String ConversionJsonCsvConfig_label_header			= "Header";
+	public String ConversionJsonCsvConfig_label_header			= "ヘッダー行";
+	//public String ConversionJsonCsvConfig_label_format_list		= "Array format";
+	public String ConversionJsonCsvConfig_label_format_list		= "リスト・フォーマット";
+	//public String ConversionJsonCsvConfig_label_format_keyvalue	= "Key-Value format";
+	public String ConversionJsonCsvConfig_label_format_keyvalue	= "Key-Value フォーマット";
+	//public String ConversionJsonCsvConfig_CsvHeader_none		= "None";
+	public String ConversionJsonCsvConfig_CsvHeader_none		= "なし";
+	//public String ConversionJsonCsvConfig_CsvHeader_single		= "Single";
+	public String ConversionJsonCsvConfig_CsvHeader_single		= "先頭行のみ";
+	//public String ConversionJsonCsvConfig_CsvHeader_multi		= "Multiple";
+	public String ConversionJsonCsvConfig_CsvHeader_multi		= "複数行";
+	//public String ConversionJsonCsvConfig_DataModel_Exalge		= "Exalge";
+	public String ConversionJsonCsvConfig_DataModel_Exalge		= "交換代数形式";
+	//public String ConversionJsonCsvConfig_DataModel_Dtalge		= "Dtalge";
+	public String ConversionJsonCsvConfig_DataModel_Dtalge		= "データ代数形式";
+	//public String ConversionJsonCsvConfig_Format_json			= "JSON format";
+	public String ConversionJsonCsvConfig_Format_json			= "JSON 型式";
+	//public String ConversionJsonCsvConfig_Format_elemdelim		= "Element separator";
+	public String ConversionJsonCsvConfig_Format_elemdelim		= "要素区切り文字";
+	//public String ConversionJsonCsvConfig_Format_keyvaldelim	= "Key-Value separator";
+	public String ConversionJsonCsvConfig_Format_keyvaldelim	= "Key-Value 区切り文字";
+	public String ConversionJsonCsvConfig_JsonElemDelim_comma = "コンマ";
+	public String ConversionJsonCsvConfig_JsonElemDelim_tab   = "タブ";
+	public String ConversionJsonCsvConfig_JsonElemDelim_space = "スペース";
+	public String ConversionJsonCsvConfig_JsonKeyValueDelim_equal = "イコール(=)";
+	public String ConversionJsonCsvConfig_JsonKeyValueDelim_colon = "コロン(:)";
+	public String ConversionStructureTable_label_json		= "JSON";
+	public String ConversionStructureTable_label_csv		= "CSV";
+	public String ConversionStructureTableColumn_number		= "No.";
+	public String ConversionStructureTableColumn_name		= "名前";
+	public String ConversionStructureTableColumn_datatype	= "JSON Type";
+	public String ConversionStructureTableColumn_source		= "ソース";
+	public String ConversionStructureButton_tooltip_addToDest		= "出力対象へ追加";
+	public String ConversionStructureButton_tooltip_destMoveUp		= "上へ移動";
+	public String ConversionStructureButton_tooltip_destMoveDown	= "下へ移動";
+	public String ConversionStructureButton_tooltip_destDelete		= "出力対象から削除";
+	public String ConversionJson2CsvDlg_title				= "[JSON to CSV] ファイル変換";
+	public String ConversionJson2CsvDlg_openfile_title		= "JSON ファイルを選択";
+	public String ConversionJson2CsvDlg_destfile_title		= "CSV ファイルへ保存";
+	public String ConversionJson2CsvDlg_label_inputfile		= "JSON ファイル";
+	public String ConversionJson2CsvDlg_tooltip_jsonfile	= "JSON ファイルを開く";
+	public String ConversionJson2CsvDlg_tooltip_addToDest	= "コレクション以外の要素のみ出力対象へ追加";
+	public String ConversionJson2CsvDlg_label_csvconfig		= "CSV 出力設定";
+	public String ConversionJson2CsvDlg_btn_convert			= "CSV ファイルへコンバート";
+	public String ConversionJson2CsvDlg_loadsrc_title		= "JSON ファイルの読み込み";
+	public String ConversionJson2CsvDlg_err_load_json		= "JSON ファイルの読み込みに失敗しました。";
+	public String ConversionJson2CsvDlg_err_conversion		= "JSON から CSV への変換に失敗しました。";
+	public String ConversionCsv2JsonDlg_title				= "[CSV to JSON] ファイル変換";
+	public String ConversionCsv2JsonDlg_openfile_title		= "CSV ファイルを選択";
+	public String ConversionCsv2JsonDlg_destfile_title		= "JSON ファイルへ保存";
+	public String ConversionCsv2JsonDlg_label_inputfile		= "CSV ファイル";
+	public String ConversionCsv2JsonDlg_label_csvconfig		= "CSV 読込設定";
+	public String ConversionCsv2JsonDlg_tooltip_csvfile		= "CSV ファイルを開く";
+	public String ConversionCsv2JsonDlg_tooltip_reload_csv	= "CSV ファイルを再読み込み";
+	public String ConversionCsv2JsonDlg_btn_convert			= "JSON ファイルへコンバート";
+	public String ConversionCsv2JsonDlg_loadsrc_title		= "CSV ファイルの読み込み";
+	public String ConversionCsv2JsonDlg_err_load_csv		= "CSV ファイルの読み込みに失敗しました。";
+	public String ConversionCsv2JsonDlg_err_conversion		= "CSV から JSON への変換に失敗しました。";
+
+	//==============================
+	// MongoDB Tool
+	// @since 3.4.0
+	//==============================
+	public String MongoToolDlg_title				= "MongoDB ツール";
+	//public String MongoToolDlg_tooltip_showpass		= "パスワードの表示/非表示";
+	public String MongoToolDlg_label_hostname		= "ホスト名";
+	public String MongoToolDlg_label_portno			= "ポート番号";
+	public String MongoToolDlg_label_dbname			= "データベース名";
+	public String MongoToolDlg_label_username		= "ユーザー名";
+	public String MongoToolDlg_label_password		= "パスワード";
+	public String MongoToolDlg_label_authdb			= "認証データベース名";
+	public String MongoToolDlg_label_collection		= "コレクション";
+	public String MongoToolDlg_label_newCollection	= "新規コレクション";
+	public String MongoToolDlg_label_importCollection	= "インポート";
+	public String MongoToolDlg_label_exportCollection	= "エクスポート";
+	public String MongoToolDlg_btn_connect			= "接続";
+	public String MongoToolDlg_btn_disconnect		= "切断";
+	public String MongoToolDlg_chk_showpass			= "パスワードを表示";
+	public String MongoToolDlg_chk_use_authdb		= "認証データベースを指定";
+	public String MongoToolDlg_chk_withObjectId		= "Object ID を含める";
+	public String MongoToolDlg_btn_newcol_create	= "コレクション作成";
+	public String MongoToolDlg_btn_newcol_import_json	= "ファイルから作成 (JSON)";
+	public String MongoToolDlg_rdo_import_append	= "コレクションへ追加";
+	public String MongoToolDlg_rdo_import_replace	= "コレクションを置換";
+	public String MongoToolDlg_btn_import_json		= "コレクションへインポート (JSON)";
+	public String MongoToolDlg_btn_export_json		= "コレクションをエクスポート (JSON)";
+	public String MongoToolDlg_tooltip_mcol_del		= "コレクションの削除";
+	public String MongoToolDlg_tooltip_mcol_refresh	= "更新";
+	public String MongoToolCollectionTableColumn_name	= "コレクション名";
+	public String MongoToolCollectionTableColumn_count	= "ドキュメント数";
+	
+	public String MongoToolDlg_err_emptyHost				= "MongoDB のホスト名を指定してください。";
+	public String MongoToolDlg_err_emptyDbName				= "MongoDB のデータベース名を指定してください。";
+	public String MongoToolDlg_err_emptyAuthDb				= "MongoDB の認証データベース名を指定してください。";
+	public String MongoToolDlg_err_emptyPassword			= "パスワードを入力してください。";
+	public String MongoToolDlg_err_access_failed			= "MongoDB にアクセスできません。";
+	public String MongoToolDlg_err_emptyNewColName			= "コレクション名を指定してください。";
+	public String MongoToolDlg_err_existNewColName			= "コレクションはすでに存在しています。";
+	public String MongoToolDlg_err_createCollection			= "コレクションの作成に失敗しました。";
+	public String MongoToolDlg_err_exportCollection			= "コレクションのエクスポートに失敗しました。";
+	public String MongoToolDlg_err_importCollection			= "コレクションのインポートに失敗しました。";
+	public String MongoToolDlg_err_jsonStartPrimitive		= "トップレベルが JSON 配列(array)、もしくは JSON オブジェクト(object)型以外のため、JSON ファイルのインポートを中断しました。";
+	public String MongoToolDlg_err_jsonTopListElemNotKeyVal	= "トップレベルの JSON 配列(array)の要素が JSON オブジェクト(object)型以外のため、JSON ファイルのインポートを中断しました。";
+	public String MongoToolDlg_confirm_replace				= "コレクション[%s]の内容をすべて破棄し、JSON ファイル(%s)をインポートします。\nよろしいですか？";
+	public String MongoToolDlg_confirm_delete				= "コレクション[%s]をデータベースから削除します。\nよろしいですか？";
 
 	//==============================
 	// Messages

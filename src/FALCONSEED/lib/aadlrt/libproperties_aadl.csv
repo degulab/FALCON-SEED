@@ -1,0 +1,6 @@
+jar,name=AADL Runtime library,path=aadlrt.jar,license=The Open World License and MIT License
+jar,name=Data-Container library,path=DtContainer.jar,license=The Open World License and MIT License
+jar,name=Dtalge library,path=Dtalge.jar,license=The Open World License and MIT License
+jar,name=Exalge library,path=Exalge2.jar,license=The Open World License and MIT License
+jar,name=MQTT utility,path=mqttutil.jar
+jar,name=MongoDB Java Driver,path=mongo-java-driver-3.12.10.jar,license=Apache License Version 2.0

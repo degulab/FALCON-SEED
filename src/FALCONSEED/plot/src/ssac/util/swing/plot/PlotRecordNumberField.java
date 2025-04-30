@@ -1,26 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2013  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Hideaki Yagi (MRI)
- */
-/*
+ * @(#)PlotRecordNumberField.java	4.0.0	2021/08/23 : for Java11
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)PlotRecordNumberField.java	2.1.0	2013/07/18
  *     - created by Y.Ishizuka(PieCake.inc,)
  */
@@ -31,7 +11,7 @@ import java.math.BigDecimal;
 /**
  * レコード番号を表示するデータ列に関する情報を保持するクラス。
  * 
- * @version 2.1.0	2013/07/18
+ * @version 4.0.0
  * @since 2.1.0
  */
 public class PlotRecordNumberField extends PlotDataField
@@ -132,7 +112,8 @@ public class PlotRecordNumberField extends PlotDataField
 
 	@Override
 	public Object getFieldValue(long index) {
-		return new Long(getRecordNumber(index));
+		//return new Long(getRecordNumber(index));
+		return Long.valueOf(getRecordNumber(index));
 	}
 
 	@Override

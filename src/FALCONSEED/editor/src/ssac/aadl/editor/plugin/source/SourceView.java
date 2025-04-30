@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2011  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)SourceView.java	4.0.0	2021/08/27 : for Java11
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)SourceView.java	1.17	2011/02/02
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)SourceView.java	1.10	2008/12/02
@@ -39,7 +20,7 @@ import ssac.util.Strings;
 /**
  * AADLソース専用ビュー。
  * 
- * @version 1.17	2011/02/02
+ * @version 4.0.0
  *
  * @since 1.10
  */
@@ -48,6 +29,8 @@ public class SourceView extends AbTextEditorView<SourceModel>
 	//------------------------------------------------------------
 	// Constants
 	//------------------------------------------------------------
+
+	private static final long serialVersionUID = 1L;
 
 	//------------------------------------------------------------
 	// Fields
@@ -148,11 +131,19 @@ public class SourceView extends AbTextEditorView<SourceModel>
 			action.setEnabled(true);
 			return true;
 		}
+		else if (EditorMenuResources.ID_BUILD_COMPILE_FATJAR.equals(command)) {
+			action.setEnabled(true);
+			return true;
+		}
 		else if (EditorMenuResources.ID_BUILD_RUN.equals(command)) {
 			action.setEnabled(true);
 			return true;
 		}
 		else if (EditorMenuResources.ID_BUILD_COMPILE_RUN.equals(command)) {
+			action.setEnabled(true);
+			return true;
+		}
+		else if (EditorMenuResources.ID_BUILD_COMPILE_FATJAR_RUN.equals(command)) {
 			action.setEnabled(true);
 			return true;
 		}

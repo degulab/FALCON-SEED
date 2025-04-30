@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2013  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)FSStartupSettings.java	5.0.0	2022/12/20
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)FSStartupSettings.java	2.1.0	2013/08/13
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)FSStartupSettings.java	2.00	2012/09/05
@@ -46,7 +27,7 @@ import ssac.util.properties.JavaXmlPropertiesModel;
 /**
  * FALCON-SEED 起動用共通パラメータ
  * 
- * @version 2.1.0	2013/08/13
+ * @version 5.0.0
  */
 public class FSStartupSettings
 {
@@ -83,6 +64,7 @@ public class FSStartupSettings
 
 	static private final String KEY_PREFS_APP_LANGUAGE = "app.language";
 	static private final String KEY_PREFS_RUNNER_MEMORY_SIZE = "runner.memory.size";
+	static private final String KEY_PREFS_DTCONTAINEREDITOR_MEMORY_SIZE = "dtdcontainereditor.memory.size";
 	static private final String KEY_PREFS_MOQUETTE_MEMORY_SIZE = "moquette.memory.size";
 	static private final String KEY_PREFS_JAVAPROCCONF_FORCE = "javaproc.config.force";
 	static private final String KEY_PREFS_JAVAPROCCONF_VM_ARGS = "javaproc.config.vmargs";
@@ -158,6 +140,46 @@ public class FSStartupSettings
 			props.setInteger(KEY_PREFS_RUNNER_MEMORY_SIZE, Integer.valueOf(value));
 		} else {
 			props.clearProperty(KEY_PREFS_RUNNER_MEMORY_SIZE);
+		}
+	}
+	
+	//--- KEY_PREFS_DTCONTAINEREDITOR_MEMORY_SIZE
+	
+	public boolean isSpecifiedDtContainerEditorMemorySize() {
+		try {
+			Integer memsize = props.getInteger(KEY_PREFS_DTCONTAINEREDITOR_MEMORY_SIZE, null);
+			return (memsize!=null && memsize.intValue() > 0);
+		}
+		catch (Throwable ex) {
+			return false;
+		}
+	}
+	
+	public int getDtContainerEditorMemorySize() {
+		try {
+			Integer memsize = props.getInteger(KEY_PREFS_DTCONTAINEREDITOR_MEMORY_SIZE, null);
+			if (memsize!=null && memsize.intValue() > 0) {
+				if (memsize.intValue() > MAX_MEMORY_SIZE)
+					return MAX_MEMORY_SIZE;
+				else
+					return memsize.intValue();
+			} else {
+				return 0;
+			}
+		}
+		catch (Throwable ex) {
+			ex = null;
+			return 0;
+		}
+	}
+	
+	public void setDtContainerEditorMemorySize(int value) {
+		if (value >= 0) {
+			if (value > MAX_MEMORY_SIZE)
+				value = MAX_MEMORY_SIZE;
+			props.setInteger(KEY_PREFS_DTCONTAINEREDITOR_MEMORY_SIZE, Integer.valueOf(value));
+		} else {
+			props.clearProperty(KEY_PREFS_DTCONTAINEREDITOR_MEMORY_SIZE);
 		}
 	}
 	

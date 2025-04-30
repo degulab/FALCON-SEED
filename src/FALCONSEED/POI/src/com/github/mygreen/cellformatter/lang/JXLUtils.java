@@ -17,6 +17,7 @@ package com.github.mygreen.cellformatter.lang;
  * @author T.TSUCHIE
  *
  */
+@Deprecated
 public class JXLUtils {
 //    
 //    private static final Logger logger = LoggerFactory.getLogger(JXLUtils.class);

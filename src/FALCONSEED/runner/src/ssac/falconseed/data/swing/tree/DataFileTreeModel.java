@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2011  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)DataFileTreeModel.java	4.0.0	2021/08/23 : for Java11
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)DataFileTreeModel.java	1.10	2011/02/14
  *     - created by Y.Ishizuka(PieCake.inc,)
  */
@@ -40,7 +21,7 @@ import ssac.util.io.VirtualFileFilter;
  * データファイルを表示するためのツリーモデル。
  * <p>このモデルでは、ユーザー定義のルートディレクトリを複数設定することができる。
  * 
- * @version 1.10	2011/02/14
+ * @version 4.0.0
  * @since 1.10
  */
 public class DataFileTreeModel extends FileTreeModel
@@ -71,8 +52,20 @@ public class DataFileTreeModel extends FileTreeModel
 		this(systemRootDir, userRootDir, getDefaultFileFilter(), getDefaultFileTreeNodeComparator());
 	}
 	
+	//public DataFileTreeModel(VirtualFile systemRootDir, VirtualFile userRootDir,
+	//							VirtualFileFilter filter, Comparator<FileTreeNode> comparator)
+	//{
+	//	super(null, filter, comparator);
+	//	super.setRoot(createDefaultRootNode());
+	//	if (systemRootDir != null) {
+	//		createSystemRootNode(systemRootDir);
+	//	}
+	//	if (userRootDir != null) {
+	//		createUserRootNode(userRootDir);
+	//	}
+	//}
 	public DataFileTreeModel(VirtualFile systemRootDir, VirtualFile userRootDir,
-								VirtualFileFilter filter, Comparator<FileTreeNode> comparator)
+								VirtualFileFilter filter, Comparator<? super TreeNode> comparator)
 	{
 		super(null, filter, comparator);
 		super.setRoot(createDefaultRootNode());
@@ -84,8 +77,13 @@ public class DataFileTreeModel extends FileTreeModel
 		}
 	}
 	
+	//protected DataFileTreeModel(FileTreeNode rootNode,
+	//							VirtualFileFilter filter, Comparator<FileTreeNode> comparator)
+	//{
+	//	super(rootNode, filter, comparator);
+	//}
 	protected DataFileTreeModel(FileTreeNode rootNode,
-								VirtualFileFilter filter, Comparator<FileTreeNode> comparator)
+								VirtualFileFilter filter, Comparator<? super TreeNode> comparator)
 	{
 		super(rootNode, filter, comparator);
 	}

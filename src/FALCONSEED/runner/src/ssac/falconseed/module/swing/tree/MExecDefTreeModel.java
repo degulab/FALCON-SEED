@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2010  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)MExecDefTreeModel.java	4.0.0	2021/08/23 : for Java11
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)MExecDefTreeModel.java	1.00	2010/12/20
  *     - created by Y.Ishizuka(PieCake.inc,)
  */
@@ -49,7 +30,7 @@ import ssac.util.swing.tree.AbstractTreeModel;
 /**
  * モジュール実行定義専用のツリーモデル。
  * 
- * @version 1.00	2010/12/20
+ * @version 4.0.0
  */
 public class MExecDefTreeModel extends AbstractTreeModel
 {
@@ -64,7 +45,8 @@ public class MExecDefTreeModel extends AbstractTreeModel
 	/** ツリーノードに登録するファイルを選択するためのフィルタ **/
 	private VirtualFileFilter	_fileFilter;
 	/** ツリーノードの表示順序を制御するためのコンパレータ **/
-	private Comparator<MExecDefTreeNode>	_comparator;
+	private Comparator<? super TreeNode>	_comparator;
+	//private Comparator<MExecDefTreeNode>	_comparator;
 
 	/** システムルートとなるツリーノード **/
 	private MExecDefTreeNode	_rdSystem;
@@ -292,11 +274,29 @@ public class MExecDefTreeModel extends AbstractTreeModel
 		}
 	}
 	
-	public Comparator<MExecDefTreeNode> getNodeComparator() {
+	//public Comparator<MExecDefTreeNode> getNodeComparator() {
+	//	return _comparator;
+	//}
+	public Comparator<? super TreeNode> getNodeComparator() {
 		return _comparator;
 	}
 	
-	public void setNodeComparaotr(Comparator<MExecDefTreeNode> c) {
+	//public void setNodeComparaotr(Comparator<MExecDefTreeNode> c) {
+	//	if (_comparator != c) {
+	//		_comparator = c;
+	//		// システムルート、ユーザールートの子ノードを全て削除し、再構築する。
+	//		MExecDefTreeNode ndSystem = getSystemRootNode();
+	//		if (ndSystem != null) {
+	//			ndSystem.removeAllChildren();
+	//		}
+	//		MExecDefTreeNode ndUser   = getUserRootNode();
+	//		if (ndUser != null) {
+	//			ndUser.removeAllChildren();
+	//		}
+	//		reload();
+	//	}
+	//}
+	public void setNodeComparaotr(Comparator<? super TreeNode> c) {
 		if (_comparator != c) {
 			_comparator = c;
 			// システムルート、ユーザールートの子ノードを全て削除し、再構築する。
@@ -697,7 +697,8 @@ public class MExecDefTreeModel extends AbstractTreeModel
 		if (child == null)
 			throw new IllegalArgumentException("child argument is null.");
 		
-		Comparator<? super MExecDefTreeNode> c = getNodeComparator();
+		//Comparator<? super MExecDefTreeNode> c = getNodeComparator();
+		Comparator<? super TreeNode> c = getNodeComparator();
 		if (c == null) {
 			return parent.getChildCount();
 		} else {
@@ -751,6 +752,73 @@ public class MExecDefTreeModel extends AbstractTreeModel
 	 * (ディレクトリ &le; ファイル) とし、ディレクトリ同士もしくはファイル同士の
 	 * 比較は <code>File</code> の比較結果となる。
 	 */
+	static public class MExecDefTreeNodeComparator implements Comparator<TreeNode>
+	{
+		public int compare(TreeNode node1, TreeNode node2)
+		{
+			boolean node1_dir;
+			boolean node2_dir;
+			VirtualFile node1_file;
+			VirtualFile node2_file;
+			String node1_name;
+			String node2_name;
+			
+			if (node1 instanceof MExecDefTreeNode) {
+				MExecDefTreeNode mn = (MExecDefTreeNode)node1;
+				node1_dir = mn.isDirectory();
+				node1_file = mn.getFileObject();
+				node1_name = mn.getFilename();
+			}
+			else {
+				node1_dir = false;
+				node1_file = null;
+				node1_name = node1.toString();
+			}
+			
+			if (node2 instanceof MExecDefTreeNode) {
+				MExecDefTreeNode mn = (MExecDefTreeNode)node2;
+				node2_dir = mn.isDirectory();
+				node2_file = mn.getFileObject();
+				node2_name = mn.getFilename();
+			}
+			else {
+				node2_dir = false;
+				node2_file = null;
+				node2_name = node2.toString();
+			}
+			
+			// directory < file
+			if (node1_dir) {
+				if (!node2_dir) {
+					// node1(directory) < node2(file)
+					return (-1);
+				}
+				// compare by directory name
+				return compareName(node1_file, node1_name, node2_file, node2_name);
+			}
+			else if (node2_dir) {
+				// node1(file) > node2(directory)
+				return (1);
+			}
+			
+			// compare by file name
+			return compareName(node1_file, node1_name, node2_file, node2_name);
+		}
+		
+		protected int compareName(VirtualFile file1, String name1, VirtualFile file2, String name2)
+		{
+			int cmp = name1.compareToIgnoreCase(name2);
+			if (cmp == 0) {
+				if (file1 != null && file2 != null) {
+					cmp = file1.compareTo(file2);
+				} else {
+					cmp = name1.compareTo(name2);
+				}
+			}
+			return cmp;
+		}
+	}
+	/*** old source ***
 	static public class MExecDefTreeNodeComparator implements Comparator<MExecDefTreeNode>
 	{
 		public int compare(MExecDefTreeNode node1, MExecDefTreeNode node2) {
@@ -784,6 +852,7 @@ public class MExecDefTreeModel extends AbstractTreeModel
 			}
 		}
 	}
+	/*** end of old source ***/
 	
 	/**
 	 * モジュール実行定義ファイルツリーのルート専用ノード。
@@ -857,12 +926,18 @@ public class MExecDefTreeModel extends AbstractTreeModel
 			return null;
 		}
 		
-		public void sortChildren(Comparator<? super MExecDefTreeNode> nodeComparator) {
+		//public void sortChildren(Comparator<? super MExecDefTreeNode> nodeComparator) {
+		//	// no operation
+		//}
+		public void sortChildren(Comparator<? super TreeNode> nodeComparator) {
 			// no operation
 		}
 		
 		@Override
-		public int binarySearch(MExecDefTreeNode child, Comparator<? super MExecDefTreeNode> nodeComparator) {
+		//public int binarySearch(MExecDefTreeNode child, Comparator<? super MExecDefTreeNode> nodeComparator) {
+		//	throw new UnsupportedOperationException("Unsupported binary search.");
+		//}
+		public int binarySearch(MExecDefTreeNode child, Comparator<? super TreeNode> nodeComparator) {
 			throw new UnsupportedOperationException("Unsupported binary search.");
 		}
 	}

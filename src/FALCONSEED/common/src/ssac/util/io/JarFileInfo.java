@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2009  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)JarFileInfo.java	4.0.0	2021/08/27 : for Java11
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)JarFileInfo.java	2.0.0	2012/11/06
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)JarFileInfo.java	1.00	2008/10/16
@@ -41,7 +22,7 @@ import java.util.regex.PatternSyntaxException;
 /**
  * Jarファイルの情報を収集／保持するクラス。
  * 
- * @version 2.0.0	2012/11/06
+ * @version 4.0.0
  *
  * @since 1.00
  */
@@ -53,6 +34,16 @@ public final class JarFileInfo
 	
 	static private final String[] EmptyClassNames = new String[0];
 	
+	/**
+	 * AADL コンパイラが Fat-jar 生成時に生成する、同梱したライブラリ情報を保持するファイルの Jar エントリ完全名。
+	 * @since 4.0.0
+	 */
+	static public final String FATJAR_INCLUDINGLIBS_ENTRYNAME = "META-INF/included-libs.txt";
+	
+	static public final String FATJAR_LABEL = "Fat-jar";
+	static public final String FATJAR_PAREN_LABEL = "(" + FATJAR_LABEL + ")";
+	static public final String FATJAR_SUFFIX_LABEL = " " + FATJAR_PAREN_LABEL;
+	
 	//------------------------------------------------------------
 	// Fields
 	//------------------------------------------------------------
@@ -61,6 +52,7 @@ public final class JarFileInfo
 	private Manifest	jarManifest;
 	private String[]	mainClassNames;
 	private String[]	classNames;
+	private boolean		jarwithlibs;
 
 	//------------------------------------------------------------
 	// Constructions
@@ -99,11 +91,38 @@ public final class JarFileInfo
 	// Public interfaces
 	//------------------------------------------------------------
 	
+	/**
+	 * 指定されたファイルが、included-libs.txt を含む Fat-jar かどうかを判定する。
+	 * このメソッドでは、読み込みエラーが発生した場合も例外をスローせずに <tt>false</tt> を返す。
+	 * @param file	判定対象のファイル
+	 * @return	Fat-jar なら <tt>true</tt>、それ以外の場合は <tt>false</tt>
+	 * @since 4.0.0
+	 */
+	static public boolean isFatJarFile(File file)
+	{
+		JarFile jf = null;
+		try {
+			jf = new JarFile(file);
+			return (jf.getJarEntry(FATJAR_INCLUDINGLIBS_ENTRYNAME) != null);
+		}
+		catch (Throwable ignoreEx) {
+			return false;
+		}
+		finally {
+			if (jf != null) {
+				try {
+					jf.close();
+				} catch (Throwable ignoreEx) {}
+			}
+		}
+	}
+	
 	public void clear() {
 		this.jarFile = null;
 		this.jarManifest = null;
 		this.mainClassNames = EmptyClassNames;
 		this.classNames = EmptyClassNames;
+		this.jarwithlibs = false;
 	}
 	
 	public File getFile() {
@@ -155,6 +174,16 @@ public final class JarFileInfo
 	{
 		analyzJarFile(file, classpath);
 	}
+	
+	/**
+	 * この Jar 内に、関連ライブラリが展開配置されているかどうかを判定する。
+	 * @return	関連ライブラリが展開配置された Jar なら <tt>true</tt>、それ以外の場合は <tt>false</tt>
+	 * @since 4.0.0
+	 */
+	public boolean isJarWithLibs()
+	{
+		return this.jarwithlibs;
+	}
 
 	//------------------------------------------------------------
 	// Internal methods
@@ -180,6 +209,11 @@ public final class JarFileInfo
 				if (je.isDirectory())
 					continue;
 				final String name = je.getName();
+				if (FATJAR_INCLUDINGLIBS_ENTRYNAME.equals(name))	// @since 4.0.0
+				{
+					// 関連ライブラリが Jar 内に展開配置されていることを示す
+					this.jarwithlibs = true;
+				}
 				final String postfix = name.substring(name.length()-6, name.length());
 				if (postfix.equalsIgnoreCase(".class")) {
 					// Java class

@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2011  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)FileTreeNode.java	4.0.0	2021/08/23 : for Java11
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)FileTreeNode.java	1.10	2011/02/14
  *     - created by Y.Ishizuka(PieCake.inc,)
  */
@@ -29,13 +10,14 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeNode;
 
 import ssac.util.io.VirtualFile;
 
 /**
  * ファイルツリー専用ノードの標準インタフェース。
  * 
- * @version 1.10	2011/02/14
+ * @version 4.0.0
  * @since 1.10
  */
 public class FileTreeNode extends DefaultMutableTreeNode
@@ -134,13 +116,28 @@ public class FileTreeNode extends DefaultMutableTreeNode
 		return getUserObject().getFile().getPath();
 	}
 	
-	@SuppressWarnings("unchecked")
-	public void sortChildren(Comparator<? super FileTreeNode> nodeComparator) {
+	//@SuppressWarnings("unchecked")
+	//public void sortChildren(Comparator<? super FileTreeNode> nodeComparator) {
+	//	Collections.sort(children, nodeComparator);
+	//}
+	public void sortChildren(Comparator<? super TreeNode> nodeComparator) {
 		Collections.sort(children, nodeComparator);
 	}
 	
-	@SuppressWarnings("unchecked")
-	public int binarySearch(FileTreeNode child, Comparator<? super FileTreeNode> nodeComparator) {
+	//@SuppressWarnings("unchecked")
+	//public int binarySearch(FileTreeNode child, Comparator<? super FileTreeNode> nodeComparator) {
+	//	if (child == null)
+	//		throw new IllegalArgumentException("The specified child object is null.");
+	//	if (children == null || children.isEmpty())
+	//		return (-1);
+	//	if (nodeComparator == null) {
+	//		// 終端のインデックス
+	//		return (-getChildCount());
+	//	}
+	//	
+	//	return Collections.binarySearch(children, child, nodeComparator);
+	//}
+	public int binarySearch(FileTreeNode child, Comparator<? super TreeNode> nodeComparator) {
 		if (child == null)
 			throw new IllegalArgumentException("The specified child object is null.");
 		if (children == null || children.isEmpty())

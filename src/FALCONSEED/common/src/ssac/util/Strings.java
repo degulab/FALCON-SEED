@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2012  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)Strings.java	4.1.0	2022/12/07
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)Strings.java	2.0.0	2012/09/27
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)Strings.java	1.17	2010/11/19
@@ -38,7 +19,7 @@ import java.util.Vector;
 /**
  * 文字列操作ユーティリティ。
  * 
- * @version 2.0.0	2012/09/27
+ * @version 4.1.0
  *
  * @since 1.00
  */
@@ -53,10 +34,31 @@ public final class Strings
 	//------------------------------------------------------------
 	// Fields
 	//------------------------------------------------------------
+	
+	/**
+	 * 同一スレッド内で共有する {@link StringBuilder} インスタンス。
+	 * @since 4.1.0
+	 */
+	static private ThreadLocal<StringBuilder>	_tlStringBuilder = new ThreadLocal<>();
 
 	//------------------------------------------------------------
 	// Public interfaces
 	//------------------------------------------------------------
+	
+	/**
+	 * 同一スレッド内で唯一の {@link StringBuilder} インスタンスを取得する。
+	 * 余分なメモリ取得をせずに、{@link StringBuilder} インスタンスを使いまわす。
+	 * @return	スレッドローカルな {@link StringBuilder} インスタンス
+	 * @since 4.1.0
+	 */
+	static public final StringBuilder getThreadLocalStringBuilder() {
+		StringBuilder sb = _tlStringBuilder.get();
+		if (sb == null) {
+			sb = new StringBuilder();
+			_tlStringBuilder.set(sb);
+		}
+		return sb;
+	}
 
 	/**
 	 * 指定された引数が <tt>null</tt> の場合に、空文字列を返す。

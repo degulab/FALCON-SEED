@@ -1,26 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2013  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Hideaki Yagi (MRI)
- */
-/*
+ * @(#)CustomPlotBox.java	4.0.0	2021/08/23 : for Java11
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)CustomPlotBox.java	2.1.0	2013/08/12
  *     - created by Y.Ishizuka(PieCake.inc,)
  */
@@ -94,7 +74,7 @@ import ssac.util.swing.ProgressMonitorTask;
 /**
  * <code>ptolemy.plot.PlotBox</code> のカスタマイズ。
  * 
- * @version 2.1.0	2013/08/12
+ * @version 4.0.0
  * @since 2.1.0
  */
 @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -1001,6 +981,7 @@ public class CustomPlotBox extends JPanel implements Printable
 	 *  This method is deprecated.  Use read() instead.
 	 *  @deprecated
 	 */
+	@Deprecated
 	public String getDataurl() {
 		return _filespec;
 	}
@@ -1009,6 +990,7 @@ public class CustomPlotBox extends JPanel implements Printable
 	 *  This method is deprecated.  Use read() instead.
 	 *  @deprecated
 	 */
+	@Deprecated
 	public URL getDocumentBase() {
 		return _documentBase;
 	}
@@ -1265,6 +1247,7 @@ public class CustomPlotBox extends JPanel implements Printable
 	 *  Call setButtons() and read() instead.
 	 *  @deprecated
 	 */
+	@Deprecated
 	public void init() {
 		setButtons(true);
 
@@ -1325,6 +1308,7 @@ public class CustomPlotBox extends JPanel implements Printable
 	 *  read the XML-based file format.
 	 *  @deprecated
 	 */
+	@Deprecated
 	public void parseFile(String filespec) {
 		parseFile(filespec, (URL) null);
 	}
@@ -1332,6 +1316,7 @@ public class CustomPlotBox extends JPanel implements Printable
 	/** Open up the input file, which could be stdin, a URL, or a file.
 	 *  @deprecated This method is deprecated.  Use read() instead.
 	 */
+	@Deprecated
 	public synchronized void parseFile(String filespec, URL documentBase) {
 		DataInputStream in = null;
 
@@ -1813,6 +1798,7 @@ public class CustomPlotBox extends JPanel implements Printable
 	 *  This method is deprecated.  Use read() instead.
 	 *  @deprecated
 	 */
+	@Deprecated
 	public void setDataurl(String filespec) {
 		_filespec = filespec;
 	}
@@ -1821,6 +1807,7 @@ public class CustomPlotBox extends JPanel implements Printable
 	 *  This method is deprecated.  Use read() instead.
 	 *  @deprecated
 	 */
+	@Deprecated
 	public void setDocumentBase(URL documentBase) {
 		_documentBase = documentBase;
 	}
@@ -2232,6 +2219,7 @@ public class CustomPlotBox extends JPanel implements Printable
 	 *  @param out An output stream.
 	 *  @deprecated
 	 */
+	@Deprecated
 	public synchronized void writeOldSyntax(OutputStream out) {
 		// Auto-flush is disabled.
 		PrintWriter output = new PrintWriter(new BufferedOutputStream(out),
@@ -3421,6 +3409,7 @@ public class CustomPlotBox extends JPanel implements Printable
 	 *  This is deprecated.  Use setButtons().
 	 *  @deprecated
 	 */
+	@Deprecated
 	protected void _setButtonsVisibility(boolean vis) {
 		// Changing legend means we need to repaint the offscreen buffer.
 		_plotImage = null;
@@ -3462,6 +3451,7 @@ public class CustomPlotBox extends JPanel implements Printable
 	 *  @param output A buffered print writer.
 	 *  @deprecated
 	 */
+	@Deprecated
 	protected void _writeOldSyntax(PrintWriter output) {
 		output.println("# Ptolemy plot, version 2.0");
 

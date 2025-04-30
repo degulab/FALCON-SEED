@@ -1,25 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
-
-  Copyright 2007-2016  SSAC(Systems of Social Accounting Consortium)
-  <author> Yasunari Ishizuka (PieCake,Inc.)
-  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
-  <author> Yuji Onuki (Statistics Bureau)
-  <author> Shungo Sakaki (Tokyo University of Technology)
-  <author> Akira Sasaki (HOSEI UNIVERSITY)
-  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
--->
 <project default="mkdist" basedir=".">
 	<tstamp>
 		<format property="build.time" pattern="yyyyMMdd" locale="en" />
@@ -32,15 +11,18 @@
 	<property name="pro.title" value="FALCON-SEED Pro" />
 	<property name="vendor" value="FALCON-SEED project, SSAC(Systems of Social Accounting Consortium)" />
 	
-	<property name="main.version" value="20160531" />
-	<property name="common.version" value="20160531" />
-	<property name="manager.version" value="20151020" />
-	<property name="editor.version" value="20151020" />
-	<property name="fscore.version" value="20130701" />
-	<property name="runner.version" value="20160531" />
-	<property name="startup.version" value="20141020" />
-	<property name="prostartup.version" value="20141020" />
-	<property name="fsmodule.version" value="20151020" />
+	<property name="short.version" value="5.2.0" />
+	
+	<property name="main.version" value="5.2.0.20250228" />
+	<property name="common.version" value="5.1.0.20230130" />
+	<property name="manager.version" value="4.0.0.20210831" />
+	<property name="editor.version" value="4.0.0.20210831" />
+	<property name="fscore.version" value="4.0.0.20210831" />
+	<property name="runner.version" value="4.0.0.20210831" />
+	<property name="startup.version" value="5.0.0.20221226" />
+	<property name="prostartup.version" value="5.0.0.20221226" />
+	<property name="fsmodule.version" value="4.0.0.20210831" />
+	<property name="dtceditor.version" value="2.0.0.20250228" />
 	
 	<property name="common.mani.title" value="${title} - Common Library" />
 	<property name="manager.mani.title" value="${title} - Package Manager" />
@@ -48,7 +30,8 @@
 	<property name="fscore.mani.title" value="${title} - Core Library" />
 	<property name="launcher.mani.title" value="${title} - Launcher" />
 	<property name="runner.mani.title" value="${title} - Module Runner" />
-	<property name="fsmodule.main.title" value="${title} - Generic Filter Engine" />
+	<property name="fsmodule.mani.title" value="${title} - Generic Filter Engine" />
+	<property name="dtceditor.mani.title" value="${title} - Data-Container Editor" />
 	
 	<property name="lib.dir" location="${basedir}/lib" />
 	<!-- Common Library source location -->
@@ -84,6 +67,9 @@
 	<!-- POI sources location -->
 	<property name="src.poi.dir" location="${basedir}/POI/src" />
 	<property name="rsc.poi.dir" location="${basedir}/POI/resource" />
+	<!-- Data-Container editor sources location -->
+	<property name="src.dtceditor.dir" location="${basedir}/dtcontainereditor/src" />
+	<property name="rsc.dtceditor.dir" location="${basedir}/dtcontainereditor/resource" />
 	
 
 	<!-- distribution location -->
@@ -104,6 +90,7 @@
 	<property name="build.fsmodule.dir"   location="${build.dir}/fsmodule" />
 	<property name="build.startup.dir"   location="${build.dir}/startup" />
 	<property name="build.prostartup.dir"   location="${build.dir}/prostartup" />
+	<property name="build.dtceditor.dir"   location="${build.dir}/dtcontainereditor" />
 	
 	<property name="common.dist.dir" location="${dist.lib.dir}" />
 	<property name="common.module.name" value="CommonLib" />
@@ -137,6 +124,10 @@
 	<property name="prostartup.dist.dir" location="${dist.dir}" />
 	<property name="prostartup.main.class"  value="ssac.falconseed.pro.startup.FSProMain" />
 	
+	<property name="dtceditor.dist.dir" location="${dist.lib.dir}" />
+	<property name="dtceditor.module.name" value="DtContainerEditor" />
+	<property name="dtceditor.main.class"  value="dtalge.container.editor.DtContainerEditor" />
+	
 	<patternset id="basic.libs">
 		<include name="**/commons-logging-*.jar" />
 		<include name="**/log4j-*.jar" />
@@ -160,6 +151,7 @@
 		<include name="**/Dtalge.jar" />
 		<include name="**/Exalge2.jar" />
 		<include name="**/mqttutil.jar" />
+		<include name="**/mongo-java-driver-*.jar" />
 	</patternset>
 	
 	<patternset id="runner.libs">
@@ -171,10 +163,19 @@
 		<include name="**/poi-ooxml-3.14-*.jar" />
 		<include name="**/poi-ooxml-schemas-3.14-*.jar" />
 		<include name="**/xmlbeans-*.jar" />
+		<include name="**/jsonic-*.jar" />
+	</patternset>
+	
+	<patternset id="dtceditor.libs">
+		<include name="**/jsonic-*.jar" />
+		<include name="**/DtContainer.jar" />
+		<include name="**/Dtalge.jar" />
+		<include name="**/Exalge2.jar" />
 	</patternset>
 	
 	<fileset id="lib.files" dir="${lib.dir}">
 		<include name="**/*.jar" />
+		<include name="**/*.csv" />
 		<include name="resources/**" />
 		<include name="MQTT/**" />
 		<exclude name="sources/**" />
@@ -193,6 +194,7 @@
 		<mkdir dir="${build.fsmodule.dir}" />
 		<mkdir dir="${build.startup.dir}" />
 		<mkdir dir="${build.prostartup.dir}" />
+		<mkdir dir="${build.dtceditor.dir}" />
 		<mkdir dir="${dist.dir}/${module.dir}" />
 		<copy todir="${dist.dir}/${module.dir}">
 			<fileset refid="lib.files" />
@@ -219,11 +221,13 @@
 		<native2ascii encoding="SJIS" src="${rsc.runner.dir}"  dest="${rsc.runner.dir}"  includes="**/*.sjis" ext=".properties" />
 		<native2ascii encoding="SJIS" src="${rsc.fsmodule.dir}"  dest="${rsc.fsmodule.dir}"  includes="**/*.sjis" ext=".properties" />
 		<native2ascii encoding="SJIS" src="${rsc.poi.dir}"  dest="${rsc.poi.dir}"  includes="**/*.sjis" ext=".properties" />
+		<native2ascii encoding="SJIS" src="${rsc.dtceditor.dir}"  dest="${rsc.dtceditor.dir}"  includes="**/*.sjis" ext=".properties" />
 	</target>
 	
 	<!-- Build common library jar -->
 	<target name="mkclass_common" depends="init, native2ascii">
-		<javac destdir="${build.common.dir}" includeantruntime="no" fork="yes" compiler="javac1.6" encoding="UTF-8" source="1.6">
+		<!-- javac destdir="${build.common.dir}" includeantruntime="no" fork="yes" compiler="javac1.8" encoding="UTF-8" source="1.8" -->
+		<javac destdir="${build.common.dir}" includeantruntime="no" fork="yes" compiler="javac10+" encoding="UTF-8" source="11">
 			<compilerarg line="-deprecation -g:${java.compile.option}" />
 			<src path="${src.common.dir}" />
 			<classpath>
@@ -267,7 +271,8 @@
 	
 	<!-- Build fscore library jar -->
 	<target name="mkclass_fscore" depends="mkjar_common">
-		<javac destdir="${build.fscore.dir}" includeantruntime="no" fork="yes" compiler="javac1.6" encoding="UTF-8" source="1.6">
+		<!-- javac destdir="${build.fscore.dir}" includeantruntime="no" fork="yes" compiler="javac1.8" encoding="UTF-8" source="1.8" -->
+		<javac destdir="${build.fscore.dir}" includeantruntime="no" fork="yes" compiler="javac10+" encoding="UTF-8" source="11">
 			<compilerarg line="-deprecation -g:${java.compile.option}" />
 			<src path="${src.fscore.dir}" />
 			<classpath>
@@ -298,7 +303,8 @@
 	
 	<!-- Build Generic Filter library jar -->
 	<target name="mkclass_fsmodule" depends="mkjar_fscore">
-		<javac destdir="${build.fsmodule.dir}" includeantruntime="no" fork="yes" compiler="javac1.6" encoding="UTF-8" source="1.6">
+		<!-- javac destdir="${build.fsmodule.dir}" includeantruntime="no" fork="yes" compiler="javac1.8" encoding="UTF-8" source="1.8" -->
+		<javac destdir="${build.fsmodule.dir}" includeantruntime="no" fork="yes" compiler="javac10+" encoding="UTF-8" source="11">
 			<compilerarg line="-deprecation -g:${java.compile.option}" />
 			<src path="${src.fsmodule.dir}" />
 			<classpath>
@@ -325,10 +331,10 @@
 		<jar destfile="${dist.aadlrt.dir}/${fsmodule.module.name}.jar">
 			<fileset dir="${build.fsmodule.dir}" />
 			<manifest>
-				<attribute name="Specification-Title" value="${fsmodule.main.title}" />
+				<attribute name="Specification-Title" value="${fsmodule.mani.title}" />
 				<attribute name="Specification-Version" value="${fsmodule.version}" />
 				<attribute name="Specification-Vendor" value="${vendor}" />
-				<attribute name="Implementation-Title" value="${fsmodule.main.title}" />
+				<attribute name="Implementation-Title" value="${fsmodule.mani.title}" />
 				<attribute name="Implementation-Version" value="${fsmodule.version}" />
 				<attribute name="Implementation-Vendor" value="${vendor}" />
 				<attribute name="Main-Class" value="${fsmodule.main.class}" />
@@ -340,7 +346,8 @@
 	<!-- Build Applications -->
 	<target name="mkclass_apps" depends="mkjar_fsmodule">
 		<!-- manager -->
-		<javac destdir="${build.manager.dir}" includeantruntime="no" fork="yes" compiler="javac1.6" encoding="UTF-8" source="1.6">
+		<!-- javac destdir="${build.manager.dir}" includeantruntime="no" fork="yes" compiler="javac1.8" encoding="UTF-8" source="1.8" -->
+		<javac destdir="${build.manager.dir}" includeantruntime="no" fork="yes" compiler="javac10+" encoding="UTF-8" source="11">
 			<compilerarg line="-deprecation -g:${java.compile.option}" />
 			<src path="${src.manager.dir}" />
 			<src path="${src.sysutil.dir}" />
@@ -357,7 +364,8 @@
 			<fileset dir="${rsc.manager.dir}" />
 		</copy>
 		<!-- editor -->
-		<javac destdir="${build.editor.dir}" includeantruntime="no" fork="yes" compiler="javac1.6" encoding="UTF-8" source="1.6">
+		<!-- javac destdir="${build.editor.dir}" includeantruntime="no" fork="yes" compiler="javac1.8" encoding="UTF-8" source="1.8" -->
+		<javac destdir="${build.editor.dir}" includeantruntime="no" fork="yes" compiler="javac10+" encoding="UTF-8" source="11">
 			<compilerarg line="-deprecation -g:${java.compile.option}" />
 			<src path="${src.editor.dir}" />
 			<src path="${src.sysutil.dir}" />
@@ -375,7 +383,8 @@
 			<fileset dir="${rsc.editor.dir}" />
 		</copy>
 		<!-- launcher -->
-		<javac destdir="${build.launcher.dir}" includeantruntime="no" fork="yes" compiler="javac1.6" encoding="UTF-8" source="1.6">
+		<!-- javac destdir="${build.launcher.dir}" includeantruntime="no" fork="yes" compiler="javac1.8" encoding="UTF-8" source="1.8" -->
+		<javac destdir="${build.launcher.dir}" includeantruntime="no" fork="yes" compiler="javac10+" encoding="UTF-8" source="11">
 			<compilerarg line="-deprecation -g:${java.compile.option}" />
 			<src path="${src.launcher.dir}" />
 			<src path="${src.sysutil.dir}" />
@@ -392,7 +401,8 @@
 			<fileset dir="${rsc.launcher.dir}" />
 		</copy>
 		<!-- runner -->
-		<javac destdir="${build.runner.dir}" includeantruntime="no" fork="yes" compiler="javac1.6" encoding="UTF-8" source="1.6">
+		<!-- javac destdir="${build.runner.dir}" includeantruntime="no" fork="yes" compiler="javac1.8" encoding="UTF-8" source="1.8" -->
+		<javac destdir="${build.runner.dir}" includeantruntime="no" fork="yes" compiler="javac10+" encoding="UTF-8" source="11">
 			<compilerarg line="-deprecation -g:${java.compile.option}" />
 			<!-- src path="${src.ptolemy.dir}" / -->
 			<src path="${src.ptplot.dir}" />
@@ -420,13 +430,34 @@
 				<include name="com/**/*.properties" />
 			</fileset>
 		</copy>
+		<!-- Data-Container editor -->
+		<!-- javac destdir="${build.dtceditor.dir}" includeantruntime="no" fork="yes" compiler="javac1.8" encoding="UTF-8" source="1.8" -->
+		<javac destdir="${build.dtceditor.dir}" includeantruntime="no" fork="yes" compiler="javac10+" encoding="UTF-8" source="11">
+			<compilerarg line="-deprecation -g:${java.compile.option}" />
+			<src path="${src.dtceditor.dir}" />
+			<src path="${src.sysutil.dir}" />
+			<classpath>
+				<fileset dir="${dist.lib.dir}">
+					<patternset refid="basic.libs" />
+					<patternset refid="common.libs" />
+					<patternset refid="fscore.libs" />
+					<patternset refid="dtceditor.libs" />
+				</fileset>
+				<pathelement path="${lib.mac.jar}" />
+			</classpath>
+		</javac>
+		<copy todir="${build.dtceditor.dir}">
+			<fileset dir="${rsc.dtceditor.dir}" />
+		</copy>
 		<!-- startup -->
-		<javac destdir="${build.startup.dir}" includeantruntime="no" fork="yes" compiler="javac1.6" encoding="UTF-8" source="1.6">
+		<!-- javac destdir="${build.startup.dir}" includeantruntime="no" fork="yes" compiler="javac1.8" encoding="UTF-8" source="1.8" -->
+		<javac destdir="${build.startup.dir}" includeantruntime="no" fork="yes" compiler="javac10+" encoding="UTF-8" source="11">
 			<compilerarg line="-deprecation -g:${java.compile.option}" />
 			<src path="${src.startup.dir}" />
 		</javac>
 		<!-- pro-startup -->
-		<javac destdir="${build.prostartup.dir}" includeantruntime="no" fork="yes" compiler="javac1.6" encoding="UTF-8" source="1.6">
+		<!-- javac destdir="${build.prostartup.dir}" includeantruntime="no" fork="yes" compiler="javac1.8" encoding="UTF-8" source="1.8" -->
+		<javac destdir="${build.prostartup.dir}" includeantruntime="no" fork="yes" compiler="javac10+" encoding="UTF-8" source="11">
 			<compilerarg line="-deprecation -g:${java.compile.option}" />
 			<src path="${src.prostartup.dir}" />
 		</javac>
@@ -535,6 +566,32 @@
 				<attribute name="Class-Path" value="${runner.runtime.classpath}" />
 			</manifest>
 		</jar>
+		<!-- Data-Container editor -->
+		<path id="dtceditor.runtime.libs">
+			<fileset dir="${dist.dir}/${module.dir}">
+				<patternset refid="basic.libs" />
+				<patternset refid="common.libs" />
+				<patternset refid="fscore.libs" />
+				<patternset refid="dtceditor.libs" />
+			</fileset>
+		</path>
+		<pathconvert property="dtceditor.runtime.classpath" pathsep=" " dirsep="/">
+			<path refid="dtceditor.runtime.libs" />
+			<map from="${dist.dir}\lib\" to="" />
+		</pathconvert>
+		<jar destfile="${dist.dir}/${module.dir}/${dtceditor.module.name}.jar">
+			<fileset dir="${build.dtceditor.dir}" />
+			<manifest>
+				<attribute name="Specification-Title" value="${dtceditor.mani.title}" />
+				<attribute name="Specification-Version" value="${dtceditor.version}" />
+				<attribute name="Specification-Vendor" value="${vendor}" />
+				<attribute name="Implementation-Title" value="${dtceditor.mani.title}" />
+				<attribute name="Implementation-Version" value="${dtceditor.version}" />
+				<attribute name="Implementation-Vendor" value="${vendor}" />
+				<attribute name="Main-Class" value="${dtceditor.main.class}" />
+				<attribute name="Class-Path" value="${dtceditor.runtime.classpath}" />
+			</manifest>
+		</jar>
 		<!-- startup -->
 		<jar destfile="${dist.dir}/FALCONSEED.jar">
 			<fileset dir="${build.startup.dir}" />
@@ -565,7 +622,7 @@
 
 	<target name="mkdist" depends="mkjar_apps">
 		<mkdir dir="${dist.dir}/src" />
-		<zip destfile="${dist.dir}/src/FALCONSEED-${main.version}-src.zip">
+		<zip destfile="${dist.dir}/src/FALCONSEED-${short.version}-src.zip">
 			<fileset dir="${basedir}/">
 				<include name="common/" />
 				<include name="editor/" />
@@ -574,12 +631,14 @@
 				<include name="fsmodule/" />
 				<include name="launcher/" />
 				<include name="runner/" />
+				<include name="dtcontainereditor/" />
 				<include name="startup/" />
 				<include name="prostartup/" />
 				<include name="SysUtil/" />
 				<include name="plot/" />
 				<include name="POI/" />
 				<include name="lib/**/*.jar" />
+				<include name="lib/**/*.csv" />
 				<include name="lib/resources/" />
 				<include name="lib/MQTT/" />
 				<exclude name="lib/*.jar" />

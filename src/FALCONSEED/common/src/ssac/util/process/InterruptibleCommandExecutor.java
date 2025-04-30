@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2014  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)InterruptibleCommandExecutor.java	4.0.0	2021/08/29 : for Java11
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)InterruptibleCommandExecutor.java	3.0.0	2014/03/25
  *     - created by Y.Ishizuka(PieCake.inc,)
  */
@@ -37,7 +18,6 @@ import ssac.aadl.macro.process.ManagedProcess;
 import ssac.aadl.macro.process.ProcessUtil;
 import ssac.aadl.macro.util.io.ReportPrinter;
 import ssac.util.Strings;
-import ssac.util.io.Files;
 import ssac.util.logging.AppLogger;
 
 
@@ -61,7 +41,7 @@ import ssac.util.logging.AppLogger;
  * Windows以外のプラットフォームでは、入力文字列そのものが新しいプロセスに
  * 渡される。
  * 
- * @version 3.0.0	2014/03/25
+ * @version 4.0.0
  * @since 3.0.0
  */
 public class InterruptibleCommandExecutor
@@ -665,10 +645,11 @@ public class InterruptibleCommandExecutor
 				}
 				_endTime = System.currentTimeMillis();
 				_running = false;
-				//--- プロセスストリームのクローズ
-				Files.closeStream(_cmdProc.getProcess().getInputStream());
-				Files.closeStream(_cmdProc.getProcess().getErrorStream());
-				Files.closeStream(_cmdProc.getProcess().getOutputStream());
+				//--- プロセスストリームのクローズはコメントアウト(@since 4.0.0)
+				//--- ここでクローズすると、メッセージがすべて出力されずにストリームを閉じてしまう可能性がある(特に Mac)
+				//Files.closeStream(_cmdProc.getProcess().getInputStream());
+				//Files.closeStream(_cmdProc.getProcess().getErrorStream());
+				//Files.closeStream(_cmdProc.getProcess().getOutputStream());
 				//--- プロセス中断メッセージ
 				int stat = _cmdProc.status();
 				if (stat != COMMAND_FINISHED || _interrupted) {

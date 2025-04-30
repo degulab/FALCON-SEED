@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2012  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)ModuleArgRelationMap.java	4.0.0	2021/08/23 : for Java11
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)ModuleArgRelationMap.java	2.0.0	2012/10/15
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)ModuleArgRelationMap.java	1.22	2012/08/20
@@ -49,7 +30,7 @@ import ssac.aadl.module.ModuleArgType;
  * 引数の関連付けにおいて、同一のフィルタIDに属する引数の関連付けは許可しない。
  * </blockquote>
  * 
- * @version 2.0.0	2012/10/15
+ * @version 4.0.0
  * @since 1.22
  */
 public class ModuleArgRelationMap implements Cloneable
@@ -174,26 +155,31 @@ public class ModuleArgRelationMap implements Cloneable
 	}
 
 	/** @deprecated **/
+	@Deprecated
 	public boolean containsIN(final ModuleRuntimeData data, final int argno) {
 		return containsIN(new ModuleArgID(data, argno));
 	}
 	
 	/** @deprecated **/
+	@Deprecated
 	public boolean containsIN(final ModuleArgID aid) {
 		return _destmap.containsKey(aid);
 	}
 	
 	/** @deprecated **/
+	@Deprecated
 	public boolean containsOUT(final ModuleRuntimeData data, final int argno) {
 		return containsOUT(new ModuleArgID(data, argno));
 	}
 	
 	/** @deprecated **/
+	@Deprecated
 	public boolean containsOUT(final ModuleArgID aid) {
 		return _srcmap.containsKey(aid);
 	}
 	
 	/** @deprecated **/
+	@Deprecated
 	public boolean contains(final ModuleArgType type, final ModuleArgID aid) {
 		if (ModuleArgType.OUT == type) {
 			return _srcmap.containsKey(aid);
@@ -243,6 +229,7 @@ public class ModuleArgRelationMap implements Cloneable
 	}
 	
 	/** @deprecated **/
+	@Deprecated
 	public ModuleArgID findOutArgID(final long outRunNo, final int outArgNo) {
 		for (ModuleArgID outkey : _srcmap.keySet()) {
 			if (outRunNo == outkey.runNo() && outArgNo == outkey.argNo()) {
@@ -253,6 +240,7 @@ public class ModuleArgRelationMap implements Cloneable
 	}
 	
 	/** @deprecated **/
+	@Deprecated
 	public ModuleArgID findInArgID(final long inRunNo, final int inArgNo) {
 		for (ModuleArgID inkey : _destmap.keySet()) {
 			if (inRunNo == inkey.runNo() && inArgNo == inkey.argNo()) {
@@ -337,11 +325,13 @@ public class ModuleArgRelationMap implements Cloneable
 	}
 	
 	/** @deprecated **/
+	@Deprecated
 	public ModuleArgID getOutArgID(final ModuleArgID inArgID) {
 		return _destmap.get(inArgID);
 	}
 	
 	/** @deprecated **/
+	@Deprecated
 	public Set<ModuleArgID> getInArgIDs(final ModuleArgID outArgID) {
 		Set<ModuleArgID> inset = _srcmap.get(outArgID);
 		if (inset != null && !inset.isEmpty()) {

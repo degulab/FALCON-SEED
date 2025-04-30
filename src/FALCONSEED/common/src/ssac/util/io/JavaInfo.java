@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2014  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)JavaInfo.java	4.0.0	2021/08/23 : for Java11
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)JavaInfo.java	3.0.0	2014/03/25
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)JavaInfo.java	2.0.0	2012/10/05
@@ -31,8 +12,8 @@ package ssac.util.io;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
+import java.util.ArrayList;
+import java.util.List;
 
 import ssac.util.logging.AppLogger;
 import ssac.util.process.SimpleCommandExecutor;
@@ -42,7 +23,7 @@ import ssac.util.process.SimpleCommandExecutor;
  * Javaホームディレクトリから、Javaバージョン、Javaコマンド、Javaコンパイラの
  * 位置を収集する。
  * 
- * @version 3.0.0	2014/03/25
+ * @version 4.0.0
  */
 public class JavaInfo
 {
@@ -60,9 +41,12 @@ public class JavaInfo
 	private final File fHome;
 	
 	private File	fJavaCommand;
+	private File	fJavacCommand;
 	private File	fCompilerJar;
 	
+	private int		iJavaMajorVersion;
 	private String	strJavaVersion;
+	private String	strCompilerVersion;
 
 	//------------------------------------------------------------
 	// Constructions
@@ -136,16 +120,40 @@ public class JavaInfo
 		return (this.fJavaCommand != null ? this.fJavaCommand.getAbsolutePath() : null);
 	}
 	
-	public File getCompilerFile() {
+	public File getJavacCommandFile() {
+		return this.fJavacCommand;
+	}
+	
+	public String getJavacCommandPath() {
+		return (this.fJavacCommand != null ? this.fJavacCommand.getAbsolutePath() : null);
+	}
+	
+	public File getCompilerJarFile() {
 		return this.fCompilerJar;
 	}
 	
-	public String getCompilerPath() {
+	public String getCompilerJarPath() {
 		return (this.fCompilerJar != null ? this.fCompilerJar.getAbsolutePath() : null);
 	}
 	
-	public String getVersion() {
+	public String getVersionString() {
 		return this.strJavaVersion;
+	}
+	
+	public int getMajorVersionNumber() {
+		return this.iJavaMajorVersion;
+	}
+	
+	public String getCompilerVersionString() {
+		return this.strCompilerVersion;
+	}
+	
+	public boolean existJavaCommand() {
+		return (this.fJavaCommand != null);
+	}
+	
+	public boolean existJavaCompiler() {
+		return (this.strCompilerVersion != null);
 	}
 	
 	public void collect() {
@@ -171,24 +179,16 @@ public class JavaInfo
 		// コマンド検索
 		this.fJavaCommand = getExistFile(targetHome, "bin\\java.exe");
 		//--- バージョン情報取得
-		if (this.fJavaCommand != null) {
-			try {
-				this.strJavaVersion = getJavaVersion(this.fJavaCommand.getAbsolutePath());
-			}
-			catch (Throwable ex) {
-				AppLogger.debug("Failed to exec \"" + this.fJavaCommand.getAbsolutePath() + "\" -version", ex);
-			}
+		if (!collectJavaVersion()) {
+			// error
+			return;
 		}
 		
 		// コンパイラ検索
-		File fJar = getExistFile(targetHome, "lib\\tools.jar");
-		if (fJar == null) {
-			return;		// not found;
-		}
-		if (!isIncludeJavaCompilerClass(fJar)) {
-			return;		// not found;
-		}
-		this.fCompilerJar = fJar;
+		this.fJavacCommand = getExistFile(targetHome, "bin\\javac.exe");
+		this.fCompilerJar = getExistFile(targetHome, "lib\\tools.jar");
+		this.strCompilerVersion = getJavaCompilerVersion(this.fJavaCommand.getAbsolutePath(),
+				(this.fCompilerJar != null ? this.fCompilerJar.getAbsolutePath() : null));
 	}
 	
 	private void collectForOthers() {
@@ -203,67 +203,125 @@ public class JavaInfo
 		// コマンド検索
 		this.fJavaCommand = getExistFile(targetHome, "bin/java");
 		if (this.fJavaCommand == null) {
-			this.fJavaCommand = getExistFile(targetHome, "Commands/java");
-		}
-		//--- java 7 対応
-		if (this.fJavaCommand == null) {
 			this.fJavaCommand = getExistFile(targetHome, "Home/bin/java");
 		}
+		if (this.fJavaCommand == null) {
+			this.fJavaCommand = getExistFile(targetHome, "Commands/java");
+		}
 		//--- バージョン情報取得
-		if (this.fJavaCommand != null) {
-			try {
-				this.strJavaVersion = getJavaVersion(this.fJavaCommand.getAbsolutePath());
-			}
-			catch (Throwable ex) {
-				AppLogger.debug("Failed to exec \"" + this.fJavaCommand.getAbsolutePath() + "\" -version", ex);
-			}
+		if (!collectJavaVersion()) {
+			// error
+			return;
 		}
 		
 		// コンパイラ検索
-		File fJar = getExistFile(targetHome, "lib/tools.jar");
-		if (fJar == null) {
-			fJar = getExistFile(targetHome, "Classes/classes.jar");
-			if (fJar == null) {
-				//--- java 7 対応
-				fJar = getExistFile(targetHome, "Home/lib/tools.jar");
-				if (fJar == null) {
-					return;		// not found
-				}
+		this.fJavacCommand = getExistFile(targetHome, "bin\\javac.exe");
+		if (this.fJavacCommand == null) {
+			this.fJavacCommand = getExistFile(targetHome, "Home/bin/javac");
+		}
+		if (this.fJavacCommand == null) {
+			this.fJavacCommand = getExistFile(targetHome, "Commands/javac");
+		}
+		this.fCompilerJar = getExistFile(targetHome, "lib/tools.jar");
+		if (this.fCompilerJar == null) {
+			this.fCompilerJar = getExistFile(targetHome, "Home/lib/tools.jar");
+		}
+		if (this.fCompilerJar == null) {
+			this.fCompilerJar = getExistFile(targetHome, "Home/lib/tools.jar");
+		}
+		this.strCompilerVersion = getJavaCompilerVersion(this.fJavaCommand.getAbsolutePath(),
+									(this.fCompilerJar != null ? this.fCompilerJar.getAbsolutePath() : null));
+	}
+	
+	private boolean collectJavaVersion()
+	{
+		if (this.fJavaCommand == null) {
+			return false;	// java command does not exist
+		}
+		
+		// コマンド実行
+		try {
+			this.strJavaVersion = getJavaVersion(this.fJavaCommand.getAbsolutePath());
+		}
+		catch (Throwable ex) {
+			AppLogger.debug("Failed to exec \"" + this.fJavaCommand.getAbsolutePath() + "\" -version", ex);
+		}
+		this.iJavaMajorVersion = getJavaMajorVersionFromVersionString(this.strJavaVersion);
+		return (this.iJavaMajorVersion > 0);
+	}
+	
+	private String getJavaCompilerVersion(String javaCmdPath, String compilerJarPath)
+	{
+		// コマンド引数
+		ArrayList<String> cmdlist = new ArrayList<String>();
+		cmdlist.add(javaCmdPath);
+		if (compilerJarPath != null) {
+			cmdlist.add("-cp");
+			cmdlist.add(compilerJarPath);
+		}
+		cmdlist.add("com.sun.tools.javac.Main");
+		cmdlist.add("-version");
+		
+		// コマンド実行
+		int exitcode = 0;
+		String verstr = null;
+		try {
+			SimpleCommandExecutor exec = new SimpleCommandExecutor(cmdlist);
+			exec.redirectErrorStream(true);	// 標準エラー出力は標準出力へリダイレクト
+			exitcode = exec.exec(5000L);	// 最大5秒待つ
+			if (exitcode == 0) {
+				verstr = exec.getOutputString();
 			}
 		}
-		if (!isIncludeJavaCompilerClass(fJar)) {
-			return;		// not found
+		catch (Throwable ex) {
+			AppLogger.debug("Failed to exec " + formatCommandArgs(cmdlist), ex);
+			return null;
 		}
-		this.fCompilerJar = fJar;
+		if (exitcode != 0) {
+			AppLogger.debug("Error(" + String.valueOf(exitcode) + ") : exec " + formatCommandArgs(cmdlist));
+			return null;
+		}
+		if (verstr == null || verstr.isEmpty()) {
+			return null;
+		}
+		
+		// バージョン番号取得
+		if (verstr.startsWith("javac ")) {
+			return verstr.substring("javac ".length());
+		} else {
+			return null;
+		}
+	}
+	
+	private String formatCommandArgs(List<String> cmdlist)
+	{
+		StringBuilder sb = new StringBuilder();
+		for (String arg : cmdlist) {
+			if (sb.length() > 0) {
+				sb.append(' ');
+			}
+			if (arg.indexOf(' ') >= 0) {
+				sb.append('\"');
+				sb.append(arg);
+				sb.append('\"');
+			}
+			else {
+				sb.append(arg);
+			}
+		}
+		return sb.toString();
 	}
 	
 	private String getJavaVersion(String javaCmdPath) throws IOException
 	{
-//		// コマンド実行
-//		CommandExecutor exec = new CommandExecutor(javaCmdPath, "-version");
-//		exec.start();
-//		try {
-//			exec.waitFor(5000);	// wait for command, limit 5 seconds
-//		} catch (InterruptedException ex) {}
-//		exec.destroy();
-//		if (AppLogger.isInfoEnabled()) {
-//			AppLogger.info("[" + exec.getProcessIdentifierString() + "] Java command stopped! --- Exit code : " + exec.getExitCode());
-//		}
-//		
-//		// 文字列取得
-//		StringBuffer sb = new StringBuffer();
-//		while (!exec.getCommandOutput().isEmpty()) {
-//			OutputString ostr = exec.getCommandOutput().pop();
-//			sb.append(ostr.getString());
-//		}
-//		String str = sb.toString();
-//		exec = null;
-//		sb = null;
-		
 		// コマンド実行
 		SimpleCommandExecutor exec = new SimpleCommandExecutor(javaCmdPath, "-version");
 		exec.redirectErrorStream(true);	// 標準エラー出力は標準出力へリダイレクト
-		exec.exec(5000L);	// 最大5秒待つ
+		int exitcode = exec.exec(5000L);	// 最大5秒待つ
+		if (exitcode != 0) {
+			AppLogger.debug("Error(" + String.valueOf(exitcode) + ") : exec \"" + this.fJavaCommand.getAbsolutePath() + "\" -version");
+			return null;
+		}
 		
 		// バージョン番号取得
 		String str = exec.getOutputString();
@@ -275,6 +333,26 @@ public class JavaInfo
 			str = null;
 		}
 		return str;
+	}
+	
+	private int getJavaMajorVersionFromVersionString(String verstr)
+	{
+		if (verstr != null && !verstr.isEmpty()) {
+			if (verstr.startsWith("1.")) {
+				verstr = verstr.substring(2);
+			}
+			try {
+				return Integer.parseInt( verstr.substring(0, verstr.indexOf('.')) );
+			}
+			catch (Throwable ex) {
+				// unexpected version string
+				return 0;
+			}
+		}
+		else {
+			// unexpected version string
+			return 0;
+		}
 	}
 
 	// 基準パスと相対パスから、ファイルの有無を確認する
@@ -297,6 +375,7 @@ public class JavaInfo
 		return file;
 	}
 
+	/*** deleted : 2021-08-23 ***
 	// 指定のファイルに Javaコンパイラ・クラスが含まれているかを検証する
 	// 検証対象クラス：com.sun.tools.javac.Main
 	private boolean isIncludeJavaCompilerClass(File jarFile) {
@@ -325,4 +404,5 @@ public class JavaInfo
 		}
 		return flgExist;
 	}
+	/*** ***/
 }

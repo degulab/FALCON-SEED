@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2012  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)AppSettings.java	4.0.0	2021/08/27 : for Java11
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)AppSettings.java	1.21	2012/08/21
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)AppSettings.java	1.14	2009/12/17
@@ -37,12 +18,10 @@ import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 import javax.swing.UIManager;
 
+import ssac.aadl.common.CachedLibsInJarInfo;
 import ssac.aadl.common.StartupSettings;
 import ssac.aadl.editor.AADLEditor;
 import ssac.aadl.macro.AADLMacroEngine;
@@ -59,7 +38,7 @@ import ssac.util.swing.TextEditorPane;
  * アプリケーションの設定情報。
  * 設定ダイアログにより設定される情報を操作するための機能を提供する。
  * 
- * @version 1.21	2012/08/21
+ * @version 4.0.0
  */
 public class AppSettings
 {
@@ -67,25 +46,37 @@ public class AppSettings
 	// Definitions
 	//------------------------------------------------------------
 	
-	static public final String SECTION_STAT	= "Status";
+	/**
+	 * 実行可能な Java の最小メジャーバージョン番号
+	 * @since 4.0.0
+	 */
+	static public final int	LEAST_JAVA_MAJOR_NUMBER = 11;
+	
+	/**
+	 * AADL実行時に必要なランタイムライブラリ情報を保持するファイルのパスを含まない名称
+	 * @since 4.0.0
+	 */
+	static public final String DEF_AADLRT_LIB_PROPERTIES_FILENAME = "libproperties_aadl.csv";
+	
+	static public final String SECTION_STAT		= "Status";
 	static public final String SECTION_PREFS	= "Preferences";
 	
 	//--- target
 
 	static public final String DOCUMENT			= SECTION_STAT + ".Document";
-	static public final String JARMODULE			= SECTION_STAT + ".JarModule";
-	static public final String MAINFRAME			= SECTION_STAT + ".MainFrame";
+	static public final String JARMODULE		= SECTION_STAT + ".JarModule";
+	static public final String MAINFRAME		= SECTION_STAT + ".MainFrame";
 	static public final String OUTER_FRAME		= MAINFRAME + ".outer";
 	static public final String INNER_FRAME		= MAINFRAME + ".inner";
-	static public final String PROP_FRAME			= MAINFRAME + ".property";
-	static public final String PREFERENCE_DLG		= SECTION_STAT + ".PreferenceDlg";
+	static public final String PROP_FRAME		= MAINFRAME + ".property";
+	static public final String PREFERENCE_DLG	= SECTION_STAT + ".PreferenceDlg";
 	static public final String BUILDOPTION_DLG	= SECTION_STAT + ".BuildOptionDlg";
 	static public final String JUMP_DLG			= SECTION_STAT + ".JumpDlg";
 	static public final String FIND_DLG			= SECTION_STAT + ".FindDlg";
 	static public final String COMPILEALLFOLDER_DLG = SECTION_STAT + ".CompileAllFolderDlg";
 	static public final String WORKSPACE_CHOOSER	= SECTION_STAT + ".WorkspaceChooser";
 
-	static public final String EDITOR		= SECTION_PREFS + ".EditorPanel";
+	static public final String EDITOR	= SECTION_PREFS + ".EditorPanel";
 	static public final String CONSOLE	= SECTION_PREFS + ".ConsolePanel";
 	static public final String COMPILE	= SECTION_PREFS + ".CompilePanel";
 	
@@ -97,8 +88,8 @@ public class AppSettings
 	
 	//--- settings
 	
-	static public final String KEY_PREFS_JAVAHOME_PATH	= SECTION_PREFS + ".JavaHome" + ".path";
-	static public final String KEY_PREFS_JAVAVM_OPTIONS	= SECTION_PREFS + ".JavaVM" + ".vmArgs";
+	static public final String KEY_PREFS_JAVAHOME_PATH		= SECTION_PREFS + ".JavaHome" + ".path";
+	static public final String KEY_PREFS_JAVAVM_OPTIONS		= SECTION_PREFS + ".JavaVM" + ".vmArgs";
 	static public final String KEY_PREFS_COMPILER_VMARGS	= SECTION_PREFS + ".Compiler" + ".vmArgs";
 	
 	//static public final String KEY_PREFS_JAVAC_JAR		= CompileSettings.KEY_JAVAC_JAR;
@@ -107,10 +98,10 @@ public class AppSettings
 	
 	//static public final String KEY_PREFS_ENCODING_AADL_SRC	= CompileSettings.KEY_ENCODING_NAME;
 	static public final String OLD_KEY_PREFS_ENCODING_AADL_SRC = "Compile.Encoding.name";
-	static public final String KEY_PREFS_ENCODING_AADL_SRC	= "aadl.source.encoding";
+	static public final String KEY_PREFS_ENCODING_AADL_SRC		= "aadl.source.encoding";
 	static public final String KEY_PREFS_ENCODING_AADL_MACRO	= "aadl.macro.csv.encoding";
-	static public final String KEY_PREFS_ENCODING_AADL_CSV	= "aadl.csv.encoding";
-	static public final String KEY_PREFS_ENCODING_AADL_TXT	= "aadl.txt.encoding";
+	static public final String KEY_PREFS_ENCODING_AADL_CSV		= "aadl.csv.encoding";
+	static public final String KEY_PREFS_ENCODING_AADL_TXT		= "aadl.txt.encoding";
 	
 	static public final String KEY_PREFS_LAST_WORKSPACE	= "editor.workspace.latest";
 	static public final String KEY_PREFS_WORKSPACE_LIST	= "editor.workspace.list";
@@ -137,14 +128,20 @@ public class AppSettings
 	static private JavaInfo	defJavaInfo;
 
 	static private String[]	aryDefaultCompileClassPath = null;
-	static private String[]	aryDefaultExecClassPath = null;
-	static private String		defineFileEncoding = null;
+	//static private String[]	aryDefaultExecClassPath = null;	// removed @since 4.0.0
+	static private String	defineFileEncoding = null;
 
 	private static AppSettings instance = null;
 	
 	private final ExConfiguration props;
 	
 	private JavaInfo	userJavaInfo;
+	
+	/**
+	 * AADL実行時に必要なランタイムライブラリ情報のキャッシュ
+	 * @since 4.0.0
+	 */
+	static private CachedLibsInJarInfo	_cachedAadlRuntimeLibsInfo;
 
 	//------------------------------------------------------------
 	// Static interfaces
@@ -381,7 +378,36 @@ public class AppSettings
 	 * @return バージョン番号を示す文字列
 	 */
 	public String getCurrentJavaVersion() {
-		return getCurrentJavaInfo().getVersion();
+		return getCurrentJavaInfo().getVersionString();
+	}
+	
+	/**
+	 * 有効なJava情報のメジャーバージョン番号を取得する。
+	 * メジャーバージョン番号が取得できない場合は 0 を返す。
+	 * @return メジャーバージョン番号
+	 * @since 4.0.0
+	 */
+	public int getCurrentJavaMajorNumber() {
+		return getCurrentJavaInfo().getMajorVersionNumber();
+	}
+	
+	/**
+	 * 有効なJava情報のコンパイラーバージョン番号を取得する。
+	 * コンパイラーバージョンが取得できない場合は null を返す。
+	 * @return バージョン番号を示す文字列
+	 * @since 4.0.0
+	 */
+	public String getCurrentJavaCompilerVersion() {
+		return getCurrentJavaInfo().getCompilerVersionString();
+	}
+	
+	/**
+	 * 有効なJava情報にコンパイラーが含まれているかどかを判定する。
+	 * @return	コンパイラーが含まれている場合は <tt>true</tt>
+	 * @since 4.0.0
+	 */
+	public boolean existCurrentJavaCompiler() {
+		return getCurrentJavaInfo().existJavaCompiler();
 	}
 
 	/**
@@ -403,23 +429,25 @@ public class AppSettings
 	}
 
 	/**
-	 * 有効なJava情報のコンパイラ・ファイルを取得する。
-	 * コンパイラが存在しない場合は null を返す。
+	 * 有効なJava情報のコンパイラ Jar ファイルを取得する。
+	 * 存在しない場合は null を返す。
 	 * 
-	 * @return Javaコンパイラの絶対パス
+	 * @return Javaコンパイラ jar の絶対パス
+	 * @since 4.0.0
 	 */
-	public File getCurrentJavaCompilerFile() {
-		return getCurrentJavaInfo().getCompilerFile();
+	public File getCurrentJavaCompilerJarFile() {
+		return getCurrentJavaInfo().getCompilerJarFile();
 	}
 
 	/**
-	 * 有効なJava情報のコンパイラ・ファイルを取得する。
-	 * コンパイラが存在しない場合は null を返す。
+	 * 有効なJava情報のコンパイラ jar ファイルを取得する。
+	 * 存在しない場合は null を返す。
 	 * 
-	 * @return Javaコンパイラの絶対パス
+	 * @return Javaコンパイラ jar の絶対パス
+	 * @since 4.0.0
 	 */
-	public String getCurrentJavaCompilerPath() {
-		return getCurrentJavaInfo().getCompilerPath();
+	public String getCurrentJavaCompilerJarPath() {
+		return getCurrentJavaInfo().getCompilerJarPath();
 	}
 
 	/**
@@ -440,6 +468,20 @@ public class AppSettings
 	 */
 	public String getCurrentJavaCommandPath() {
 		return getCurrentJavaInfo().getCommandPath();
+	}
+	
+	/**
+	 * AADLモジュールの実行に必要なライブラリ情報オブジェクトを取得する。
+	 * @return	ライブラリ情報オブジェクト
+	 * @since 4.0.0
+	 */
+	static public synchronized CachedLibsInJarInfo getDefaultAadlExecLibsInfo()
+	{
+		if (_cachedAadlRuntimeLibsInfo == null) {
+			File targetFile = new File(getAadlRuntimeLibrariesDirFile(), DEF_AADLRT_LIB_PROPERTIES_FILENAME);
+			_cachedAadlRuntimeLibsInfo = new CachedLibsInJarInfo(targetFile);
+		}
+		return _cachedAadlRuntimeLibsInfo;
 	}
 
 	//------------------------------------------------------------
@@ -725,9 +767,9 @@ public class AppSettings
 		return this.props.getString(KEY_PREFS_JAVAVM_OPTIONS, null);
 	}
 
-	/**
+	/*
 	 * @deprecated このメソッドは削除される。
-	 */
+	 *
 	public List<String> getJavaVMoptionList() {
 		List<String> vmList;
 		String strOptions = getJavaVMoptions();
@@ -739,6 +781,7 @@ public class AppSettings
 		}
 		return vmList;
 	}
+	/** **/
 	
 	public void setJavaVMoptions(String options) {
 		if (!Strings.isNullOrEmpty(options)) {
@@ -776,9 +819,9 @@ public class AppSettings
 		return this.props.getString(KEY_PREFS_COMPILER_VMARGS, null);
 	}
 
-	/**
+	/*
 	 * @deprecated このメソッドは削除される。
-	 */
+	 *
 	public List<String> getCompilerVMargsList() {
 		List<String> vmList;
 		String strOptions = getCompilerVMargs();
@@ -790,6 +833,7 @@ public class AppSettings
 		}
 		return vmList;
 	}
+	/** **/
 
 	public void setCompilerVMargs(String options) {
 		if (!Strings.isNullOrEmpty(options)) {
@@ -875,18 +919,51 @@ public class AppSettings
 			this.props.clearProperty(KEY_PREFS_WORKSPACE_LIST);
 		}
 	}
+	
+	/**
+	 * AADLのコンパイルに必要なライブラリが格納されているディレクトリの絶対パスを取得する。
+	 * @return	AADLコンパイル用ライブラリが格納されたディレクトリの絶対パス
+	 * @since 4.0.0
+	 */
+	static public File getAadlCompilerLibrariesDirFile()
+	{
+		File path = new File(AADLEditor.getLibDirFile(), "aadlc");
+		try {
+			return path.getAbsoluteFile().getCanonicalFile();
+		} catch (Throwable ex) {
+			return path.getAbsoluteFile();
+		}
+	}
+	
+	/**
+	 * AADLモジュールの実行に必要なランタイムライブラリが格納されているディレクトリの絶対パスを取得する。
+	 * @return	AADLモジュール実行用ランタイムライブラリが格納されたディレクトリの絶対パス
+	 * @since 4.0.0
+	 */
+	static public File getAadlRuntimeLibrariesDirFile()
+	{
+		File path = new File(AADLEditor.getLibDirFile(), "aadlrt");
+		try {
+			return path.getAbsoluteFile().getCanonicalFile();
+		} catch (Throwable ex) {
+			return path.getAbsoluteFile();
+		}
+	}
 
 	//------------------------------------------------------------
 	// Internal methods
 	//------------------------------------------------------------
 	
-	static private String[] getDefaultCompileClassPaths() {
-		if (aryDefaultCompileClassPath != null) {
+	synchronized static private String[] getDefaultCompileClassPaths() {
+		CachedLibsInJarInfo libinfo = getDefaultAadlExecLibsInfo();
+		
+		if (libinfo.isAvailable() && aryDefaultCompileClassPath != null) {
 			return aryDefaultCompileClassPath;
 		}
 
 		//aryDefaultCompileClassPath = getDefaultLibraryPaths(DEF_COMPILE_LIBS);
-		String[] defExecLibs = getDefaultExecLibraryPaths();
+		//String[] defExecLibs = getDefaultExecLibraryPaths();
+		String[] defExecLibs = libinfo.getLibraryPaths();
 		String[] defCompLibs = getDefaultCompileLibraryPaths();
 		aryDefaultCompileClassPath = new String[defExecLibs.length + defCompLibs.length];
 		int idx = 0;
@@ -899,14 +976,16 @@ public class AppSettings
 		return aryDefaultCompileClassPath;
 	}
 	
-	static private String[] getDefaultExecClassPaths() {
-		if (aryDefaultExecClassPath != null) {
-			return aryDefaultExecClassPath;
-		}
+	synchronized static private String[] getDefaultExecClassPaths() {
+		return getDefaultAadlExecLibsInfo().getLibraryPaths();
 		
-		//aryDefaultExecClassPath = getDefaultLibraryPaths(DEF_EXEC_LIBS);
-		aryDefaultExecClassPath = getDefaultExecLibraryPaths();
-		return aryDefaultExecClassPath;
+		// @since 4.0.0 : 以下は削除
+		//if (aryDefaultExecClassPath != null) {
+		//	return aryDefaultExecClassPath;
+		//}
+		//
+		//aryDefaultExecClassPath = getDefaultExecLibraryPaths();
+		//return aryDefaultExecClassPath;
 	}
 	
 	static private final java.io.FileFilter javaLibFilter = new java.io.FileFilter(){
@@ -926,19 +1005,20 @@ public class AppSettings
 		}
 	};
 
-	/**
+	/* @since 4.0.0 : 削除
 	 * AADLモジュールの実行に必要なランタイムライブラリを取得する。
 	 * このメソッドは、AADLエディタのパス構成で <code>&quot;lib/aadlrt&quot;</code> ディレクトリに
 	 * 格納されている Jar もしくは Zip ファイルをすべて収集する。
 	 * @return	標準実行ライブラリの絶対パスリスト
-	 */
+	 *
 	static private String[] getDefaultExecLibraryPaths() {
-		File path = new File(AADLEditor.getLibDirFile(), "aadlrt");
-		try {
-			path = path.getAbsoluteFile().getCanonicalFile();
-		} catch (Throwable ex) {
-			path = path.getAbsoluteFile();
-		}
+		//File path = new File(AADLEditor.getLibDirFile(), "aadlrt");
+		//try {
+		//	path = path.getAbsoluteFile().getCanonicalFile();
+		//} catch (Throwable ex) {
+		//	path = path.getAbsoluteFile();
+		//}
+		File path = getAadlRuntimeLibrariesDirFile();
 		File[] libFiles = path.listFiles(javaLibFilter);
 		if (libFiles != null && libFiles.length > 0) {
 			String[] aryPaths = new String[libFiles.length];
@@ -952,6 +1032,7 @@ public class AppSettings
 			return new String[0];
 		}
 	}
+	/** **/
 
 	/**
 	 * AADLのコンパイルに必要なランタイムライブラリを取得する。
@@ -960,12 +1041,13 @@ public class AppSettings
 	 * @return	標準コンパイルライブラリの絶対パスリスト
 	 */
 	static private String[] getDefaultCompileLibraryPaths() {
-		File path = new File(AADLEditor.getLibDirFile(), "aadlc");
-		try {
-			path = path.getAbsoluteFile().getCanonicalFile();
-		} catch (Throwable ex) {
-			path = path.getAbsoluteFile();
-		}
+		//File path = new File(AADLEditor.getLibDirFile(), "aadlc");
+		//try {
+		//	path = path.getAbsoluteFile().getCanonicalFile();
+		//} catch (Throwable ex) {
+		//	path = path.getAbsoluteFile();
+		//}
+		File path = getAadlCompilerLibrariesDirFile();
 		File[] libFiles = path.listFiles(javaLibFilter);
 		if (libFiles != null && libFiles.length > 0) {
 			String[] aryPaths = new String[libFiles.length];
@@ -979,38 +1061,4 @@ public class AppSettings
 			return new String[0];
 		}
 	}
-
-	/*--- delete : 1.10 2008/12/05
-	static private String[] getDefaultLibraryPaths(String[] filenames) {
-		File path = AADLEditor.getLibDirFile();
-		//if (!path.exists()) {
-		//	path = new File("lib").getAbsoluteFile();
-		//}
-		
-		String[] aryPaths = new String[filenames.length];
-		for (int i = 0; i < aryPaths.length; i++) {
-			File libPath = new File(path, filenames[i]);
-			try {
-				if (!libPath.exists()) {
-					AppLogger.warn("Library file [" + libPath.getAbsolutePath() + "] not found!");
-				}
-			}
-			catch (Throwable ex) {
-				AppLogger.warn("Library file [" + libPath.getAbsolutePath() + "] not found!", ex);
-			}
-			try {
-				aryPaths[i] = libPath.getCanonicalPath();
-			}
-			catch (Throwable ignoreEx) {
-				aryPaths[i] = libPath.getAbsolutePath();
-			}
-			if (AppLogger.isDebugEnabled()) {
-				AppLogger.debug("Library file path [" + libPath.getAbsolutePath() + "]");
-				AppLogger.debug("        real path [" + aryPaths[i] + "]");
-			}
-		}
-		
-		return aryPaths;
-	}
-	--- delete : 1.10 2008/12/05 */
 }

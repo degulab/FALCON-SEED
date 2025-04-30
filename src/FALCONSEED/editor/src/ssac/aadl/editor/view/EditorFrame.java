@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2015  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)EditorFrame.java	4.0.0	2021/08/28 : for Java11
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)EditorFrame.java	3.2.2	2015/10/15 (Bug fixed)
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)EditorFrame.java	1.22	2012/11/06
@@ -107,6 +88,7 @@ import ssac.aadl.editor.view.dialog.WorkspaceChooser;
 import ssac.aadl.editor.view.menu.EditorMenuResources;
 import ssac.aadl.module.ModuleFileManager;
 import ssac.aadl.module.setting.AbstractSettings;
+import ssac.aadl.module.setting.EditorBuildOptions;
 import ssac.falconseed.common.FSEnvironment;
 import ssac.util.Strings;
 import ssac.util.Validations;
@@ -127,7 +109,7 @@ import ssac.util.swing.menu.JMenus;
  * <p>
  * このクラスは、AADLエディタのフレームワークを提供する。
  * 
- * @version 3.2.2
+ * @version 4.0.0
  * 
  * @since 1.10
  */
@@ -1244,6 +1226,47 @@ public class EditorFrame extends FrameWindow implements IMenuHandler, IMenuActio
 	}
 	
 	/**
+	 * 実行対象 Java 情報において、Java コンパイラーが利用可能かどうかを判定する。
+	 * 利用可能でない場合、エラーメッセージを表示する。
+	 * @return	Java コンパイラーが利用可能なら <tt>true</tt>
+	 * @since 4.0.0
+	 */
+	private boolean checkJavaCompilerAvailable()
+	{
+		if (!AppSettings.getInstance().existCurrentJavaCompiler()) {
+			// Java-Compiler does not found in target Java environment.
+			String msg = EditorMessages.getInstance().msgNotFoundJavaCompiler;
+			AppLogger.warn(msg);
+			AADLEditor.showErrorMessage(this, msg);
+			return false;
+		}
+		
+		// available
+		return true;
+	}
+	
+	/**
+	 * 実行対象 Java 情報において、Java コンパイラーのバージョンが、サポート対象のバージョンかを判定する。
+	 * サポート対象のバージョンではない場合、エラーメッセージを表示する。
+	 * @return	サポート対象の Java コンパイラーバージョンなら <tt>true</tt> を返す
+	 * @since 4.0.0
+	 */
+	private boolean checkSupportedJavaCompilerVersion()
+	{
+		if (AppSettings.getInstance().getCurrentJavaMajorNumber() < AppSettings.LEAST_JAVA_MAJOR_NUMBER) {
+			// Java version is not supported
+			String msg = String.format(EditorMessages.getInstance().msgUnsupportedJavaVersion,
+							AppSettings.getInstance().getCurrentJavaVersion(), String.valueOf(AppSettings.LEAST_JAVA_MAJOR_NUMBER));
+			AppLogger.warn(msg);
+			AADLEditor.showErrorMessage(this, msg);
+			return false;
+		}
+		
+		// supported
+		return true;
+	}
+	
+	/**
 	 * コンパイルが停止していることを確認する。
 	 * 停止していなければ、エラーメッセージを表示する。
 	 * 
@@ -1385,9 +1408,10 @@ public class EditorFrame extends FrameWindow implements IMenuHandler, IMenuActio
 	 * 確認するダイアログを表示する。
 	 * 
 	 * @param editor 対象のドキュメントを保持するエディタ
+	 * @param genFatJar ライブラリも含めて単一 Jar にする場合は <tt>true</tt>
 	 * @return コンパイルが開始された場合に <tt>true</tt> を返す。
 	 */
-	private boolean compileEditorDocument(final IEditorView editor) {
+	private boolean compileEditorDocument(final IEditorView editor, boolean genFatJar) {
 		// 実行状態チェック
 		if (!checkStoppedCompile() || !editor.getDocument().isCompilable()) {
 			return false;
@@ -1428,9 +1452,13 @@ public class EditorFrame extends FrameWindow implements IMenuHandler, IMenuActio
 			}
 		}
 		
+		// エディタ操作の保存
+		EditorBuildOptions buildOptions = new EditorBuildOptions();
+		buildOptions.setEnableAadlCompileFatJar(genFatJar);
+		
 		// 保存ファイルのコンパイル
 		editor.refreshDocumentSettings();
-		paneBuild.setTargetDocument(editor.getDocument());
+		paneBuild.setTargetDocument(editor.getDocument(), buildOptions);
 		tabInfo.setSelectedComponent(paneBuild);
 		paneBuild.start();
 		return true;
@@ -2076,12 +2104,20 @@ public class EditorFrame extends FrameWindow implements IMenuHandler, IMenuActio
 				onSelectedMenuBuildCompile(action);
 				return true;
 			}
+			else if (EditorMenuResources.ID_BUILD_COMPILE_FATJAR.equals(command)) {
+				onSelectedMenuBuildCompileFatJar(action);
+				return true;
+			}
 			else if (EditorMenuResources.ID_BUILD_RUN.equals(command)) {
 				onSelectedMenuBuildRun(action);
 				return true;
 			}
 			else if (EditorMenuResources.ID_BUILD_COMPILE_RUN.equals(command)) {
 				onSelectedMenuBuildCompileRun(action);
+				return true;
+			}
+			else if (EditorMenuResources.ID_BUILD_COMPILE_FATJAR_RUN.equals(command)) {
+				onSelectedMenuBuildCompileFatJarRun(action);
 				return true;
 			}
 			else if (EditorMenuResources.ID_BUILD_RUNASJAR.equals(command)) {
@@ -2699,10 +2735,27 @@ public class EditorFrame extends FrameWindow implements IMenuHandler, IMenuActio
 	protected void onSelectedMenuBuildCompile(Action action) {
 		AppLogger.debug("menu [Build]-[Compile] selected.");
 		
-		IEditorView editor = getActiveEditor();
-		if (editor != null) {
-			if (compileEditorDocument(editor)) {
-				compileAndRun = false;
+		if (checkJavaCompilerAvailable() && checkSupportedJavaCompilerVersion()) {
+			IEditorView editor = getActiveEditor();
+			if (editor != null) {
+				if (compileEditorDocument(editor, false)) {
+					compileAndRun = false;
+				}
+			}
+		}
+		setFocusToActiveEditor();
+	}
+
+	// menu : [Build]-[Compile (Fat-jar)]
+	protected void onSelectedMenuBuildCompileFatJar(Action action) {
+		AppLogger.debug("menu [Build]-[Compile as Fat-jar] selected.");
+		
+		if (checkJavaCompilerAvailable() && checkSupportedJavaCompilerVersion()) {
+			IEditorView editor = getActiveEditor();
+			if (editor != null) {
+				if (compileEditorDocument(editor, true)) {
+					compileAndRun = false;
+				}
 			}
 		}
 		setFocusToActiveEditor();
@@ -2711,6 +2764,7 @@ public class EditorFrame extends FrameWindow implements IMenuHandler, IMenuActio
 	// menu : [Build]-[Run]
 	protected void onSelectedMenuBuildRun(Action action) {
 		AppLogger.debug("menu [Build]-[Run] selected.");
+		
 		IEditorView editor = getActiveEditor();
 		if (editor != null) {
 			execEditorDocument(editor);
@@ -2722,10 +2776,27 @@ public class EditorFrame extends FrameWindow implements IMenuHandler, IMenuActio
 	protected void onSelectedMenuBuildCompileRun(Action action) {
 		AppLogger.debug("menu [Build]-[Compile & Run] selected.");
 		
-		IEditorView editor = getActiveEditor();
-		if (editor != null) {
-			if (compileEditorDocument(editor)) {
-				compileAndRun = true;
+		if (checkJavaCompilerAvailable() && checkSupportedJavaCompilerVersion()) {
+			IEditorView editor = getActiveEditor();
+			if (editor != null) {
+				if (compileEditorDocument(editor, false)) {
+					compileAndRun = true;
+				}
+			}
+		}
+		setFocusToActiveEditor();
+	}
+
+	// menu : [Build]-[Compile (Fat-jar) & Run]
+	protected void onSelectedMenuBuildCompileFatJarRun(Action action) {
+		AppLogger.debug("menu [Build]-[Compile as Fat-jar & Run] selected.");
+		
+		if (checkJavaCompilerAvailable() && checkSupportedJavaCompilerVersion()) {
+			IEditorView editor = getActiveEditor();
+			if (editor != null) {
+				if (compileEditorDocument(editor, true)) {
+					compileAndRun = true;
+				}
 			}
 		}
 		setFocusToActiveEditor();
@@ -2741,8 +2812,10 @@ public class EditorFrame extends FrameWindow implements IMenuHandler, IMenuActio
 	// menu : [Build]-[Compile all in Folder]
 	protected void onSelectedMenuBuildCompileAllInFolder(Action action) {
 		AppLogger.debug("menu [Build]-[Compile all in Folder] selected.");
-		compileAllInFolder();
-		refreshModuleProperties();
+		if (checkJavaCompilerAvailable() && checkSupportedJavaCompilerVersion()) {
+			compileAllInFolder();
+			refreshModuleProperties();
+		}
 		setFocusToActiveEditor();
 	}
 

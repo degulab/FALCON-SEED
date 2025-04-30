@@ -1,25 +1,8 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2016  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)ModuleRunner.java	4.0.0	2021/08/27 : for Java11
+ *     - modified by Y.Ishizuka(PieCake.inc,)
+ * @(#)ModuleRunner.java	3.4.0	2020/03/19
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)ModuleRunner.java	3.3.0	2016/05/31
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)ModuleRunner.java	3.2.2	2015/10/20 (Bug fixed)
@@ -72,7 +55,6 @@ import ssac.falconseed.common.FSStartupSettings;
 import ssac.falconseed.editor.plugin.PluginManager;
 import ssac.falconseed.runner.setting.AppSettings;
 import ssac.falconseed.runner.view.RunnerFrame;
-import ssac.util.MacUtilities;
 import ssac.util.Strings;
 import ssac.util.logging.AppLogger;
 import ssac.util.swing.Application;
@@ -82,7 +64,7 @@ import ssac.util.swing.table.SpreadSheetTable;
 /**
  * モジュールランナーのアプリケーション・メインクラス
  * 
- * @version 3.3.0 2016/05/31
+ * @version 4.0.0
  */
 public class ModuleRunner extends Application
 {
@@ -92,7 +74,7 @@ public class ModuleRunner extends Application
 	
 	static public final String NAME = "Module Runner";
 	
-	static public final String BUILD = "20160531";
+	static public final String BUILD = "20210831";
 	
 	static public final String LOCAL_VERSION = NAME + " (" + BUILD + ")";
 
@@ -287,10 +269,10 @@ public class ModuleRunner extends Application
 				sb.append("\n      Home=");
 				f = AppSettings.getInstance().getCurrentJavaHomeFile();
 				sb.append(f != null ? f.getAbsolutePath() : "null");
-				//--- Compiler
-				sb.append("\n      Compiler=");
-				f = AppSettings.getInstance().getCurrentJavaCompilerFile();
-				sb.append(f != null ? f.getAbsolutePath() : "null");
+				////--- Compiler
+				//sb.append("\n      Compiler=");
+				//f = AppSettings.getInstance().getCurrentJavaCompilerFile();
+				//sb.append(f != null ? f.getAbsolutePath() : "null");
 				//--- Command
 				sb.append("\n      Command=");
 				f = AppSettings.getInstance().getCurrentJavaCommandFile();
@@ -386,9 +368,10 @@ public class ModuleRunner extends Application
 				frame.setIconImage(imgIcon);
 			}
 			frame.initialComponent();
-			if (MacUtilities.isMac()) {
-				MacUtilities.setupScreenMenuHandler(frame);
-			}
+			// 以下はサポートされない @since 4.0.0
+			//if (MacUtilities.isMac()) {
+			//	MacUtilities.setupScreenMenuHandler(frame);
+			//}
 	
 			// メインフレームの表示
 			frame.setVisible(true);

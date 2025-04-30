@@ -3,7 +3,7 @@
 <properties>
 <comment>FALCON-SEED system environment.</comment>
 <entry key="system.name">FALCON-SEED</entry>
-<entry key="system.version">3.3.0</entry>
-<entry key="system.build">20160531</entry>
-<entry key="system.title">FALCON-SEED 3.3.0</entry>
+<entry key="system.version">5.2.0</entry>
+<entry key="system.build">20250228</entry>
+<entry key="system.title">FALCON-SEED 5.2.0</entry>
 </properties>

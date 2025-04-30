@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2009  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)ExecSettings.java	4.0.0	2021/08/27 : for Java11
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)ExecSettings.java	1.14	2009/12/09
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)ExecSettings.java	1.10	2009/01/28
@@ -39,7 +20,7 @@ import ssac.util.Strings;
  * ビルドオプションダイアログの実行オプション・パネルにより設定される
  * 情報を操作するための機能を提供する。
  * 
- * @version 1.14	2009/12/09
+ * @version 4.0.0
  */
 public class ExecSettings extends ClassPathSettings
 {
@@ -58,8 +39,9 @@ public class ExecSettings extends ClassPathSettings
 	//static public final String KEY_JAVACMD_SPECIFY	= GROUP_JAVACMD + ".specify";
 	//static public final String KEY_JAVACMD_PATH		= GROUP_JAVACMD + ".path";
 	
-	static public final String KEY_TARGET_FILE = GROUP_TARGET + ".file";
-	static public final String KEY_TARGET_MAIN = GROUP_TARGET + ".main-class";
+	static public final String KEY_TARGET_FILE 		= GROUP_TARGET + ".file";
+	static public final String KEY_TARGET_FATJAR	= GROUP_TARGET + ".fatjar";	// @since 4.0.0
+	static public final String KEY_TARGET_MAIN 		= GROUP_TARGET + ".main-class";
 	
 	static public final String KEY_PROGRAM_ARGS = GROUP_PROGRAM + ".args";
 	static public final String KEY_PROGRAM_ARGS_NUM = KEY_PROGRAM_ARGS + ".num";
@@ -75,7 +57,13 @@ public class ExecSettings extends ClassPathSettings
 	//------------------------------------------------------------
 
 	//private File javaCommand;
+	/**
+	 * 実行対象ファイル
+	 */
 	private File targetFile;
+	/**
+	 * 作業ディレクトリ
+	 */
 	private File workdir;
 
 	//------------------------------------------------------------
@@ -89,62 +77,6 @@ public class ExecSettings extends ClassPathSettings
 	//------------------------------------------------------------
 	// Public interfaces
 	//------------------------------------------------------------
-	
-	//--- KEY_JAVACMD_SPECIFY
-	
-	//public boolean isSpecifiedJavaCommand() {
-	//	return this.props.getBooleanValue(KEY_JAVACMD_SPECIFY);
-	//}
-	
-	//public void setJavaCommandSpecified(boolean toSpecify) {
-	//	this.props.setBooleanValue(KEY_JAVACMD_SPECIFY, toSpecify);
-	//}
-	
-	//--- KEY_JAVACMD_PATH
-	
-	//public File getTargetJavaCommandFile() {
-	//	if (isSpecifiedJavaCommand() && javaCommand != null) {
-	//		return javaCommand;
-	//	}
-	//	
-	//	return AppSettings.getInstance().getCurrentJavaCommandFile();
-	//}
-	
-	//public String getTargetJavaCommandPath() {
-	//	if (isSpecifiedJavaCommand() && javaCommand != null) {
-	//		if (javaCommand.exists()) {
-	//			return javaCommand.getPath();
-	//		}
-	//	}
-	//	
-	//	return AppSettings.getInstance().getCurrentJavaCommandPath();
-	//}
-	
-	//public File getJavaCommandFile() {
-	//	return javaCommand;
-	//}
-	
-	//public String getJavaCommandPath() {
-	//	if (javaCommand != null)
-	//		return javaCommand.getPath();
-	//	else
-	//		return null;
-	//}
-	
-	//public void setJavaCommandFile(File cmdFile) {
-	//	if (cmdFile != null)
-	//		javaCommand = cmdFile.getAbsoluteFile();
-	//	else
-	//		javaCommand = null;
-	//}
-	
-	//public void setJavaCommandPath(String cmdPath) {
-	//	if (cmdPath != null && cmdPath.length() > 0) {
-	//		setJavaCommandFile(new File(cmdPath));
-	//	} else {
-	//		javaCommand = null;
-	//	}
-	//}
 	
 	//--- KEY_TARGET_FILE
 	
@@ -178,6 +110,31 @@ public class ExecSettings extends ClassPathSettings
 		} else {
 			targetFile = null;
 		}
+	}
+	
+	//--- KEY_TARGET_JARWITHLIBS
+	
+	/**
+	 * 実行対象ファイルが、関連ライブラリを含む jar かどうかを判定する。
+	 * @return	関連ライブラリを含む Jar なら <tt>true</tt>、それ以外の場合は <tt>false</tt>
+	 * @since 4.0.0
+	 */
+	public boolean isTargetFatJar()
+	{
+		return props.getBooleanValue(KEY_TARGET_FATJAR, false);
+	}
+	
+	/**
+	 * 実行対象ファイルが、関連ライブラリを含む jar かどうかを設定する。
+	 * @param flag	関連ライブラリを含む Jar なら <tt>true</tt>、そうでないなら <tt>false</tt>
+	 * @since 4.0.0
+	 */
+	public void setTargetFatJar(boolean flag)
+	{
+		if (flag)
+			props.setBooleanValue(KEY_TARGET_FATJAR, flag);
+		else
+			props.clearProperty(KEY_TARGET_FATJAR);
 	}
 	
 	//--- KEY_TARGET_MAIN

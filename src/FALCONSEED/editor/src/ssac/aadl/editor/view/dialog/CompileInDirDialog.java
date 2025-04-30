@@ -1,27 +1,8 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2009  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
- * @(#)CompileInDirDialog.java	1.14	2009/12/09
+ * @(#)CompileInDirDialog.java	4.0.0	2021/08/28 : for Java11
  *     - modified by Y.Ishizuka(PieCake.inc,)
+ * @(#)CompileInDirDialog.java	1.14	2009/12/09
+ *     - created by Y.Ishizuka(PieCake.inc,)
  */
 package ssac.aadl.editor.view.dialog;
 
@@ -71,6 +52,7 @@ import ssac.aadl.editor.EditorMessages;
 import ssac.aadl.editor.plugin.source.SourceModel;
 import ssac.aadl.editor.setting.AppSettings;
 import ssac.aadl.module.setting.CompileSettings;
+import ssac.aadl.module.setting.EditorBuildOptions;
 import ssac.aadl.module.swing.FileDialogManager;
 import ssac.util.Strings;
 import ssac.util.io.Files;
@@ -83,7 +65,7 @@ import ssac.util.swing.BasicDialog;
  * フォルダに含まれる全てのAADLソースファイルをコンパイルする、
  * ユーティリティ・ダイアログ。
  * 
- * @version 1.14	2009/12/09
+ * @version 4.0.0
  * 
  * @since 1.14
  */
@@ -92,6 +74,8 @@ public class CompileInDirDialog extends BasicDialog
 	//------------------------------------------------------------
 	// Constants
 	//------------------------------------------------------------
+
+	private static final long serialVersionUID = 6179761403328031421L;
 	
 	static private final Dimension DM_MIN_SIZE = new Dimension(640, 480);
 	
@@ -110,6 +94,11 @@ public class CompileInDirDialog extends BasicDialog
 	private File		targetDir = null;
 	private List<File> srcFiles = null;
 	private boolean	recursiveSubDir = false;
+	/**
+	 * コンパイル時に、関連ライブラリを含む jar を生成することを示すフラグ
+	 * @since 4.0.0
+	 */
+	private boolean genJarWithLibs = false;
 	private Timer		drawTimer = null;
 	
 	private CompileProcessThread	thread = null;
@@ -118,6 +107,11 @@ public class CompileInDirDialog extends BasicDialog
 	private JButton	btnSelectFolder;
 	private JButton	btnCompile;
 	private JCheckBox	chkWithoutSubdirectories;
+	/**
+	 * 関連ライブラリを含む jar を生成するかどうかを示すフラグのチェックボックス
+	 * @since 4.0.0
+	 */
+	private JCheckBox	chkJarWithLibs;
 	
 	private JLabel		lblNumFiles;
 	private JLabel		lblNumSuccess;
@@ -282,6 +276,7 @@ public class CompileInDirDialog extends BasicDialog
 		*/
 		//--- Check box
 		chkWithoutSubdirectories = new JCheckBox(EditorMessages.getInstance().CompileInDirDlg_Button_WithoutSubDir);
+		chkJarWithLibs = new JCheckBox(EditorMessages.getInstance().CompileInDirDlg_Button_JarWithLibs);
 		//--- compile button
 		btnCompile = new JButton(EditorMessages.getInstance().CompileInDirDlg_Button_StartCompile);
 		
@@ -309,18 +304,22 @@ public class CompileInDirDialog extends BasicDialog
 		gbc.weightx = 0;
 		gbc.fill = GridBagConstraints.NONE;
 		panel.add(btnSelectFolder, gbc);
-		//--- Check box
+		// horizontal-box for optional pane
+		Box optionbox = Box.createHorizontalBox();
+		optionbox.add(chkWithoutSubdirectories);
+		optionbox.add(Box.createHorizontalStrut(10));
+		optionbox.add(chkJarWithLibs);
+		optionbox.add(Box.createHorizontalGlue());
+		optionbox.add(btnCompile);
+		//--- set optionbox to grid
 		gbc.gridx = 0;
 		gbc.gridy = 1;
-		gbc.gridwidth = 2;
+		gbc.gridwidth = 4;
 		gbc.insets = new Insets(3, 0, 0, 0);
-		gbc.fill = GridBagConstraints.NONE;
+		gbc.weightx = 1;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.anchor = GridBagConstraints.WEST;
-		panel.add(chkWithoutSubdirectories, gbc);
-		//--- compile button
-		gbc.gridx = 2;
-		gbc.anchor = GridBagConstraints.EAST;
-		panel.add(btnCompile, gbc);
+		panel.add(optionbox, gbc);
 		
 		//
 		return panel;
@@ -424,6 +423,7 @@ public class CompileInDirDialog extends BasicDialog
 	private void setupDisplayForReady() {
 		btnSelectFolder.setEnabled(true);
 		chkWithoutSubdirectories.setEnabled(true);
+		chkJarWithLibs.setEnabled(true);
 		btnCompile.setText(EditorMessages.getInstance().CompileInDirDlg_Button_StartCompile);
 		btnCompile.setEnabled(acceptTargetDir());
 		btnCopyMessage.setEnabled(true);
@@ -432,7 +432,8 @@ public class CompileInDirDialog extends BasicDialog
 	
 	private void setupDisplayForRunning() {
 		btnSelectFolder.setEnabled(false);
-		chkWithoutSubdirectories.setEnabled(true);
+		chkWithoutSubdirectories.setEnabled(false);
+		chkJarWithLibs.setEnabled(false);
 		btnCompile.setText(EditorMessages.getInstance().CompileInDirDlg_Button_StopCompile);
 		btnCompile.setEnabled(true);
 		btnCopyMessage.setEnabled(false);
@@ -496,6 +497,7 @@ public class CompileInDirDialog extends BasicDialog
 		// initialize
 		clearResults();
 		recursiveSubDir = !chkWithoutSubdirectories.isSelected();
+		genJarWithLibs = chkJarWithLibs.isSelected();
 		isRunning = true;
 		updateButtons();
 		progressbar.setIndeterminate(true);
@@ -927,6 +929,8 @@ public class CompileInDirDialog extends BasicDialog
 			CompileSettings settings = new CompileSettings();
 			
 			// コンパイル
+			EditorBuildOptions buildOptions = new EditorBuildOptions();
+			buildOptions.setEnableAadlCompileFatJar(genJarWithLibs);
 			int numFiles = srcFiles.size();
 			{
 				String msg = "Start compile AADL source files(" + numFiles + ")\n";
@@ -949,7 +953,7 @@ public class CompileInDirDialog extends BasicDialog
 					String msg = "\n@Compile \"" + f.getAbsolutePath() + "\"\n";
 					printOut(msg);
 					//--- create ProcessBuilder instance
-					ProcessBuilder pb = SourceModel.createCompileProcessBuilder(f, settings);
+					ProcessBuilder pb = SourceModel.createCompileProcessBuilder(f, settings, buildOptions);
 					//--- start process
 					proc = pb.start();
 				}
@@ -1013,6 +1017,7 @@ public class CompileInDirDialog extends BasicDialog
 	
 	static class JConsolePane extends JTextPane
 	{
+		private static final long serialVersionUID = 1L;
 		private final DefaultStyledDocument document;
 		private final MutableAttributeSet attrForError;
 		private boolean lineWrapped = false;

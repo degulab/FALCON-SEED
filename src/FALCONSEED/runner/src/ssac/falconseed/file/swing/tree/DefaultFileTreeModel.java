@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2012  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)DefaultFileTreeModel.java	4.0.0	2021/08/23 : for Java11
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)DefaultFileTreeModel.java	2.0.0	2012/10/29
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)DefaultFileTreeModel.java	1.20	2012/03/05
@@ -46,7 +27,7 @@ import ssac.util.swing.tree.AbstractTreeModel;
 /**
  * 汎用ファイルツリー専用のツリーモデル。
  * 
- * @version 2.0.0	2012/10/29
+ * @version 4.0.0
  * @since 1.20
  */
 public class DefaultFileTreeModel extends AbstractTreeModel
@@ -62,12 +43,14 @@ public class DefaultFileTreeModel extends AbstractTreeModel
 	/** クラス標準のファイルフィルタ **/
 	static protected VirtualFileFilter	_defFileFilter;
 	/** クラス標準のファイルコンパレータ **/
-	static protected Comparator<? super DefaultFileTreeNode>	_defComparator;
+	//static protected Comparator<? super DefaultFileTreeNode>	_defComparator;
+	static protected Comparator<? super TreeNode>	_defComparator;
 
 	/** ツリーノードに登録するファイルを選択するためのフィルタ **/
 	private VirtualFileFilter	_fileFilter;
 	/** ツリーノードの表示順序を制御するためのコンパレータ **/
-	private Comparator<? super DefaultFileTreeNode>	_comparator;
+	//private Comparator<? super DefaultFileTreeNode>	_comparator;
+	private Comparator<? super TreeNode>	_comparator;
 
 	//------------------------------------------------------------
 	// Constructions
@@ -81,7 +64,16 @@ public class DefaultFileTreeModel extends AbstractTreeModel
 		this(rootnode, getDefaultFileFilter(), getDefaultFileTreeNodeComparator());
 	}
 	
-	public DefaultFileTreeModel(DefaultFileTreeNode rootnode, VirtualFileFilter filter, Comparator<? super DefaultFileTreeNode> comparator)
+	//public DefaultFileTreeModel(DefaultFileTreeNode rootnode, VirtualFileFilter filter, Comparator<? super DefaultFileTreeNode> comparator)
+	//{
+	//	super(rootnode);
+	//	this._fileFilter = filter;
+	//	this._comparator = comparator;
+	//	if (rootnode != null) {
+	//		refreshNode(rootnode);
+	//	}
+	//}
+	public DefaultFileTreeModel(DefaultFileTreeNode rootnode, VirtualFileFilter filter, Comparator<? super TreeNode> comparator)
 	{
 		super(rootnode);
 		this._fileFilter = filter;
@@ -182,7 +174,10 @@ public class DefaultFileTreeModel extends AbstractTreeModel
 	 * @return	設定されている <code>Comparator</code> オブジェクトを返す。
 	 * 			設定されていない場合は <tt>null</tt> を返す。
 	 */
-	public Comparator<? super DefaultFileTreeNode> getNodeComparator() {
+	//public Comparator<? super DefaultFileTreeNode> getNodeComparator() {
+	//	return _comparator;
+	//}
+	public Comparator<? super TreeNode> getNodeComparator() {
 		return _comparator;
 	}
 
@@ -190,7 +185,14 @@ public class DefaultFileTreeModel extends AbstractTreeModel
 	 * このモデルに、新しいコンパレーターを設定する。
 	 * @param c	新たに設定する <code>Comparator</code> オブジェクト
 	 */
-	public void setNodeComparaotr(Comparator<? super DefaultFileTreeNode> c) {
+	//public void setNodeComparaotr(Comparator<? super DefaultFileTreeNode> c) {
+	//	if (_comparator != c) {
+	//		_comparator = c;
+	//		removeAllChildrenFromAvailableRootNode();
+	//		reload();
+	//	}
+	//}
+	public void setNodeComparaotr(Comparator<? super TreeNode> c) {
 		if (_comparator != c) {
 			_comparator = c;
 			removeAllChildrenFromAvailableRootNode();
@@ -592,7 +594,13 @@ public class DefaultFileTreeModel extends AbstractTreeModel
 	 * このクラス標準のツリーノードコンパレータを取得する。
 	 * @return	<code>Comparator</code> オブジェクト
 	 */
-	static protected Comparator<? super DefaultFileTreeNode> getDefaultFileTreeNodeComparator() {
+	//static protected Comparator<? super DefaultFileTreeNode> getDefaultFileTreeNodeComparator() {
+	//	if (_defComparator == null) {
+	//		_defComparator = new DefaultFileTreeNodeComparator();
+	//	}
+	//	return _defComparator;
+	//}
+	static protected Comparator<? super TreeNode> getDefaultFileTreeNodeComparator() {
 		if (_defComparator == null) {
 			_defComparator = new DefaultFileTreeNodeComparator();
 		}
@@ -631,7 +639,8 @@ public class DefaultFileTreeModel extends AbstractTreeModel
 		if (child == null)
 			throw new IllegalArgumentException("child argument is null.");
 		
-		Comparator<? super DefaultFileTreeNode> c = getNodeComparator();
+		//Comparator<? super DefaultFileTreeNode> c = getNodeComparator();
+		Comparator<? super TreeNode> c = getNodeComparator();
 		if (c == null) {
 			return parent.getChildCount();
 		} else {
@@ -686,6 +695,72 @@ public class DefaultFileTreeModel extends AbstractTreeModel
 	 * (ディレクトリ &le; ファイル) とし、ディレクトリ同士もしくはファイル同士の
 	 * 比較はファイルオブジェクトの比較結果となる。
 	 */
+	static public class DefaultFileTreeNodeComparator implements Comparator<TreeNode>
+	{
+		public int compare(TreeNode node1, TreeNode node2) {
+			boolean node1_dir;
+			boolean node2_dir;
+			VirtualFile node1_file;
+			VirtualFile node2_file;
+			String node1_name;
+			String node2_name;
+			
+			if (node1 instanceof DefaultFileTreeNode) {
+				DefaultFileTreeNode mn = (DefaultFileTreeNode)node1;
+				node1_dir = mn.isDirectory();
+				node1_file = mn.getFileObject();
+				node1_name = mn.getFilename();
+			}
+			else {
+				node1_dir = false;
+				node1_file = null;
+				node1_name = node1.toString();
+			}
+			
+			if (node2 instanceof DefaultFileTreeNode) {
+				DefaultFileTreeNode mn = (DefaultFileTreeNode)node2;
+				node2_dir = mn.isDirectory();
+				node2_file = mn.getFileObject();
+				node2_name = mn.getFilename();
+			}
+			else {
+				node2_dir = false;
+				node2_file = null;
+				node2_name = node2.toString();
+			}
+			
+			// directory < file
+			if (node1_dir) {
+				if (!node2_dir) {
+					// node1(directory) < node2(file)
+					return (-1);
+				}
+				// compare by directory name
+				return compareName(node1_file, node1_name, node2_file, node2_name);
+			}
+			else if (node2_dir) {
+				// node1(file) > node2(directory)
+				return (1);
+			}
+			
+			// compare by file name
+			return compareName(node1_file, node1_name, node2_file, node2_name);
+		}
+		
+		protected int compareName(VirtualFile file1, String name1, VirtualFile file2, String name2)
+		{
+			int cmp = name1.compareToIgnoreCase(name2);
+			if (cmp == 0) {
+				if (file1 != null && file2 != null) {
+					cmp = file1.compareTo(file2);
+				} else {
+					cmp = name1.compareTo(name2);
+				}
+			}
+			return cmp;
+		}
+	}
+	/*** old source ***
 	static public class DefaultFileTreeNodeComparator implements Comparator<DefaultFileTreeNode>
 	{
 		public int compare(DefaultFileTreeNode node1, DefaultFileTreeNode node2) {
@@ -719,4 +794,5 @@ public class DefaultFileTreeModel extends AbstractTreeModel
 			return cmp;
 		}
 	}
+	/*** end of old source ***/
 }

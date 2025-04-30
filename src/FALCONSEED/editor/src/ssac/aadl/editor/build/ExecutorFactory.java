@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2009  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)ExecutorFactory.java	4.0.0	2021/08/27 : for Java11
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)ExecutorFactory.java	1.14	2009/12/09
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)ExecutorFactory.java	1.10	2009/01/28
@@ -43,7 +24,7 @@ import ssac.util.process.CommandExecutor;
  * アプリケーションによって設定されたコンパイルもしくは実行設定に従い、
  * <code>{@link CommandExecutor}</code> インスタンスを生成するユーティリティ。
  * 
- * @version 1.14	2009/12/09
+ * @version 4.0.0
  */
 public final class ExecutorFactory
 {
@@ -168,6 +149,9 @@ public final class ExecutorFactory
 		if (!targetFile.isFile())
 			throw new IllegalArgumentException("Target is not file : \"" + targetFile.getPath() + "\"");
 		
+		// check fat-jar
+		boolean fatjar = settings.isTargetFatJar();
+		
 		// create command
 		Vector<String> cmdList = new Vector<String>();
 		//--- java command
@@ -224,9 +208,13 @@ public final class ExecutorFactory
 		
 		// ClassPath
 		ClassPaths pathList = new ClassPaths();
-		pathList.appendPaths(userClassPaths);
 		pathList.addPath(targetFile);
-		pathList.appendPaths(execLibraries);
+		if (!fatjar) {
+			//--- 外部ライブラリ(ユーザー指定)
+			pathList.appendPaths(userClassPaths);
+			//--- 標準 AADL ランタイムライブラリ等
+			pathList.appendPaths(execLibraries);
+		}
 		addClassPath(cmdList, pathList);
 		
 		// Main class

@@ -1,25 +1,8 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2016  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)RunnerFrame.java	4.0.0	2021/08/29 : for Java11
+ *     - modified by Y.Ishizuka(PieCake.inc,)
+ * @(#)RunnerFrame.java	3.4.0	2020/03/05
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)RunnerFrame.java	3.3.0	2016/05/31
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)RunnerFrame.java	3.2.2	2015/10/15 (Bug fixed)
@@ -104,6 +87,8 @@ import ssac.aadl.module.ModuleFileManager;
 import ssac.aadl.module.swing.CsvFileConfigDialog;
 import ssac.aadl.module.swing.FileDialogManager;
 import ssac.falconseed.common.FSEnvironment;
+import ssac.falconseed.convert.json.swing.ConversionCsvJsonDialog;
+import ssac.falconseed.convert.json.swing.ConversionJsonCsvDialog;
 import ssac.falconseed.editor.document.IEditorDocument;
 import ssac.falconseed.editor.plugin.IComponentManager;
 import ssac.falconseed.editor.plugin.PluginManager;
@@ -141,6 +126,7 @@ import ssac.falconseed.module.swing.ModuleArgsEditDialog;
 import ssac.falconseed.module.swing.tree.IMExecDefFileChooserHandler;
 import ssac.falconseed.module.swing.tree.MExecDefFileChooser;
 import ssac.falconseed.module.swing.tree.MExecDefFolderChooser;
+import ssac.falconseed.mongo.MongoToolDialog;
 import ssac.falconseed.plot.ChartConfigModel;
 import ssac.falconseed.plot.ChartConfigModel.ChartStyles;
 import ssac.falconseed.plot.ChartDialogManager;
@@ -181,7 +167,7 @@ import ssac.util.swing.menu.JMenus;
  * <p>
  * このクラスは、モジュールランナーのフレームワークを提供する。
  * 
- * @version 3.3.0
+ * @version 4.0.0
  */
 public class RunnerFrame extends FrameWindow implements IMenuHandler, IMenuActionHandler, MacScreenMenuHandler
 {
@@ -1153,7 +1139,10 @@ public class RunnerFrame extends FrameWindow implements IMenuHandler, IMenuActio
 		MExecDefHistory history = new MExecDefHistory();
 		{
 			VirtualFile vfHistory = argsmodel.getSettings().getExecDefDirectory().getChildFile(MExecDefFileManager.MEXECDEF_HISTORY_FILENAME);
-			history.loadForTarget(vfHistory);
+			if (vfHistory != null && vfHistory.exists()) {
+				// 読み込みエラー回避の為、引数履歴ファイルが存在する場合のみ読み込む : @since 4.0.0
+				history.loadForTarget(vfHistory);
+			}
 			history.ensureArgsTypes(argsmodel.getSettings());	// 引数型定義にあわない履歴を除去
 			history.ensureMaxSize(AppSettings.getInstance().getHistoryMaxLength());	// 履歴の最大数を反映
 		}
@@ -3357,8 +3346,24 @@ public class RunnerFrame extends FrameWindow implements IMenuHandler, IMenuActio
 			onSelectedMenuToolChartLine(action);
 			return true;
 		}
-		else if (RunnerMenuResources.ID_TOOL_EXCEL2CSV.equals(command)) {
-			onSelectedMenuToolExcel2Csv(action);
+		//else if (RunnerMenuResources.ID_TOOL_EXCEL2CSV.equals(command)) {
+		//	onSelectedMenuToolExcel2Csv(action);
+		//	return true;
+		//}
+		else if (RunnerMenuResources.ID_TOOL_CONVERT_EXCEL2CSV.equals(command)) {
+			onSelectedMenuToolConvertExcel2Csv(action);
+			return true;
+		}
+		else if (RunnerMenuResources.ID_TOOL_CONVERT_JSON2CSV.equals(command)) {
+			onSelectedMenuToolConvertJson2Csv(action);
+			return true;
+		}
+		else if (RunnerMenuResources.ID_TOOL_CONVERT_CSV2JSON.equals(command)) {
+			onSelectedMenuToolConvertCsv2Json(action);
+			return true;
+		}
+		else if (RunnerMenuResources.ID_TOOL_MONGODB.equals(command)) {
+			onSelectedMenuToolMongoDB(action);
 			return true;
 		}
 		else if (RunnerMenuResources.ID_HELP_ABOUT.equals(command)) {
@@ -3563,7 +3568,19 @@ public class RunnerFrame extends FrameWindow implements IMenuHandler, IMenuActio
 			action.setEnabled(getActiveEditor() instanceof CsvFileView);
 			return true;
 		}
-		else if (RunnerMenuResources.ID_TOOL_EXCEL2CSV.equals(command)) {
+		//else if (RunnerMenuResources.ID_TOOL_EXCEL2CSV.equals(command)) {
+		//	action.setEnabled(true);
+		//}
+		else if (RunnerMenuResources.ID_TOOL_CONVERT_EXCEL2CSV.equals(command)) {
+			action.setEnabled(true);
+		}
+		else if (RunnerMenuResources.ID_TOOL_CONVERT_JSON2CSV.equals(command)) {
+			action.setEnabled(true);
+		}
+		else if (RunnerMenuResources.ID_TOOL_CONVERT_CSV2JSON.equals(command)) {
+			action.setEnabled(true);
+		}
+		else if (RunnerMenuResources.ID_TOOL_MONGODB.equals(command)) {
 			action.setEnabled(true);
 		}
 		else if (command.startsWith(RunnerMenuResources.ID_HELP_MENU)) {
@@ -4222,10 +4239,10 @@ public class RunnerFrame extends FrameWindow implements IMenuHandler, IMenuActio
 		return true;
 	}
 	
-	// menu : [Tool]-[Excel 2 CSV]
+	// menu : [Tool]-[Convert]-[Excel 2 CSV]
 	// @since 3.3.0
-	protected void onSelectedMenuToolExcel2Csv(Action action) {
-		AppLogger.debug("menu [Tool]-[Excel 2 CSV] selected.");
+	protected void onSelectedMenuToolConvertExcel2Csv(Action action) {
+		AppLogger.debug("menu [Tool]-[Convert]-[Excel 2 CSV] selected.");
 		
 		// Choose file
 		File initFile = AppSettings.getInstance().getLastFile(AppSettings.Excel2CSV_EXCEL_INPUTFILE);
@@ -4357,6 +4374,114 @@ public class RunnerFrame extends FrameWindow implements IMenuHandler, IMenuActio
 			showExcel2CsvSucceededDestFiles(dispFiles);
 			setFocusToActiveEditor();
 		}
+	}
+	
+	// menu : [Tool]-[Convert]-[JSON 2 CSV]
+	// @since 3.4.0
+	protected void onSelectedMenuToolConvertJson2Csv(Action action) {
+		AppLogger.debug("menu [File]-[Convert]-[JSON 2 CSV] selected.");
+		
+		//IEditorView editor = getActiveEditor();
+		//if (!(editor instanceof CsvFileView)) {
+		//	AppLogger.debug("menu [Tool]-[Chart]-[Line] Failed - Active editor is not CsvFileView.");
+		//	setFocusToActiveEditor();
+		//	return;
+		//}
+		
+//		// データ生成
+//		CsvFileView view = (CsvFileView)editor;
+//		if (view.getTableComponent().getRowCount() <= 0 || view.getTableComponent().getColumnCount() <= 0) {
+//			// no data
+//			Application.showErrorMessage(this, RunnerMessages.getInstance().msgChartConfigNoData);
+//			AppLogger.debug("menu [Tool]-[Chart]-[Line] Failed - Active editor is not CsvFileView.");
+//			setFocusToActiveEditor();
+//			return;
+//		}
+//		int minSelRow = -1;
+//		int maxSelRow = -1;
+//		if (!view.getTableComponent().isSelectionAllRows()) {
+//			minSelRow = view.getTableComponent().getSelectionModel().getMinSelectionIndex();
+//			maxSelRow = view.getTableComponent().getSelectionModel().getMaxSelectionIndex();
+//		}
+//		int[] selcols = view.getTableComponent().getSelectedColumns();
+//		final ChartConfigModel chartModel = new ChartConfigModel(view.getDocument(), ChartStyles.LINE, minSelRow, maxSelRow, selcols);
+		
+//		// ダイアログ作成
+//		ChartConfigDialog dlg = new ChartConfigDialog(this, chartModel);
+//		dlg.initialComponent();
+//		dlg.setVisible(true);
+//		if (IDialogResult.DialogResult_OK == dlg.getDialogResult()) {
+//			SwingUtilities.invokeLater(new Runnable() {
+//				@Override
+//				public void run() {
+//					ChartViewDialog dlg = new ChartViewDialog(RunnerFrame.this, chartModel);
+//					dlg.initialComponent();
+//					dlg.setVisible(true);
+//				}
+//			});
+//			AppLogger.debug("menu [Tool]-[Chart]-[Line] Succeeded.");
+//		} else {
+//			AppLogger.debug("menu [Tool]-[Chart]-[Line] Canceled.");
+//		}
+//		
+//		setFocusToActiveEditor();
+		
+//		// ダイアログ表示
+//		if (_chartWindow == null) {
+//			_chartWindow = new ChartDialogManager(this);
+//		}
+//		_chartWindow.doChartConfig(chartModel);
+//		updateMenuItem(RunnerMenuResources.ID_HIDE_SHOW_CHARTWINDOW);
+//		AppLogger.debug("menu [Tool]-[Chart]-[Line] Succeeded.");
+		
+		// ダイアログ表示
+		// TODO: 要実装
+		ConversionJsonCsvDialog dlg = new ConversionJsonCsvDialog(this, true);
+		dlg.initialComponent();
+		dlg.setVisible(true);
+		dlg.dispose();
+		int ret = dlg.getDialogResult();
+		AppLogger.debug("Dialog result : " + ret);
+		if (ret == IDialogResult.DialogResult_OK) {
+			AppLogger.debug("menu [Tool]-[Convert]-[JSON 2 CSV] Succeeded.");
+		} else {
+			AppLogger.debug("menu [Tool]-[Convert]-[JSON 2 CSV] Canceled.");
+		}
+		setFocusToActiveEditor();
+	}
+	
+	// menu : [Tool]-[Convert]-[CSV 2 JSON]
+	// @since 3.4.0
+	protected void onSelectedMenuToolConvertCsv2Json(Action action) {
+		AppLogger.debug("menu [File]-[Convert]-[CSV 2 JSON] selected.");
+		
+		// ダイアログ表示
+		ConversionCsvJsonDialog dlg = new ConversionCsvJsonDialog(this, true);
+		dlg.initialComponent();
+		dlg.setVisible(true);
+		dlg.dispose();
+		int ret = dlg.getDialogResult();
+		AppLogger.debug("Dialog result : " + ret);
+		if (ret == IDialogResult.DialogResult_OK) {
+			AppLogger.debug("menu [Tool]-[Convert]-[CSV 2 JSON] Succeeded.");
+		} else {
+			AppLogger.debug("menu [Tool]-[Convert]-[CSV 2 JSON] Canceled.");
+		}
+		setFocusToActiveEditor();
+	}
+	
+	// menu : [Tool]-[MongoDB]
+	// @since 3.4.0
+	protected void onSelectedMenuToolMongoDB(Action action) {
+		AppLogger.debug("menu [File]-[MongoDB] selected.");
+		
+		// ダイアログ表示
+		MongoToolDialog dlg = new MongoToolDialog(this, true);
+		dlg.initialComponent();
+		dlg.setVisible(true);
+		dlg.dispose();
+		AppLogger.debug("menu [File]-[MongoDB] Dialog disposed.");
+		setFocusToActiveEditor();
 	}
 
 	// menu : [File] - [Export Dtalge]

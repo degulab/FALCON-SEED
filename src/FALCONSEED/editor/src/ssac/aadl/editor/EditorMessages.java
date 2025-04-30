@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2011  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)EditorMessages.java	4.0.0	2021/08/27 : for Java11
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)EditorMessages.java	1.17	2011/02/15
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)EditorMessages.java	1.14	2009/12/09
@@ -38,7 +19,7 @@ import ssac.util.logging.AppLogger;
 /**
  * AADLエディタの文字列リソース。
  * 
- * @version 1.17	2011/02/15
+ * @version 4.0.0
  *
  * @since 1.10
  */
@@ -107,7 +88,7 @@ public class EditorMessages extends FieldResource
 	public String descAADLArg	= "AADL Argument file (*.csv,*.xml,*.txt)";
 	public String extAADLArg	= ".csv;.xml;.txt";
 
-	public String chooserTitleJavaHome		= "Select Java Development Kit location";
+	public String chooserTitleJavaHome		= "Select Java Development Kit (JDK) location";
 	public String chooserTitleJavaCompiler	= "Select Java compiler (tools.jar)";
 	public String chooserTitleJavaCommand	= "Select Java command";
 	public String chooserTitleWorkDir		= "Select working directory";
@@ -169,7 +150,7 @@ public class EditorMessages extends FieldResource
 	public String menuFilePackRefer		= "Refer...";
 	public String menuFilePackImport	= "Import...";
 	public String menuFileSelectWS		= "Select Workspace...";
-	public String menuFilePreference	= "Preference...";
+	public String menuFilePreference	= "Preferences...";
 	public String menuFileQuit			= "Quit";
 	//--- [Edit] menu
 	public String menuEdit			= "Edit";
@@ -187,13 +168,15 @@ public class EditorMessages extends FieldResource
 	public String menuFindNext		= "Find Next";
 	public String menuFindPrevious	= "Find Previous";
 	//--- [Build] menu
-	public String menuBuild					= "Build";
-	public String menuBuildCompile			= "Compile";
-	public String menuBuildRun				= "Run";
-	public String menuBuildCompileAndRun	= "Compile and Run";
-	public String menuBuildRunAsJar			= "Run as JAR...";
-	public String menuBuildCompileInDir		= "Compile in directory...";
-	public String menuBuildOption			= "Options...";
+	public String menuBuild						= "Build";
+	public String menuBuildCompile				= "Compile";
+	public String menuBuildCompileFatJar		= "Compile as Fat-jar";
+	public String menuBuildRun					= "Run";
+	public String menuBuildCompileAndRun		= "Compile and Run";
+	public String menuBuildCompileFatJarAndRun	= "Compile as Fat-jar and Run";
+	public String menuBuildRunAsJar				= "Run as JAR...";
+	public String menuBuildCompileInDir			= "Compile in directory...";
+	public String menuBuildOption				= "Options...";
 	//--- [Help] menu
 	public String menuHelp		= "Help";
 	public String menuHelpAbout	= "About...";
@@ -219,7 +202,7 @@ public class EditorMessages extends FieldResource
 	// Preference dialog resources
 	//==============================
 	
-	public String PreferenceDlg_Title_Main = "Preference";
+	public String PreferenceDlg_Title_Main = "Preferences";
 	public String PreferenceDlg_Title_Tab_General = "General";
 	public String PreferenceDlg_Title_Tab_Font = "Font";
 	public String PreferenceDlg_Title_Tab_Encoding = "File Encoding";
@@ -231,7 +214,7 @@ public class EditorMessages extends FieldResource
 	public String PreferenceDlg_Title_CustomJavaHome = "Custom Java Home";
 	public String PreferenceDlg_Title_JavaVersion = "Version -";
 	public String PreferenceDlg_Title_JavaCommand = "Command -";
-	public String PreferenceDlg_Title_JavaCompiler = "Compiler -";
+	public String PreferenceDlg_Title_JavaCompiler = "Compiler version -";
 
 	public String PreferenceDlg_Title_Font_Target = "Target:";
 	public String PreferenceDlg_Title_Font_Family = "Name:";
@@ -335,6 +318,7 @@ public class EditorMessages extends FieldResource
 	public String CompileInDirDlg_Button_StartCompile  = "Start compile";
 	public String CompileInDirDlg_Button_StopCompile   = "Stop";
 	public String CompileInDirDlg_Button_WithoutSubDir = "Without sub-directories";
+	public String CompileInDirDlg_Button_JarWithLibs   = "generate Jar-with-libs";
 	public String CompileInDirDlg_Button_CopyToClip    = "Copy to clipboard";
 
 	//==============================
@@ -377,6 +361,11 @@ public class EditorMessages extends FieldResource
 	public String confirmUpdateConflictReplace = "The file has been changed on the file system. Do you want to\noverwrite the changes made on the file system?";
 	//public String confirmUpdateConflictReplace = "ファイルはファイル・システム上で変更されています。\nファイル・システム上でおこなわれた変更を上書きしますか?";
 
+	public String confirmJavaCompilerNotFound = "The specified Java does not include Java compiler.\nDo you want to keep it?";
+	//public String confirmJavaCompilerNotFound = "指定された Java には Java コンパイラーが含まれていません。\n設定を保存してよろしいですか?";
+	public String confirmUnsupportedJavaVersion = "Java version older than Java %s is not supported.\nDo you want to keep it?";
+	//public String confirmUnsupportedJavaVersion = "Java バージョン %s より前の Java はサポートされていません。\n設定を保存してよろしいですか?";
+
 	// Error messages
 	public String msgSearchResultNotFound = "Not found.";
 	public String msgSearchReplacedTokens = "%d tokens are replaced.";
@@ -413,8 +402,6 @@ public class EditorMessages extends FieldResource
 	//public String msgCompileTerminated = "コンパイルは中断されました。";
 	public String msgNowExecuting = "Module is running.\nPlease do this operation after the module running.";
 	//public String msgNowExecuting = "モジュール実行中です。\nこの操作はモジュールの実行が終了してから行ってください。";
-	public String msgNotFoundJDK = "JDK not found!\nPlease correct preference from [Preference] menu after it starts.";
-	//public String msgNotFoundJDK = "Java開発環境が見つかりません。\n起動後、[設定]メニューから正しい設定を行ってください。";
 	public String msgUnsupportedDocument = "\"%s\" is not supported file type.";
 	//public String msgUnsupportedDocument = "\"%s\" はサポートされていないファイル形式です。";
 	public String msgExecutableFileNotFound = "Executable file not found.";
@@ -424,6 +411,15 @@ public class EditorMessages extends FieldResource
 	public String msgCannotWriteCauseReadOnly = "File '%s' is read only. Cannot save it.";
 	//public String msgCannotWriteCauseReadOnly = "ファイル '%s' は読み取り専用です。保存できません。";
 
+	public String msgNotFoundJDKonStart = "Java compiler does not found.\nPlease specify JDK to use from [File]-[Preferences] menu after it starts.";
+	//public String msgNotFoundJDKonStart = "Java コンパイラーが見つかりません。\n起動後、[ファイル]-[設定]メニューから、使用する Java 開発環境(JDK)を設定してください。";
+	public String msgUnspecifiedTargetJava = "Target JDK is not specified.";
+	//public String msgUnspecifiedTargetJava = "Java 開発環境(JDK)が指定されていません。";
+	public String msgNotFoundJavaCompiler = "Java compiler does not found.\nPlease specify JDK to use from [File]-[Preferences] menu.";
+	//public String msgNotFoundJavaCompiler = "Java コンパイラーが見つかりません。\n[ファイル]-[設定]メニューから、使用する Java 開発環境(JDK)を設定してください。";
+	public String msgUnsupportedJavaVersion = "Version (%s) of Java to use is not supported.\nPlease specify JDK version %s or later from [File]-[Preferences] menu.";
+	//public String msgUnsupportedJavaVersion = "使用する Java のバージョン(%s)はサポートされていません。\n[ファイル]-[設定]メニューから、バージョン %s 以上の Java 開発環境(JDK)を設定してください。";
+	
 	public String msgWorkspaceNoSelection = "Please select a workspace.";
 	//public String msgWorkspaceNoSelection = "ワークスペースを選択してください。";
 	public String msgWorkspaceNotFound = "Workspace not found.";

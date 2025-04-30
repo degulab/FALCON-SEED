@@ -1,5 +1,6 @@
-/**
- * 
+/*
+ * @(#)FileProgressMonitorTask.java	1.14	2009/12/22
+ *     - created by Y.Ishizuka(PieCake.inc,)
  */
 package ssac.util.swing;
 
@@ -42,8 +43,10 @@ import ssac.util.properties.ExConfiguration;
 import ssac.util.swing.tree.AbstractTreeModel;
 
 /**
- * @author ishizuka
- *
+ * フォルダ選択ダイアログ。
+ * 
+ * @version 1.14	2009/12/22
+ * @since 1.14
  */
 public class FolderBrowserDialog extends JDialog implements IDialogResult
 {

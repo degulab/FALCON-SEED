@@ -1,25 +1,8 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2016  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)LauncherView.java	5.0.0	2022/12/21
+ *     - modified by Y.Ishizuka(PieCake.inc,)
+ * @(#)LauncherView.java	4.0.0	2021/08/23
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)LauncherView.java	3.3.0	2016/05/30
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)LauncherView.java	3.1.3	2015/05/25
@@ -61,8 +44,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 
@@ -94,7 +75,7 @@ import ssac.util.swing.JMaskedNumberSpinner;
 /**
  * FALCON-SEED起動用ランチャーのメイン画面
  * 
- * @version 3.3.0	2016/05/30
+ * @version 5.0.0
  */
 public class LauncherView extends JFrame implements ProcessWatchHandler, MacScreenMenuHandler
 {
@@ -104,10 +85,11 @@ public class LauncherView extends JFrame implements ProcessWatchHandler, MacScre
 
 	private static final long serialVersionUID = 3490565232403779958L;
 	
-	static protected final String APPNAME_ModuleRunner	= "Module Runner";
+	static protected final String APPNAME_ModuleRunner		= "Module Runner";
 	static protected final String APPNAME_AADLEditor		= "AADL Editor";
 	static protected final String APPNAME_PackageManager	= "Package Manager";
-	static protected final String APPNAME_MQTT_Moquette	= "Moquette Broker";
+	static protected final String APPNAME_MQTT_Moquette		= "Moquette Broker";
+	static protected final String APPNAME_DtContainerEditor	= "Data-Container Editor";
 
 	static private final String BIN_JAVA_MOQUETTE_LIB	= "moquette-broker-0.1-jar-with-dependencies.jar";
 	static private final String BIN_JAVA_MOQUETTE_JAR	= "moquette-launcher.jar";
@@ -115,7 +97,8 @@ public class LauncherView extends JFrame implements ProcessWatchHandler, MacScre
 	
 	static private final String DIR_MQTTLIB_BASE	= "MQTT" + File.separatorChar + "broker";
 	
-	static private final String SYSPROP_ENDORSED_DIRS	= "java.endorsed.dirs";
+	// unsupported "java.endorsed.dirs" over Java9
+	//static private final String SYSPROP_ENDORSED_DIRS	= "java.endorsed.dirs";
 	
 	//------------------------------------------------------------
 	// Fields
@@ -134,6 +117,9 @@ public class LauncherView extends JFrame implements ProcessWatchHandler, MacScre
 	
 	private JSpinner	spinEditor;
 	private JButton	btnStartEditor;
+	
+	private JSpinner	spinDtContainerEditor;
+	private JButton	btnStartDtContainerEditor;
 
 	private JSpinner	spinMqttMoquette;
 	private JButton btnStartMqttMoquette;
@@ -151,7 +137,8 @@ public class LauncherView extends JFrame implements ProcessWatchHandler, MacScre
 	
 	private final boolean _isWindows;
 	
-	private String	_javaEndorsedDirsOption = null;
+	// unsupported "java.endorsed.dirs" over Java9
+	//private String	_javaEndorsedDirsOption = null;
 
 	//------------------------------------------------------------
 	// Constructions
@@ -177,8 +164,9 @@ public class LauncherView extends JFrame implements ProcessWatchHandler, MacScre
 		_binMoquetteJar = new File(_dirMoquette, BIN_JAVA_MOQUETTE_JAR);
 		_existMoquette = (_binMoquetteLib.exists() && _binMoquetteJar.exists());
 		
-		// setup Java Endorsed Directories option (overwrite GDAL(QGIS) Libraries)
-		_javaEndorsedDirsOption = buildJavaEndorsedDirsOption();
+		// unsupported "java.endorsed.dirs" over Java9
+		//// setup Java Endorsed Directories option (overwrite GDAL(QGIS) Libraries)
+		//_javaEndorsedDirsOption = buildJavaEndorsedDirsOption();
 		
 		setTitle(title);
 		setupCenterPanel();
@@ -396,6 +384,7 @@ public class LauncherView extends JFrame implements ProcessWatchHandler, MacScre
 		
 		// Spin
 		spinRunner = createMemorySizeSpinner();
+		spinDtContainerEditor = createMemorySizeSpinner();
 		if (FSStartupSettings.isSpecifiedAdvancedOption()) {
 			spinManager = createMemorySizeSpinner();
 			spinEditor = createMemorySizeSpinner();
@@ -407,6 +396,7 @@ public class LauncherView extends JFrame implements ProcessWatchHandler, MacScre
 		
 		// Start button
 		btnStartRunner = new JButton(strStart);
+		btnStartDtContainerEditor = new JButton(strStart);
 		if (FSStartupSettings.isSpecifiedAdvancedOption()) {
 			btnStartManager = new JButton(strStart);
 			btnStartEditor = new JButton(strStart);
@@ -419,6 +409,7 @@ public class LauncherView extends JFrame implements ProcessWatchHandler, MacScre
 		// Layout
 		int pnlIndex = 0;
 		layoutLauncherItem(panel, pnlIndex++, "Module Runner", spinRunner, btnStartRunner);
+		layoutLauncherItem(panel, pnlIndex++, "Data-Container Editor", spinDtContainerEditor, btnStartDtContainerEditor);
 		if (FSStartupSettings.isSpecifiedAdvancedOption()) {
 			layoutLauncherItem(panel, pnlIndex++, "AADL Editor", spinEditor, btnStartEditor);
 			layoutLauncherItem(panel, pnlIndex++, "Package Manager", spinManager, btnStartManager);
@@ -461,6 +452,13 @@ public class LauncherView extends JFrame implements ProcessWatchHandler, MacScre
 		btnStartRunner.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				onButtonStartRunner(e);
+			}
+		});
+		
+		//--- for Data-Container Editor
+		btnStartDtContainerEditor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				onButtonStartDtContainerEditor(e);
 			}
 		});
 		
@@ -797,6 +795,32 @@ public class LauncherView extends JFrame implements ProcessWatchHandler, MacScre
 		FSStartupSettings.flush();
 	}
 	
+	protected void onButtonStartDtContainerEditor(ActionEvent ae) {
+		// memory size
+		int memSize = ((Integer)spinDtContainerEditor.getValue()).intValue();
+		
+		// create Command list
+		List<String> cmdList = buildCommandForDtContainerEditor(memSize);
+		
+		// start process
+		/*--- old codes ---
+		if (!startProcess(cmdList)) {
+			return;
+		}
+		/*--- end of old codes ---*/
+		if (!executeResponsableProcess(APPNAME_DtContainerEditor, cmdList)) {
+			return;
+		}
+		
+		// save settings
+		if (memSize != FSStartupSettings.DEF_MEMORY_SIZE) {
+			FSStartupSettings.getInstance().setDtContainerEditorMemorySize(memSize);
+		} else {
+			FSStartupSettings.getInstance().setDtContainerEditorMemorySize(-1);
+		}
+		FSStartupSettings.flush();
+	}
+	
 	protected void onButtonStartEditor(ActionEvent ae) {
 		// memory size
 		int memSize = ((Integer)spinEditor.getValue()).intValue();
@@ -901,10 +925,11 @@ public class LauncherView extends JFrame implements ProcessWatchHandler, MacScre
 		if (!Strings.isNullOrEmpty(logDir)) {
 			cmdlist.add("-D" + FSStartupSettings.SYSPROP_LOGGING_DIR + "=" + logDir);
 		}
-		//--- java endorsed dirs
-		if (_javaEndorsedDirsOption != null && _javaEndorsedDirsOption.length() > 0) {
-			cmdlist.add(_javaEndorsedDirsOption);
-		}
+		// unsupported "java.endorsed.dirs" over Java9
+		////--- java endorsed dirs
+		//if (_javaEndorsedDirsOption != null && _javaEndorsedDirsOption.length() > 0) {
+		//	cmdlist.add(_javaEndorsedDirsOption);
+		//}
 //		//--- JTree DnD option
 //		cmdlist.add("-Dsun.swing.enableImprovedDragGesture");
 		//--- for Apple Mac
@@ -973,10 +998,11 @@ public class LauncherView extends JFrame implements ProcessWatchHandler, MacScre
 		if (!Strings.isNullOrEmpty(logDir)) {
 			cmdlist.add("-D" + StartupSettings.SYSPROP_LOGGING_DIR + "=" + logDir);
 		}
-		//--- java endorsed dirs
-		if (_javaEndorsedDirsOption != null && _javaEndorsedDirsOption.length() > 0) {
-			cmdlist.add(_javaEndorsedDirsOption);
-		}
+		// unsupported "java.endorsed.dirs" over Java9
+		////--- java endorsed dirs
+		//if (_javaEndorsedDirsOption != null && _javaEndorsedDirsOption.length() > 0) {
+		//	cmdlist.add(_javaEndorsedDirsOption);
+		//}
 //		//--- JTree DnD option
 //		cmdlist.add("-Dsun.swing.enableImprovedDragGesture");
 		//--- for Apple Mac
@@ -1045,10 +1071,11 @@ public class LauncherView extends JFrame implements ProcessWatchHandler, MacScre
 		if (!Strings.isNullOrEmpty(logDir)) {
 			cmdlist.add("-D" + StartupSettings.SYSPROP_LOGGING_DIR + "=" + logDir);
 		}
-		//--- java endorsed dirs
-		if (_javaEndorsedDirsOption != null && _javaEndorsedDirsOption.length() > 0) {
-			cmdlist.add(_javaEndorsedDirsOption);
-		}
+		// unsupported "java.endorsed.dirs" over Java9
+		////--- java endorsed dirs
+		//if (_javaEndorsedDirsOption != null && _javaEndorsedDirsOption.length() > 0) {
+		//	cmdlist.add(_javaEndorsedDirsOption);
+		//}
 //		//--- JTree DnD option
 //		cmdlist.add("-Dsun.swing.enableImprovedDragGesture");
 		//--- for Apple Mac
@@ -1092,6 +1119,83 @@ public class LauncherView extends JFrame implements ProcessWatchHandler, MacScre
 		
 		return cmdlist;
 	}
+	
+	/**
+	 * Launch Data-Container Editor GUI
+	 * @since 5.0.0
+	 */
+	List<String> buildCommandForDtContainerEditor(int memSize) {
+		ArrayList<String> cmdlist = new ArrayList<String>();
+		
+		// Java command
+		cmdlist.add(LauncherMain.getCurrentJavaCommandPath());
+		
+		// class paths
+		File fHome = LauncherMain.getAppHome();
+		
+		// MemorySize
+		if (memSize > 0) {
+			cmdlist.add("-Xmx" + String.valueOf(memSize) + "m");
+			cmdlist.add("-D" + FSStartupSettings.SYSPROP_MEMORY_SIZE + "=" + memSize);
+		}
+		//--- config dir
+		String confDir = FSStartupSettings.getConfigDirProperty();
+		if (!Strings.isNullOrEmpty(confDir)) {
+			cmdlist.add("-D" + FSStartupSettings.SYSPROP_CONFIG_DIR + "=" + confDir);
+		}
+		//--- logging dir
+		String logDir = FSStartupSettings.getLoggingDirProperty();
+		if (!Strings.isNullOrEmpty(logDir)) {
+			cmdlist.add("-D" + FSStartupSettings.SYSPROP_LOGGING_DIR + "=" + logDir);
+		}
+		// unsupported "java.endorsed.dirs" over Java9
+		////--- java endorsed dirs
+		//if (_javaEndorsedDirsOption != null && _javaEndorsedDirsOption.length() > 0) {
+		//	cmdlist.add(_javaEndorsedDirsOption);
+		//}
+//		//--- JTree DnD option
+//		cmdlist.add("-Dsun.swing.enableImprovedDragGesture");
+		//--- for Apple Mac
+		if (MacUtilities.isMac()) {
+			//--- Set file encoding for UTF-8
+			cmdlist.add("-Dsun.jnu.encoding=UTF-8");
+			cmdlist.add("-Dfile.encoding=UTF-8");
+			//--- Set use screen menu
+			cmdlist.add(MacUtilities.vmOptionUseScreenMenuBar());
+			//--- Set Dock name
+			cmdlist.add(MacUtilities.vmOptionSetDockAppName(APPNAME_DtContainerEditor));
+			//--- Set Dock Icon
+			try {
+				File fIcon = new File(fHome, "lib/resources/icon/DtContainerEditor.icns");
+				if (fIcon.exists() && fIcon.isFile()) {
+					cmdlist.add(MacUtilities.vmOptionSetDockIcon(fIcon.getAbsolutePath()));
+				}
+			} catch (Throwable ignoreEx) {}
+		}
+		
+		// DtContainerEditor.jar
+		cmdlist.add("-jar");
+		File coreJar = new File(new File(fHome, "lib"), "DtContainerEditor.jar");
+		cmdlist.add(coreJar.getAbsolutePath());
+		
+		// Language option
+		if (!FSStartupSettings.isDefaultLocaleWhenStartup(Locale.getDefault())) {
+			cmdlist.add(FSStartupSettings.LANGUAGE_OPTION);
+			cmdlist.add(Locale.getDefault().getLanguage());
+		}
+		
+		// Debug option
+		if (FSStartupSettings.isSpecifiedDebugOption()) {
+			cmdlist.add(FSStartupSettings.DEBUG_OPTION);
+		}
+		
+		// Verbose option
+		if (FSStartupSettings.isSpecifiedVerboseOption()) {
+			cmdlist.add(FSStartupSettings.VERBOSE_OPTION);
+		}
+		
+		return cmdlist;
+	}
 
 	/**
 	 * Launch Moquette Broker GUI
@@ -1120,10 +1224,11 @@ public class LauncherView extends JFrame implements ProcessWatchHandler, MacScre
 		if (!Strings.isNullOrEmpty(logDir)) {
 			cmdlist.add("-D" + FSStartupSettings.SYSPROP_LOGGING_DIR + "=" + logDir);
 		}
-		//--- java endorsed dirs
-		if (_javaEndorsedDirsOption != null && _javaEndorsedDirsOption.length() > 0) {
-			cmdlist.add(_javaEndorsedDirsOption);
-		}
+		// unsupported "java.endorsed.dirs" over Java9
+		////--- java endorsed dirs
+		//if (_javaEndorsedDirsOption != null && _javaEndorsedDirsOption.length() > 0) {
+		//	cmdlist.add(_javaEndorsedDirsOption);
+		//}
 //		//--- JTree DnD option
 //		cmdlist.add("-Dsun.swing.enableImprovedDragGesture");
 		//--- for Apple Mac
@@ -1167,7 +1272,8 @@ public class LauncherView extends JFrame implements ProcessWatchHandler, MacScre
 		return cmdlist;
 	}
 
-	/**
+	// unsupported "java.endorsed.dirs" over Java9
+	/*
 	 * &quot;java.endorsed.dirs&quot; に、&quot;lib/modules&quot; ディレクトリを
 	 * 追加した、新しいプロパティを指定する文字列を生成する。
 	 * <p><b>注意：</b>
@@ -1179,7 +1285,7 @@ public class LauncherView extends JFrame implements ProcessWatchHandler, MacScre
 	 * </blockquote>
 	 * @return	生成されたプロパティ指定を示す文字列
 	 * @since 2014/10/17(modified:2016/05/30)
-	 */
+	 *
 	static private String buildJavaEndorsedDirsOption() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("-D");
@@ -1213,6 +1319,7 @@ public class LauncherView extends JFrame implements ProcessWatchHandler, MacScre
 		
 		return sb.toString();
 	}
+	/*** ***/
 	
 	//************************************************************
 	// Component events
@@ -1361,9 +1468,10 @@ public class LauncherView extends JFrame implements ProcessWatchHandler, MacScre
 										mainFrame.setIconImage(imgIcon);
 									}
 									mainFrame.initialComponent();
-									if (MacUtilities.isMac()) {
-										MacUtilities.setupScreenMenuHandler(mainFrame);
-									}
+									// 以下はサポートされない @since 4.0.0
+									//if (MacUtilities.isMac()) {
+									//	MacUtilities.setupScreenMenuHandler(mainFrame);
+									//}
 								
 									// メインフレームの表示
 									mainFrame.setVisible(true);

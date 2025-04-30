@@ -1,25 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Copyright 2007-2009  SSAC(Systems of Social Accounting Consortium)
- *  <author> Yasunari Ishizuka (PieCake,Inc.)
- *  <author> Hiroshi Deguchi (TOKYO INSTITUTE OF TECHNOLOGY)
- *  <author> Yuji Onuki (Statistics Bureau)
- *  <author> Shungo Sakaki (Tokyo University of Technology)
- *  <author> Akira Sasaki (HOSEI UNIVERSITY)
- *  <author> Hideki Tanuma (TOKYO INSTITUTE OF TECHNOLOGY)
- */
-/*
+ * @(#)TextFieldCharacterValidator.java	5.0.0	2022/12/15
+ *     - modified by Y.Ishizuka(PieCake.inc,) - Bug fixed
  * @(#)TextFieldCharacterValidator.java	1.14	2009/12/09
  *     - created by Y.Ishizuka(PieCake.inc,)
  */
@@ -45,7 +26,7 @@ import ssac.util.Strings;
  * テキストフィールドの入力文字を監視するドキュメントフィルター。
  * ここで設定した条件で、入力内容をチェックすることも可能。
  * 
- * @version 1.14	2009/12/09
+ * @version 5.0.0
  * @since 1.14
  */
 public class TextFieldCharacterValidator extends DocumentFilter
@@ -69,7 +50,7 @@ public class TextFieldCharacterValidator extends DocumentFilter
 	/** 設定された文字セットが入力可能文字であることを示すフラグ **/
 	private boolean	_charsetForValid;
 	/** 入力を検証する際に使用する文字セット **/
-	private Set<Character>	_charset;
+	private Set<Character>	_charset = Collections.emptySet();
 	/** 入力文字に不正があった場合に表示するエラーメッセージ **/
 	private String		_charsetErrorMessage;
 	/** 不正な文字も入力を許可することを示すフラグ **/
