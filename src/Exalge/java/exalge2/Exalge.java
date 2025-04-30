@@ -1,22 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *  
- *  Copyright 2007-2014  SOARS Project.
- *  <author> Hiroshi Deguchi(SOARS Project.)
- *  <author> Li Hou(SOARS Project.)
- *  <author> Yasunari Ishizuka(PieCake.inc,)
- */
-/*
+ * @(#)Exalge.java	0.990	2018/11/26
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)Exalge.java	0.984	2014/05/29
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)Exalge.java	0.983	2010/02/25
@@ -89,9 +73,9 @@ import exalge2.util.Strings;
  * <p>交換代数値は、交換代数基底と値のペアを、交換代数基底をキーとする
  * Mapで保持する。したがって、同一基底の値が複数存在することはない。
  * <br>
- * このクラスの Map の実装は、挿入型の {@link java.util.LinkedHashMap <code>LinkedHashMap</code>} である。
- * したがって、{@link #put(ExBase, BigDecimal) <code>put</code>} メソッドや 
- * {@link #plus(ExBase, BigDecimal) <code>plus</code>} メソッド、ファイル入出力において、
+ * このクラスの Map の実装は、挿入型の {@link java.util.LinkedHashMap} である。
+ * したがって、{@link #put(ExBase, BigDecimal)} メソッドや 
+ * {@link #plus(ExBase, BigDecimal)} メソッド、ファイル入出力において、
  * クラス内での基底の順序は基本的に維持される。詳細は、各メソッドの説明を参照のこと。
  * 
  * <p>このクラスでは、実数値 0 の基底もデータとして保持される。
@@ -114,7 +98,6 @@ import exalge2.util.Strings;
  * フェイルファスト反復子は最善努力原則に基づき、<code>ConcurrentModificationException</code> をスローする。
  * したがって、正確を期すためにこの例外に依存するプログラムを書くことは誤りである。
  * 「反復子のフェイルファストの動作はバグを検出するためにのみ使用すべきである」
- * <p>
  * <p>
  * <b>《入出力フォーマット》</b>
  * <br>
@@ -194,7 +177,7 @@ import exalge2.util.Strings;
  * なお、XML ドキュメントの入出力は、{@link #toXML()}、{@link #fromXML(XmlDocument)} により行う。
  * また、XML ファイルの入出力は、{@link #toXML(File)}、{@link #fromXML(File)} により行う。
  * 
- * @version 0.984	2014/05/29
+ * @version 0.990	2018/11/25
  * 
  * @author H.Deguchi(SOARS Project.)
  * @author Li Hou(SOARS Project.)
@@ -556,6 +539,24 @@ public final class Exalge implements exalge2.io.IDataOutput, Iterable<Exalge>
 	//------------------------------------------------------------
 	// Interfaces
 	//------------------------------------------------------------
+	
+	/**
+	 * このオブジェクトの交換代数要素の変更不可能なコレクションを取得する。
+	 * @return	<code>Map.Entry&lt;ExBase,BigDecimal&gt;</code> を要素とする変更不可能なコレクション
+	 * @since 0.990
+	 */
+	public final Set<Map.Entry<ExBase,BigDecimal>> getUnmodifiableEntrySet() {
+		return Collections.unmodifiableMap(data).entrySet();
+	}
+
+	/**
+	 * このオブジェクト交換代数基底集合の変更不可能な集合を取得する。
+	 * @return	このオブジェクトに含まれる交換代数基底を要素とする変更不可能な集合
+	 * @since 0.990
+	 */
+	public final Set<ExBase> getUnmodifiableExBaseSet() {
+		return Collections.unmodifiableMap(data).keySet();
+	}
 
 	/**
 	 * <code>Exalge</code> の要素の反復子を返す。
@@ -1000,6 +1001,21 @@ public final class Exalge implements exalge2.io.IDataOutput, Iterable<Exalge>
 
 	/**
 	 * 指定された基底と対応する値を取り出す。
+	 * <br>
+	 * 要素に含まれていない基底を指定した場合は、<tt>null</tt> を返す。
+	 * <p>
+	 * <b>(注)</b> <tt>null</tt> が返された場合でも、指定した基底が存在しないとは限らない。
+	 * <tt>null</tt> 値の基底が要素に含まれている場合もある。
+	 * @param exbase	指定された基底
+	 * @return	指定された基底と対応する値、もしくは <tt>null</tt>
+	 * @since 0.990
+	 */
+	public BigDecimal getRealValue(ExBase exbase) {
+		return data.get(exbase);
+	}
+
+	/**
+	 * 指定された基底と対応する値を取り出す。
 	 * 要素に含まれていない基底を指定した場合は、0 を返す。
 	 * <p>
 	 * このメソッドは、引数をチェックしないため、{@link #get(ExBase)}の高速版となる。
@@ -1032,6 +1048,7 @@ public final class Exalge implements exalge2.io.IDataOutput, Iterable<Exalge>
 	 * 
 	 * @param exbase 交換代数の基底
 	 * @param value  値(<tt>null</tt> の場合は、そのまま)
+	 * @return 指定された基底と値が代入された新しいインスタンス
 	 * 
 	 * @throws NullPointerException 引数が <tt>null</tt> の場合、
 	 * 								もしくは、値が <tt>null</tt> であり、
@@ -1096,6 +1113,7 @@ public final class Exalge implements exalge2.io.IDataOutput, Iterable<Exalge>
 	 * @deprecated (0.94)このメソッドは、{@link #normalization()} に置き換えられました。
 	 * 
 	 * 交換代数の要素の値が 0 のものを要素から削除した、Exalgeの新しいインスタンスを返す。
+	 * @return 新しいインスタンス
 	 * 
 	 * @see #normalization()
 	 * 

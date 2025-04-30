@@ -1,22 +1,4 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *  
- *  Copyright 2007-2014  SOARS Project.
- *  <author> Hiroshi Deguchi(SOARS Project.)
- *  <author> Li Hou(SOARS Project.)
- *  <author> Yasunari Ishizuka(PieCake.inc,)
- */
-/*
  * @(#)ExBasePatternSet.java	0.984	2014/05/29
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)ExBasePatternSet.java	0.982	2009/09/13
@@ -209,7 +191,7 @@ public class ExBasePatternSet extends LinkedHashSet<ExBasePattern> implements ex
      * @param initialCapacity 基底パターン集合(セット)の初期容量
      * @param loadFactor 基底パターン集合(セット)の負荷係数
      * 
-     * @throws 初期容量が 0 より小さいか、負荷係数が正の値ではない場合にスローされる
+     * @throws IllegalArgumentException	初期容量が 0 より小さいか、負荷係数が正の値ではない場合にスローされる
      * 
      * @see java.util.LinkedHashSet#LinkedHashSet(int, float)
      */
@@ -222,7 +204,7 @@ public class ExBasePatternSet extends LinkedHashSet<ExBasePattern> implements ex
      * 
      * @param initialCapacity 基底集合(セット)の初期容量
      * 
-     * @throws 初期容量が 0 より小さい場合にスローされる
+     * @throws IllegalArgumentException 初期容量が 0 より小さい場合にスローされる
      * 
      * @see java.util.LinkedHashSet#LinkedHashSet(int)
      */

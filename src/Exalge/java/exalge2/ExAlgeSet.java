@@ -1,22 +1,4 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *  
- *  Copyright 2007-2014  SOARS Project.
- *  <author> Hiroshi Deguchi(SOARS Project.)
- *  <author> Li Hou(SOARS Project.)
- *  <author> Yasunari Ishizuka(PieCake.inc,)
- */
-/*
  * @(#)ExAlgeSet.java	0.984	2014/05/29
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)ExAlgeSet.java	0.983	2010/02/25
@@ -100,7 +82,7 @@ import exalge2.io.xml.XmlDomParseException;
  * <i>値</i>，<i>ハットキー</i>，<i>名前キー</i>，<i>単位キー</i>，<i>時間キー</i>，<i>サブジェクトキー</i>
  * <li>文字コードは、実行するプラットフォームの処理系に依存する。
  * <li>空白行を交換代数の元の区切りとする。つまり、空白行と空白行の間の要素が全てが
- * １つの <code>{@link Exalge}<code> インスタンスに相当する。
+ * １つの <code>{@link exalge2.Exalge}</code> インスタンスに相当する。
  * <li>連続した空白行は、１行分の空白行とみなす。
  * <li>各カラムの前後空白は、無視される。
  * <li><code>'#'</code> で始まる行は、コメント行とみなす。

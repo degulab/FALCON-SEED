@@ -1,22 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *  
- *  Copyright 2007-2009  SOARS Project.
- *  <author> Hiroshi Deguchi(SOARS Project.)
- *  <author> Li Hou(SOARS Project.)
- *  <author> Yasunari Ishizuka(PieCake.inc,)
- */
-/*
+ * @(#)ExBasePattern.java	0.990	2018/11/26
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)ExBasePattern.java	0.982	2009/09/13
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)ExBasePattern.java	0.970	2009/03/10
@@ -78,7 +62,7 @@ import exalge2.util.Strings;
  * &lt; &gt; - , ^ &quot; % &amp; ? | @ ' " (空白)
  * </blockquote>
  * 
- * @version 0.982	2009/09/13
+ * @version 0.990
  * 
  * @author H.Deguchi(SOARS Project.)
  * @author Y.Ishizuka(PieCake.inc,)
@@ -452,6 +436,23 @@ public final class ExBasePattern extends AbExBase implements Comparable<ExBasePa
 	}
 
 	/**
+	 * 基底から、基底パターンの内部形式を生成する。
+	 * この内部形式の基底パターンは、<code>PatternItem</code> の配列であり、
+	 * 基底キーがワイルドカードのみのものはこのパターンに含まれない。
+	 * また、全ての基底キーがワイルドカードの場合は <tt>null</tt> となる。
+	 * このメソッドでは、ハットキーはワイルドカードのみのパターンとして、
+	 * 指定された基底キー配列のハットキーは無視される。
+	 * 
+	 * @param base	基底
+	 * @return	内部形式の基底パターン
+	 * 
+	 * @since 0.990
+	 */
+	static public PatternItem[] makePatternWithoutHatKey(ExBase base) {
+		return makePatternWithoutHatKey(base._baseKeys);
+	}
+
+	/**
 	 * 指定された基底パターンに、指定された基底キー配列が一致するかを判定する。
 	 * @param patterns	内部形式の基底パターン
 	 * @param baseKeys	基底キー配列(整形済みのもの)
@@ -481,6 +482,18 @@ public final class ExBasePattern extends AbExBase implements Comparable<ExBasePa
 		
 		//--- matched!
 		return true;
+	}
+
+	/**
+	 * 指定された基底パターンに、指定された基底が一致するかを判定する。
+	 * @param patterns	内部形式の基底パターン
+	 * @param base		基底
+	 * @return	一致した場合は <tt>true</tt>
+	 * 
+	 * @since 0.990
+	 */
+	static public boolean matchesByPattern(PatternItem[] patterns, ExBase base) {
+		return matchesByPattern(patterns, base._baseKeys);
 	}
 
 	/**
@@ -548,6 +561,25 @@ public final class ExBasePattern extends AbExBase implements Comparable<ExBasePa
 		newBase.setupStatus();
 		return newBase;
 		
+	}
+	
+	/**
+	 * 宛先基底キーパターンにより、指定された基底を変換する。
+	 * 宛先基底キーパターンによる変換では、宛先基底キーパターンにワイルドカードが含まれていない場合は
+	 * 宛先基底キーパターンの基底キー文字列、ワイルドカードが含まれている場合は指定された基底の
+	 * 基底キー文字列によって、新しい基底を生成する。<br>
+	 * このメソッドでは、ハット基底キーをワイルドカードとみなす。
+	 * <p>
+	 * 宛先基底キーパターンによる変換において、ワイルドカードの数や位置は考慮しない。
+	 * 
+	 * @param toBase	宛先基底キーパターン
+	 * @param exbase	変換する基底
+	 * @return	変換後の新しい基底
+	 * 
+	 * @since 0.990
+	 */
+	static public ExBase translateBaseKeyWithoutHatKey(ExBase toBase, ExBase exbase) {
+		return translateBaseKeyWithoutHatKey(toBase._baseKeys, exbase);
 	}
 
 	//------------------------------------------------------------
@@ -1961,7 +1993,7 @@ public final class ExBasePattern extends AbExBase implements Comparable<ExBasePa
 	 *
 	 * @since 0.970
 	 */
-	static protected final class PatternItem implements Comparable<PatternItem> {
+	static public final class PatternItem implements Comparable<PatternItem> {
 		/**
 		 * 固定文字列のみのパターンを示すID
 		 */

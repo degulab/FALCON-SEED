@@ -1,22 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *  
- *  Copyright 2007-2009  SOARS Project.
- *  <author> Hiroshi Deguchi(SOARS Project.)
- *  <author> Li Hou(SOARS Project.)
- *  <author> Yasunari Ishizuka(PieCake.inc,)
- */
-/*
+ * @(#)AbExBase.java	0.990	2018/11/26
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)AbExBase.java	0.982	2009/09/13
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)AbExBase.java	0.970	2009/03/10
@@ -67,7 +51,7 @@ import java.util.regex.Pattern;
  * <p>このクラスにおいては、基底キーは任意の文字列であり、特殊な意味を持つ記号などを
  * 判別する機能は派生クラスにて実装する。
  * 
- * @version 0.982	2009/09/13
+ * @version 0.990
  * 
  * @author H.Deguchi(SOARS Project.)
  * @author Li Hou(SOARS Project.)
@@ -105,23 +89,28 @@ public abstract class AbExBase
 	/**
 	 * 基本的な基底キーの使用禁止文字
 	 */
-	static protected final char[] _ILLEGAL_BASEKEY_CHARS = new char[]{' ','\t','\n','\u000B','\f','\r','<','>','-',',','^','%','&','?','|','@','\'','\"'};
+	static public final char[] _ILLEGAL_BASEKEY_CHARS = new char[]{' ','\t','\n','\u000B','\f','\r','<','>','-',',','^','%','&','?','|','@','\'','\"'};
 
 	/**
 	 * 基本基底キー総数
 	 */
-	static protected final int NUM_BASIC_KEYS = 2;
+	static public final int NUM_BASIC_KEYS = 2;
 	
 	/**
 	 * 基底キー総数
 	 */
-	static protected final int NUM_ALL_KEYS = NUM_BASIC_KEYS + ExtendedKeyID.NUM_KEYS;
-	
-	static protected final int KEY_NAME = 0;
-	static protected final int KEY_HAT  = 1;
-	static protected final int KEY_EXT_UNIT    = NUM_BASIC_KEYS + ExtendedKeyID.UNIT.intValue();
-	static protected final int KEY_EXT_TIME    = NUM_BASIC_KEYS + ExtendedKeyID.TIME.intValue();
-	static protected final int KEY_EXT_SUBJECT = NUM_BASIC_KEYS + ExtendedKeyID.SUBJECT.intValue();
+	static public final int NUM_ALL_KEYS = NUM_BASIC_KEYS + ExtendedKeyID.NUM_KEYS;
+
+	/** 基底の名前キーのインデックス **/
+	static public final int KEY_NAME = 0;
+	/** 基底のハットキーのインデックス **/
+	static public final int KEY_HAT  = 1;
+	/** 基底の単位キーのインデックス **/
+	static public final int KEY_EXT_UNIT    = NUM_BASIC_KEYS + ExtendedKeyID.UNIT.intValue();
+	/** 基底の時間キーのインデックス **/
+	static public final int KEY_EXT_TIME    = NUM_BASIC_KEYS + ExtendedKeyID.TIME.intValue();
+	/** 基底の主体キーのインデックス **/
+	static public final int KEY_EXT_SUBJECT = NUM_BASIC_KEYS + ExtendedKeyID.SUBJECT.intValue();
 
 	/**
 	 * 一意文字列キーの基底キー区切り文字

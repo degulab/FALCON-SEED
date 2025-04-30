@@ -1,22 +1,4 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *  
- *  Copyright 2007-2014  SOARS Project.
- *  <author> Hiroshi Deguchi(SOARS Project.)
- *  <author> Li Hou(SOARS Project.)
- *  <author> Yasunari Ishizuka(PieCake.inc,)
- */
-/*
  * @(#)TransMatrix.java	0.984	2014/05/29
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)TransMatrix.java	0.970	2009/03/10
@@ -72,7 +54,7 @@ import exalge2.io.xml.XmlDomParseException;
  * このクラスには、按分元基底と、按分比率と按分先基底のペアを保持するテーブル
  * ({@link TransDivideRatios})とのマップにより変換テーブルが構成される。
  * <br>
- * このクラスの Map の実装は、挿入型の {@link java.util.LinkedHashMap <code>LinkedHashMap</code>} である。
+ * このクラスの Map の実装は、挿入型の {@link java.util.LinkedHashMap} である。
  * したがって、挿入メソッド、ファイル入出力において、
  * クラス内での要素の順序は基本的に維持される。
  * <br>

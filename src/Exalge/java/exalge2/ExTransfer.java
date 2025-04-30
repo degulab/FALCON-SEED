@@ -1,22 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *  
- *  Copyright 2007-2014  SOARS Project.
- *  <author> Hiroshi Deguchi(SOARS Project.)
- *  <author> Li Hou(SOARS Project.)
- *  <author> Yasunari Ishizuka(PieCake.inc,)
- */
-/*
+ * @(#)ExTransfer.java	0.990	2018/11/26
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)ExTransfer.java	0.984	2014/05/29
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)ExTransfer.java	0.982	2009/10/09 - test for ExBasePatternMultiMap use LinkedHashMap
@@ -54,11 +38,14 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
+import exalge2.db.BigExalge;
+import exalge2.db.BigExalgeElement;
 import exalge2.io.csv.CsvFormatException;
 import exalge2.io.csv.CsvReader;
 import exalge2.io.csv.CsvWriter;
 import exalge2.io.xml.XmlDocument;
 import exalge2.io.xml.XmlDomParseException;
+import redundantalge.db.BigIterator;
 
 /**
  * 交換代数の変換定義を保持する変換テーブル。
@@ -88,10 +75,10 @@ import exalge2.io.xml.XmlDomParseException;
  * 属性値には 0 以上の実数値を指定できる。
  * 同一の変換元基底パターンを持つ変換定義が3つ存在し、
  * 属性値がそれぞれ、1、3、5 と指定されている場合、変換後の値は次のように算出される。<br>
- * &nbsp;&nbsp;&nbsp&nbsp;変換元要素の値×1/9<br>
- * &nbsp;&nbsp;&nbsp&nbsp;変換元要素の値×3/9<br>
- * &nbsp;&nbsp;&nbsp&nbsp;変換元要素の値×5/9<br>
- * &nbsp;&nbsp;&nbsp&nbsp;※ 9 = 1 + 3 + 5<br>
+ * &nbsp;&nbsp;&nbsp;&nbsp;変換元要素の値×1/9<br>
+ * &nbsp;&nbsp;&nbsp;&nbsp;変換元要素の値×3/9<br>
+ * &nbsp;&nbsp;&nbsp;&nbsp;変換元要素の値×5/9<br>
+ * &nbsp;&nbsp;&nbsp;&nbsp;※ 9 = 1 + 3 + 5<br>
  * この属性を指定した変換定義の属性値には、同一変換元基底パターンを持つ複数の変換定義において、
  * 属性値の合計が 0 より大きい値となるように属性値を指定しなければならない。</dd>
  * <dt><b>multiply</b></dt>
@@ -106,7 +93,7 @@ import exalge2.io.xml.XmlDomParseException;
  * また、属性名に 'aggre' が指定された変換定義の変換先基底パターンと同一の変換先基底パターンを指定することは許可しない。</dd>
  * </dl>
  * <p>
- * このクラスの Map の実装は、挿入型の {@link java.util.LinkedHashMap <code>LinkedHashMap</code>} である。
+ * このクラスの Map の実装は、挿入型の {@link java.util.LinkedHashMap} である。
  * そのため、クラス内での変換定義の順序は基本的に維持される。
  * <p>
  * <b>注：</b>変換テーブルは、一つの変換定義が一つの変換元基底パターンを持ち、ratio や multiply など、
@@ -225,7 +212,7 @@ import exalge2.io.xml.XmlDomParseException;
  * なお、XML ドキュメントの入出力は、{@link #toXML()}、{@link #fromXML(XmlDocument)} により行う。
  * また、XML ファイルの入出力は、{@link #toXML(File)}、{@link #fromXML(File)} により行う。
  * 
- * @version 0.984	2014/05/29
+ * @version 0.990
  * 
  * @author H.Deguchi(SOARS Project.)
  * @author Y.Ishizuka(PieCake.inc,)
@@ -796,7 +783,7 @@ public class ExTransfer implements exalge2.io.IDataOutput, Cloneable
 	 * @param value		基底パターンの組み合わせに関連付ける属性値
 	 * @return	指定された基底パターンの組み合わせがこの変換テーブルに存在していなかった場合は <tt>true</tt> を返す。
 	 * 
-	 * @throws NullPointerException	<code>from</code> もしくは </code>to</code> が <tt>null</tt> の場合。
+	 * @throws NullPointerException	<code>from</code> もしくは <code>to</code> が <tt>null</tt> の場合。
 	 * 									もしくは属性名が {@link #ATTR_RATIO}、{@link #ATTR_MULTIPLY} のときに <code>value</code> が <tt>null</tt> の場合
 	 * @throws IllegalArgumentException	次のケースにおいて、例外をスローする。
 	 * <ul>
@@ -838,7 +825,7 @@ public class ExTransfer implements exalge2.io.IDataOutput, Cloneable
 	 * @param value		基底パターンの組み合わせに関連付ける属性値
 	 * @return	指定された基底パターンの組み合わせがこの変換テーブルに存在していなかった場合は <tt>true</tt> を返す。
 	 * 
-	 * @throws NullPointerException	<code>from</code> もしくは </code>to</code> が <tt>null</tt> の場合。
+	 * @throws NullPointerException	<code>from</code> もしくは <code>to</code> が <tt>null</tt> の場合。
 	 * 									もしくは属性名が {@link #ATTR_RATIO}、{@link #ATTR_MULTIPLY} のときに <code>value</code> が <tt>null</tt> の場合
 	 * @throws IllegalArgumentException	次のケースにおいて、例外をスローする。
 	 * <ul>
@@ -885,7 +872,7 @@ public class ExTransfer implements exalge2.io.IDataOutput, Cloneable
 	 * @param value		比率属性の値
 	 * @return	指定された基底パターンの組み合わせがこの変換テーブルに存在していなかった場合は <tt>true</tt> を返す。
 	 * 
-	 * @throws NullPointerException	<code>from</code>、</code>to</code>、<code>value</code> のどれかが <tt>null</tt> の場合
+	 * @throws NullPointerException	<code>from</code>、<code>to</code>、<code>value</code> のどれかが <tt>null</tt> の場合
 	 * @throws IllegalArgumentException	次のケースにおいて、例外をスローする。
 	 * <ul>
 	 * <li>指定された属性値が負の場合</li>
@@ -912,7 +899,7 @@ public class ExTransfer implements exalge2.io.IDataOutput, Cloneable
 	 * @param value		比率属性の値
 	 * @return	指定された基底パターンの組み合わせがこの変換テーブルに存在していなかった場合は <tt>true</tt> を返す。
 	 * 
-	 * @throws NullPointerException	<code>from</code>、</code>to</code>、<code>value</code> のどれかが <tt>null</tt> の場合
+	 * @throws NullPointerException	<code>from</code>、<code>to</code>、<code>value</code> のどれかが <tt>null</tt> の場合
 	 * @throws IllegalArgumentException	次のケースにおいて、例外をスローする。
 	 * <ul>
 	 * <li>指定された基底パターンのハットキーがワイルドカード以外の場合</li>
@@ -942,7 +929,7 @@ public class ExTransfer implements exalge2.io.IDataOutput, Cloneable
 	 * @param value		乗算属性の値
 	 * @return	指定された基底パターンの組み合わせがこの変換テーブルに存在していなかった場合は <tt>true</tt> を返す。
 	 * 
-	 * @throws NullPointerException	<code>from</code>、</code>to</code>、<code>value</code> のどれかが <tt>null</tt> の場合
+	 * @throws NullPointerException	<code>from</code>、<code>to</code>、<code>value</code> のどれかが <tt>null</tt> の場合
 	 * @throws IllegalArgumentException	次のケースにおいて、例外をスローする。
 	 * <ul>
 	 * <li>指定された変換元基底パターンがすでに存在するとき、存在する変換定義の属性名が {@link #ATTR_MULTIPLY} ではない場合</li>
@@ -968,7 +955,7 @@ public class ExTransfer implements exalge2.io.IDataOutput, Cloneable
 	 * @param value		乗算属性の値
 	 * @return	指定された基底パターンの組み合わせがこの変換テーブルに存在していなかった場合は <tt>true</tt> を返す。
 	 * 
-	 * @throws NullPointerException	<code>from</code>、</code>to</code>、<code>value</code> のどれかが <tt>null</tt> の場合
+	 * @throws NullPointerException	<code>from</code>、<code>to</code>、<code>value</code> のどれかが <tt>null</tt> の場合
 	 * @throws IllegalArgumentException	次のケースにおいて、例外をスローする。
 	 * <ul>
 	 * <li>指定された基底パターンのハットキーがワイルドカード以外の場合</li>
@@ -995,7 +982,7 @@ public class ExTransfer implements exalge2.io.IDataOutput, Cloneable
 	 * @param to	変換先基底パターンとする交換代数基底
 	 * @return	指定された基底パターンの組み合わせがこの変換テーブルに存在していなかった場合は <tt>true</tt> を返す。
 	 * 
-	 * @throws NullPointerException	<code>from</code> もしくは </code>to</code> が <tt>null</tt> の場合
+	 * @throws NullPointerException	<code>from</code> もしくは <code>to</code> が <tt>null</tt> の場合
 	 * @throws IllegalArgumentException	次のケースにおいて、例外をスローする。
 	 * <ul>
 	 * <li>指定された変換元基底パターンを含む変換定義がすでに存在する場合</li>
@@ -1020,7 +1007,7 @@ public class ExTransfer implements exalge2.io.IDataOutput, Cloneable
 	 * @param to	変換先基底パターン
 	 * @return	指定された基底パターンの組み合わせがこの変換テーブルに存在していなかった場合は <tt>true</tt> を返す。
 	 * 
-	 * @throws NullPointerException	<code>from</code> もしくは </code>to</code> が <tt>null</tt> の場合
+	 * @throws NullPointerException	<code>from</code> もしくは <code>to</code> が <tt>null</tt> の場合
 	 * @throws IllegalArgumentException	次のケースにおいて、例外をスローする。
 	 * <ul>
 	 * <li>指定された基底パターンのハットキーがワイルドカード以外の場合</li>
@@ -1048,7 +1035,7 @@ public class ExTransfer implements exalge2.io.IDataOutput, Cloneable
 	 * @param to	変換先基底パターンとする交換代数基底
 	 * @return	指定された基底パターンの組み合わせがこの変換テーブルに存在していなかった場合は <tt>true</tt> を返す。
 	 * 
-	 * @throws NullPointerException	<code>from</code> もしくは </code>to</code> が <tt>null</tt> の場合
+	 * @throws NullPointerException	<code>from</code> もしくは <code>to</code> が <tt>null</tt> の場合
 	 * @throws IllegalArgumentException	次のケースにおいて、例外をスローする。
 	 * <ul>
 	 * <li>指定された変換元基底パターンを含む変換定義がすでに存在する場合</li>
@@ -1073,7 +1060,7 @@ public class ExTransfer implements exalge2.io.IDataOutput, Cloneable
 	 * @param to	変換先基底パターン
 	 * @return	指定された基底パターンの組み合わせがこの変換テーブルに存在していなかった場合は <tt>true</tt> を返す。
 	 * 
-	 * @throws NullPointerException	<code>from</code> もしくは </code>to</code> が <tt>null</tt> の場合
+	 * @throws NullPointerException	<code>from</code> もしくは <code>to</code> が <tt>null</tt> の場合
 	 * @throws IllegalArgumentException	次のケースにおいて、例外をスローする。
 	 * <ul>
 	 * <li>指定された基底パターンのハットキーがワイルドカード以外の場合</li>
@@ -1110,7 +1097,7 @@ public class ExTransfer implements exalge2.io.IDataOutput, Cloneable
 	 * @param value		基底パターンの組み合わせに関連付ける属性値
 	 * @return	既存の定義が上書きされなかった場合に <tt>true</tt> を返す。
 	 * 
-	 * @throws NullPointerException	<code>from</code> もしくは </code>to</code> が <tt>null</tt> の場合。
+	 * @throws NullPointerException	<code>from</code> もしくは <code>to</code> が <tt>null</tt> の場合。
 	 * 									もしくは属性名が {@link #ATTR_RATIO}、{@link #ATTR_MULTIPLY} のときに <code>value</code> が <tt>null</tt> の場合
 	 * @throws IllegalArgumentException	次のケースにおいて、例外をスローする。
 	 * <ul>
@@ -1146,7 +1133,7 @@ public class ExTransfer implements exalge2.io.IDataOutput, Cloneable
 	 * @param value		基底パターンの組み合わせに関連付ける属性値
 	 * @return	既存の定義が上書きされなかった場合に <tt>true</tt> を返す。
 	 * 
-	 * @throws NullPointerException	<code>from</code> もしくは </code>to</code> が <tt>null</tt> の場合。
+	 * @throws NullPointerException	<code>from</code> もしくは <code>to</code> が <tt>null</tt> の場合。
 	 * 									もしくは属性名が {@link #ATTR_RATIO}、{@link #ATTR_MULTIPLY} のときに <code>value</code> が <tt>null</tt> の場合
 	 * @throws IllegalArgumentException	次のケースにおいて、例外をスローする。
 	 * <ul>
@@ -1186,7 +1173,7 @@ public class ExTransfer implements exalge2.io.IDataOutput, Cloneable
 	 * @param value		比率属性の値
 	 * @return	既存の定義が上書きされなかった場合に <tt>true</tt> を返す。
 	 * 
-	 * @throws NullPointerException	<code>from</code>、</code>to</code>、<code>value</code> のどれかが <tt>null</tt> の場合
+	 * @throws NullPointerException	<code>from</code>、<code>to</code>、<code>value</code> のどれかが <tt>null</tt> の場合
 	 * @throws IllegalArgumentException	指定された属性値が負の場合
 	 */
 	public boolean setRatio(ExBase from, ExBase to, BigDecimal value) {
@@ -1208,7 +1195,7 @@ public class ExTransfer implements exalge2.io.IDataOutput, Cloneable
 	 * @param value		比率属性の値
 	 * @return	既存の定義が上書きされなかった場合に <tt>true</tt> を返す。
 	 * 
-	 * @throws NullPointerException	<code>from</code>、</code>to</code>、<code>value</code> のどれかが <tt>null</tt> の場合
+	 * @throws NullPointerException	<code>from</code>、<code>to</code>、<code>value</code> のどれかが <tt>null</tt> の場合
 	 * @throws IllegalArgumentException	指定された基底パターンのハットキーがワイルドカード以外の場合、もしくは、
 	 * 										指定された属性値が負の場合
 	 */
@@ -1233,7 +1220,7 @@ public class ExTransfer implements exalge2.io.IDataOutput, Cloneable
 	 * @param value		乗算属性の値
 	 * @return	既存の定義が上書きされなかった場合に <tt>true</tt> を返す。
 	 * 
-	 * @throws NullPointerException	<code>from</code>、</code>to</code>、<code>value</code> のどれかが <tt>null</tt> の場合
+	 * @throws NullPointerException	<code>from</code>、<code>to</code>、<code>value</code> のどれかが <tt>null</tt> の場合
 	 */
 	public boolean setMultiply(ExBase from, ExBase to, BigDecimal value) {
 		return set(ExBasePattern.toPattern(from), ExBasePattern.toPattern(to), ATTR_MULTIPLY, value);
@@ -1254,7 +1241,7 @@ public class ExTransfer implements exalge2.io.IDataOutput, Cloneable
 	 * @param value		乗算属性の値
 	 * @return	既存の定義が上書きされなかった場合に <tt>true</tt> を返す。
 	 * 
-	 * @throws NullPointerException	<code>from</code>、</code>to</code>、<code>value</code> のどれかが <tt>null</tt> の場合
+	 * @throws NullPointerException	<code>from</code>、<code>to</code>、<code>value</code> のどれかが <tt>null</tt> の場合
 	 * @throws IllegalArgumentException	指定された基底パターンのハットキーがワイルドカード以外の場合
 	 */
 	public boolean setMultiply(ExBasePattern from, ExBasePattern to, BigDecimal value) {
@@ -1277,7 +1264,7 @@ public class ExTransfer implements exalge2.io.IDataOutput, Cloneable
 	 * @param to		変換先基底パターンとする交換代数基底
 	 * @return	既存の定義が上書きされなかった場合に <tt>true</tt> を返す。
 	 * 
-	 * @throws NullPointerException	<code>from</code> もしくは </code>to</code> が <tt>null</tt> の場合
+	 * @throws NullPointerException	<code>from</code> もしくは <code>to</code> が <tt>null</tt> の場合
 	 */
 	public boolean setAggregate(ExBase from, ExBase to) {
 		return set(ExBasePattern.toPattern(from), ExBasePattern.toPattern(to), ATTR_AGGRE, BigDecimal.ONE);
@@ -1297,7 +1284,7 @@ public class ExTransfer implements exalge2.io.IDataOutput, Cloneable
 	 * @param to		変換先基底パターン
 	 * @return	既存の定義が上書きされなかった場合に <tt>true</tt> を返す。
 	 * 
-	 * @throws NullPointerException	<code>from</code> もしくは </code>to</code> が <tt>null</tt> の場合
+	 * @throws NullPointerException	<code>from</code> もしくは <code>to</code> が <tt>null</tt> の場合
 	 * @throws IllegalArgumentException	指定された基底パターンのハットキーがワイルドカード以外の場合
 	 */
 	public boolean setAggregate(ExBasePattern from, ExBasePattern to) {
@@ -1320,7 +1307,7 @@ public class ExTransfer implements exalge2.io.IDataOutput, Cloneable
 	 * @param to		変換先基底パターンとする交換代数基底
 	 * @return	既存の定義が上書きされなかった場合に <tt>true</tt> を返す。
 	 * 
-	 * @throws NullPointerException	<code>from</code> もしくは </code>to</code> が <tt>null</tt> の場合
+	 * @throws NullPointerException	<code>from</code> もしくは <code>to</code> が <tt>null</tt> の場合
 	 */
 	public boolean setHatAggregate(ExBase from, ExBase to) {
 		return set(ExBasePattern.toPattern(from), ExBasePattern.toPattern(to), ATTR_HAT, BigDecimal.ONE);
@@ -1340,7 +1327,7 @@ public class ExTransfer implements exalge2.io.IDataOutput, Cloneable
 	 * @param to		変換先基底パターン
 	 * @return	既存の定義が上書きされなかった場合に <tt>true</tt> を返す。
 	 * 
-	 * @throws NullPointerException	<code>from</code> もしくは </code>to</code> が <tt>null</tt> の場合
+	 * @throws NullPointerException	<code>from</code> もしくは <code>to</code> が <tt>null</tt> の場合
 	 * @throws IllegalArgumentException	指定された基底パターンのハットキーがワイルドカード以外の場合
 	 */
 	public boolean setHatAggregate(ExBasePattern from, ExBasePattern to) {
@@ -1629,6 +1616,64 @@ public class ExTransfer implements exalge2.io.IDataOutput, Cloneable
 		} else {
 			// 変換結果を合成
 			return targetAlge.plus(transAlge);
+		}
+	}
+
+	/**
+	 * この変換テーブルの変換定義に基づき、指定された大容量の交換代数元を変換する。
+	 * 変換対象の基底に一致する、異なる変換元基底パターンが複数存在する場合は、
+	 * 最初に一致した基底パターンを変換元基底パターンとする全ての変換定義によってのみ変換される。
+	 * <p>
+	 * 変換結果は、指定された交換代数元の全ての要素に、変換対象となった
+	 * 基底のハットと元の値、変換後の基底と値が加算された結果となる。
+	 * <p>
+	 * <b>(注)</b> この変換では、Bar演算は行わない。変換結果を集約する場合、必要に応じて、
+	 * Sum演算、Bar演算を行うこと。
+	 * 
+	 * @param dstAlge		変換結果を格納する交換代数元オブジェクト
+	 * @param targetAlge	変換対象の交換代数元
+	 * 
+	 * @throws ArithmeticException		'ratio'属性の変換において、変換比率の合計が 0 の場合にスローされる
+	 * @throws redundantalge.db.BigAlgeError	大容量の交換代数元オブジェクトのストレージに関する処理が正常に実行できなかった場合
+	 * @since 0.990
+	 */
+	public void bigTransfer(BigExalge dstAlge, BigExalge targetAlge) {
+		Exalge transDestAlge = new Exalge();
+		BigIterator<BigExalgeElement> it = targetAlge.elementIterator();
+		try {
+			while (it.hasNext()) {
+				BigExalgeElement elem = it.next();
+				//--- 変換元の値を結果オブジェクトに格納
+				dstAlge.add(elem.getBase(), elem.getValue());
+				//--- パターンマッチ
+				ExBasePattern matchedPattern = matchesFrom(elem.getBase());
+				if (matchedPattern != null) {
+					ITransferEntryMap entrymap = map.get(matchedPattern);
+					if (entrymap == null || entrymap.isEmpty()) {
+						throw new IllegalStateException(getErrorForUndefinedTranslationAhead(matchedPattern));
+					}
+					ExBase targetBase = elem.getBase();
+					BigDecimal targetValue = elem.getValue();
+					//--- 変換元のハット演算結果を結果オブジェクトに格納
+					dstAlge.add(targetBase.hat(), targetValue);
+					//--- 変換結果を格納するバッファをクリア
+					transDestAlge.data.clear();
+					//--- 一要素の変換
+					try {
+						entrymap.transfer(transDestAlge, targetBase, targetValue);
+					}
+					catch (ArithmeticException ex) {
+						BigDecimal totalRatio = entrymap.getTotalValue();
+						throw new ArithmeticException(String.format("Failed to divide by total value(%s) : [from]%s",
+									totalRatio.stripTrailingZeros().toPlainString(), matchedPattern.toString()));
+					}
+					//--- 変換結果を結果オブジェクトに格納
+					dstAlge.add(transDestAlge);
+				}
+			}
+		}
+		finally {
+			it.closeCursor();
 		}
 	}
 

@@ -1,22 +1,4 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *  
- *  Copyright 2007-2008  SOARS Project.
- *  <author> Hiroshi Deguchi(SOARS Project.)
- *  <author> Li Hou(SOARS Project.)
- *  <author> Yasunari Ishizuka(PieCake.inc,)
- */
-/*
  * @(#)FileConverter.java	0.982	2009/09/13
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)FileConverter.java	0.93	2007/09/03
@@ -269,7 +251,6 @@ public class FileConverter {
 	 * @throws FileNotFoundException ファイルが存在しないか、何らかの理由で開くことができない場合
 	 * @throws IOException 入出力エラーが発生した場合
 	 * @throws UnsupportedEncodingException 指定された文字セットがサポートされていない場合
-	 * @throws CsvFormatException CSV ファイルのフォーマットが正しくない場合
 	 * @throws UnsupportedFormatException ファイルのフォーマットがサポートされていない場合
 	 * @throws FactoryConfigurationError XML の実装が使用できないかインスタンス化できない場合
 	 * @throws ParserConfigurationException DocumentBuilder を構成できない場合

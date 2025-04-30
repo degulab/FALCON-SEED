@@ -1,0 +1,6 @@
+{  "_id" : ObjectId("5bfced1669013a1c1c6277a1"),  "base" : {  "hat" : false,  "name" : "国調労調変換比率",  "unit" : "",  "time" : "Y1975",  "subject" : "製造業（除く内職）" },  "value" : NumberDecimal("1.04465301204819277108433734939759") }
+{  "_id" : ObjectId("5bfced1669013a1c1c6277a2"),  "base" : {  "hat" : false,  "name" : "国調労調変換比率",  "unit" : "",  "time" : "Y1980",  "subject" : "製造業（除く内職）" },  "value" : NumberDecimal("1.025095511543419664830657447556545") }
+{  "_id" : ObjectId("5bfced1669013a1c1c6277a3"),  "base" : {  "hat" : false,  "name" : "国調労調変換比率",  "unit" : "",  "time" : "Y1985",  "subject" : "製造業（除く内職）" },  "value" : NumberDecimal("1.034298420284083366520642506305589") }
+{  "_id" : ObjectId("5bfced1669013a1c1c6277a4"),  "base" : {  "hat" : false,  "name" : "国調労調変換比率",  "unit" : "",  "time" : "Y1990",  "subject" : "製造業（除く内職）" },  "value" : NumberDecimal("1.033923538440072554764894656062509") }
+{  "_id" : ObjectId("5bfced1669013a1c1c6277a5"),  "base" : {  "hat" : false,  "name" : "国調労調変換比率",  "unit" : "",  "time" : "Y1995",  "subject" : "製造業（除く内職）" },  "value" : NumberDecimal("1.087690881510197202090005056463846") }
+{  "_id" : ObjectId("5bfced1669013a1c1c6277a6"),  "base" : {  "hat" : false,  "name" : "国調労調変換比率",  "unit" : "",  "time" : "Y2000",  "subject" : "製造業（除く内職）" },  "value" : NumberDecimal("1.041678846153846153846153846153846") }

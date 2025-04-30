@@ -1,22 +1,4 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *  
- *  Copyright 2007-2009  SOARS Project.
- *  <author> Hiroshi Deguchi(SOARS Project.)
- *  <author> Li Hou(SOARS Project.)
- *  <author> Yasunari Ishizuka(PieCake.inc,)
- */
-/*
  * @(#)TransDivideRatios.java	0.970	2009/03/10
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)TransDivideRatios.java	0.960	2009/02/09
@@ -52,8 +34,8 @@ import java.util.Set;
  * において、按分比率テーブル内の「比率合計値が 1 ではない」とする計算方法と、
  * 「比率合計値が 1 である」とする計算方法を選択できる。
  * <p>
- * このクラスの Map の実装は、挿入型の {@link java.util.LinkedHashMap <code>LinkedHashMap</code>} である。
- * したがって、{@link #put(ExBasePattern, BigDecimal) <code>put</code>} メソッドにおいて、
+ * このクラスの Map の実装は、挿入型の {@link java.util.LinkedHashMap} である。
+ * したがって、{@link #put(ExBasePattern, BigDecimal)} メソッドにおいて、
  * クラス内でのデータの格納順序は基本的に維持される。
  * 
  * @version 0.970	2009/03/10

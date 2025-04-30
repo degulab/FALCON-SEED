@@ -1,22 +1,4 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *  
- *  Copyright 2007-2008  SOARS Project.
- *  <author> Hiroshi Deguchi(SOARS Project.)
- *  <author> Li Hou(SOARS Project.)
- *  <author> Yasunari Ishizuka(PieCake.inc,)
- */
-/*
  * @(#)FileUtil.java	0.94	2008/05/12
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)FileUtil.java	0.93	2007/09/03
@@ -307,7 +289,6 @@ public class FileUtil
 	
 	/**
 	 * 指定された文字セットで、テキストファイルを文字列のリストとして読み込む。
-	 * <p>
 	 * <p>
 	 * このメソッドは、指定されたファイルをテキストファイルとして、指定の
 	 * 文字エンコーディングで全て読み込み、読み込んだテキストを格納する
