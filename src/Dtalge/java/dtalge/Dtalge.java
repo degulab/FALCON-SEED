@@ -1,21 +1,4 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *  
- *  Copyright 2007-2012  SOARS Project.
- *  <author> Hiroshi Deguchi(SOARS Project.)
- *  <author> Yasunari Ishizuka(PieCake.inc,)
- */
-/*
  * @(#)Dtalge.java	0.40	2012/06/13
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)Dtalge.java	0.30	2011/03/16
@@ -34,6 +17,7 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -97,9 +81,9 @@ import dtalge.util.internal.XmlErrors;
  * z = x+y = d&lt;e1&gt;+b&lt;e2&gt;+e&lt;e3&gt;
  * </blockquote>
  * なお、交換代数のような加算演算などの算術的演算は定義されない。
- * <p>
- * このクラスの Map の実装は、挿入型の {@link java.util.LinkedHashMap <code>LinkedHashMap</code>} である。
- * したがって、{@link #put(DtBase, Object) <code>put</code>} メソッド、ファイル入出力において、
+ * 
+ * <p>このクラスの Map の実装は、挿入型の {@link java.util.LinkedHashMap} である。
+ * したがって、{@link #put(DtBase, Object)} メソッド、ファイル入出力において、
  * クラス内での基底の順序は基本的に維持される。詳細は、各メソッドの説明を参照のこと。
  * 
  * <p>このクラスでは、<tt>null</tt>も値として有効であり、要素として格納される。
@@ -108,8 +92,7 @@ import dtalge.util.internal.XmlErrors;
  * <ul>
  * <li>{@link #normalization()}
  * </ul>
- * <p>
- * このクラスの {@link #iterator()} メソッドによって返される反復子は、「フェイルファスト」である。
+ * <p>このクラスの {@link #iterator()} メソッドによって返される反復子は、「フェイルファスト」である。
  * 反復子の作成後に、マップが構造的に変更されると、反復子は <code>ConcurrentModificationException</code> をスローする。
  * したがって、同時変更が行われると、反復子は、将来の予測できない時点において予測できない動作が発生する危険を回避するため、
  * ただちにかつ手際よく例外をスローする。
@@ -118,9 +101,8 @@ import dtalge.util.internal.XmlErrors;
  * フェイルファスト反復子は最善努力原則に基づき、<code>ConcurrentModificationException</code> をスローする。
  * したがって、正確を期すためにこの例外に依存するプログラムを書くことは誤りである。
  * 「反復子のフェイルファストの動作はバグを検出するためにのみ使用すべきである」
- * <p>
- * <p>
- * <b>《入出力フォーマット》</b>
+ * 
+ * <p><b>《入出力フォーマット》</b>
  * <br>
  * <code>Dtalge</code> は、CSV ファイル、XML ファイル形式の入出力インタフェースを
  * 提供する。CSV 形式、XML 形式共に、次の制約がある。
@@ -150,10 +132,9 @@ import dtalge.util.internal.XmlErrors;
  * </ul>
  * また、CSV 形式、XML 形式のファイル入力時、ファイル内に同一の基底が複数存在する場合、
  * 最後に出現した基底の値が保持される。これは、データ代数元の書換演算による結果である。
- * <p>
- * <b>&lt;CSV 形式(標準形)&gt;</b>
- * <p>
- * CSV 形式(標準形)のファイルは、カンマ区切りのテキストファイルであり、次のようなフォーマットとなる。
+ * 
+ * <p><b>&lt;CSV 形式(標準形)&gt;</b>
+ * <p>CSV 形式(標準形)のファイルは、カンマ区切りのテキストファイルであり、次のようなフォーマットとなる。
  * <ul>
  * <li>CSV ファイルの第 1 行目は、次のキーワードであること。大文字、小文字も区別される。
  * <br>&nbsp;&nbsp;&nbsp;&nbsp;#DtalgebraSet2
@@ -191,10 +172,9 @@ import dtalge.util.internal.XmlErrors;
  * <ul>
  * <li>特殊記号 &quot;!%&quot; が記述されていても、通常の文字列として読み込まれる。
  * </ul>
- * <p>
- * <b>&lt;CSV 形式(テーブル形式)&gt;</b>
- * <p>
- * CSV 形式(テーブル形式)のファイルは、カンマ区切りのテキストファイルであり、次のようなフォーマットとなる。
+ * 
+ * <p><b>&lt;CSV 形式(テーブル形式)&gt;</b>
+ * <p>CSV 形式(テーブル形式)のファイルは、カンマ区切りのテキストファイルであり、次のようなフォーマットとなる。
  * <ul>
  * <li>CSV ファイルの第 1 行目は、次のキーワードであること。大文字、小文字も区別される。
  * <br>&nbsp;&nbsp;&nbsp;&nbsp;#DtalgebraTable2
@@ -247,10 +227,8 @@ import dtalge.util.internal.XmlErrors;
  * <li>CSV フィールドの値が空欄(長さが 0 の文字列)の場合は、<tt>null</tt>値として読み込まれる。
  * <li>空白行、もしくは全ての列が省略(空文字)されている場合、全ての基底に対応する値が <tt>null</tt>値となるデータ代数元となる。
  * </ul>
- * <p>
- * <b>&lt;XML 形式&gt;</b>
- * <p>
- * XML 形式ファイルのノード構成は、次の通りである。
+ * <p><b>&lt;XML 形式&gt;</b>
+ * <p>XML 形式ファイルのノード構成は、次の通りである。
  * <pre><code>
  * &lt;DtalgebraSet&gt;
  *   &lt;Dtalgebra&gt;
@@ -1030,6 +1008,49 @@ public final class Dtalge implements IDataOutput, Iterable<Dtalge>
 	}
 
 	/**
+	 * 指定された基底と値を、このデータ代数に加算する。
+	 * <p>
+	 * 指定した基底が存在していない場合、データ代数元の基底と値のマップ終端に追加される。
+	 * すでに同一基底が存在する場合、指定された値で上書きされる。この場合、
+	 * 基底の順序は影響を受けない。
+	 * <p>
+	 * (注)このメソッドは、インスタンスの値を書き換える。
+	 * 
+	 * @param base データ代数の基底
+	 * @param value 値
+	 * @return このオブジェクト
+	 * @throws NullPointerException	指定された基底が <tt>null</tt> の場合
+	 * @throws IllegalValueOfDataTypeException	指定された値が基底のデータ型と異なる場合
+	 * 
+	 * @since 0.5.0
+	 */
+	public Dtalge add(DtBase base, Object value) {
+		putValue(base, value);
+		return this;
+	}
+	
+	/**
+	 * 指定されたデータ代数元のすべての要素を、このデータ代数に加算する。
+	 * <p>
+	 * 指定した基底が存在していない場合、データ代数元の基底と値のマップ終端に追加される。
+	 * すでに同一基底が存在する場合、指定された値で上書きされる。この場合、
+	 * 基底の順序は影響を受けない。
+	 * <p>
+	 * (注)このメソッドは、インスタンスの値を書き換える。
+	 * 
+	 * @param alge	代入するデータ代数元
+	 * @return このオブジェクト
+	 * @throws NullPointerException	指定された基底が <tt>null</tt> の場合
+	 * 
+	 * @since 0.5.0
+	 */
+	public Dtalge add(Dtalge alge) {
+		Validations.validNotNull(alge, "'alge' argument cannot be null.");
+		putValue(alge);
+		return this;
+	}
+
+	/**
 	 * データ代数元の要素の値が <tt>null</tt> のものを除外した、<code>Dtalge</code> の
 	 * 新しいインスタンスを返す。
 	 * 
@@ -1085,6 +1106,24 @@ public final class Dtalge implements IDataOutput, Iterable<Dtalge>
 	//------------------------------------------------------------
 	// Interfaces
 	//------------------------------------------------------------
+	
+	/**
+	 * このオブジェクトのデータ代数要素の変更不可能なコレクションを取得する。
+	 * @return	<code>Map.Entry&lt;DtBase,Object&gt;</code> を要素とする変更不可能なコレクション
+	 * @since 0.5.0
+	 */
+	public final Set<Map.Entry<DtBase,Object>> getUnmodifiableEntrySet() {
+		return Collections.unmodifiableMap(data).entrySet();
+	}
+
+	/**
+	 * このオブジェクトのデータ代数基底集合の変更不可能な集合を取得する。
+	 * @return	このオブジェクトに含まれるデータ代数基底を要素とする変更不可能な集合
+	 * @since 0.5.0
+	 */
+	public final Set<DtBase> getUnmodifiableDtBaseSet() {
+		return Collections.unmodifiableMap(data).keySet();
+	}
 
 	/**
 	 * このインスタンスのハッシュ値を返す。
@@ -1398,7 +1437,7 @@ public final class Dtalge implements IDataOutput, Iterable<Dtalge>
 	}
 
 	/**
-	 * この交換代数元から、指定された基底と一致する要素のみを取り出し、
+	 * このデータ代数元から、指定された基底と一致する要素のみを取り出し、
 	 * その要素のみを持つ <code>Dtalge</code> の新しいインスタンスを返す。
 	 * <br>
 	 * 指定された基底が存在しない場合、要素を持たない <code>Dtalge</code> の新しい
@@ -1427,7 +1466,7 @@ public final class Dtalge implements IDataOutput, Iterable<Dtalge>
 	}
 
 	/**
-	 * この交換代数元から、指定された基底集合に含まれる基底と一致する要素のみを
+	 * このデータ代数元から、指定された基底集合に含まれる基底と一致する要素のみを
 	 * 取り出し、その要素のみを持つ <code>Dtalge</code> の新しいインスタンスを返す。
 	 * <br>
 	 * 指定された基底が存在しない場合、要素を持たない <code>Dtalge</code> の
@@ -1556,7 +1595,7 @@ public final class Dtalge implements IDataOutput, Iterable<Dtalge>
 	 * その値を <code>dstObj</code> に置き換えた、<code>Dtalge</code> の
 	 * 新しいインスタンスを返す。
 	 * <p>
-	 * 次の場合、このデータ代数元と同じ要素を持つデータ代数元を返す。
+	 * 次の場合、このデータ代数元自身のインスタンスを返す。
 	 * <ul>
 	 * <li>指定された基底が、このデータ代数元に存在しない場合
 	 * <li>指定された基底に対応する値が、<code>srcObj</code> と等しくない場合
@@ -1565,6 +1604,8 @@ public final class Dtalge implements IDataOutput, Iterable<Dtalge>
 	 * @param base	振替対象とするデータ代数基底
 	 * @param srcObj	振替元の値
 	 * @param dstObj	振替先の値
+	 * @return	振替が行われた場合は振替結果を保持する新しい <code>Dtalge</code> インスタンス、
+	 * 			振替が行われなかった場合は <code>this</code>
 	 * 
 	 * @throws NullPointerException 指定された基底が <tt>null</tt> の場合
 	 * @throws IllegalValueOfDataTypeException	指定された振替先の値が基底のデータ型と異なる場合
@@ -2236,29 +2277,29 @@ public final class Dtalge implements IDataOutput, Iterable<Dtalge>
 	/**
 	 * CSVファイルフォーマットの第1行目のキーワード
 	 */
-	static protected final String CSV_KEYWORD		= "#DtalgebraSet";
-	static protected final String CSV_KEYWORD_V2	= "#DtalgebraSet2";
+	static public final String CSV_KEYWORD		= "#DtalgebraSet";
+	static public final String CSV_KEYWORD_V2	= "#DtalgebraSet2";
 	/**
 	 * テーブル形式のCSVファイルフォーマットの第1行目のキーワード
 	 */
-	static protected final String CSV_TABLE_KEYWORD		= "#DtalgebraTable";
-	static protected final String CSV_TABLE_KEYWORD_V2	= "#DtalgebraTable2";
+	static public final String CSV_TABLE_KEYWORD		= "#DtalgebraTable";
+	static public final String CSV_TABLE_KEYWORD_V2	= "#DtalgebraTable2";
 
-	static protected final String CSV_VALUE_EMPTY		= "";
-	static protected final String CSV_COMMAND_PREFIX	= "!%";
-	static protected final String CSV_ESCAPE_PREFIX	= "!%!%";
-	static protected final String CSV_COMMAND_NULL	= CSV_COMMAND_PREFIX + "N";
+	static public final String CSV_VALUE_EMPTY		= "";
+	static public final String CSV_COMMAND_PREFIX	= "!%";
+	static public final String CSV_ESCAPE_PREFIX	= "!%!%";
+	static public final String CSV_COMMAND_NULL	= CSV_COMMAND_PREFIX + "N";
 
 	/** CSV フィールドの値が、通常の文字列であることを示す。 **/
-	static protected final int	CSVVALTYPE_STRING		= 9999;
+	static public final int	CSVVALTYPE_STRING		= 9999;
 	/** CSV フィールドの値が、<tt>null</tt> もしくは空文字であることを示す。 **/
-	static protected final int	CSVVALTYPE_NONE			= 0;
+	static public final int	CSVVALTYPE_NONE			= 0;
 	/** CSV フィールドの値が、特殊記号によりエスケープされた文字列であることを示す。 **/
-	static protected final int	CSVVALTYPE_ESCAPED		= 1;
+	static public final int	CSVVALTYPE_ESCAPED		= 1;
 	/** CSV フィールドの値が、<tt>null</tt> を表す特殊値であることを示す。 **/
-	static protected final int	CSVVALTYPE_CMD_NULL		= 2;
+	static public final int	CSVVALTYPE_CMD_NULL		= 2;
 	/** CSV フィールドの値が、未定義の特殊値であることを示す。 **/
-	static protected final int	CSVVALTYPE_CMD_UNKNOWN	= (-1);
+	static public final int	CSVVALTYPE_CMD_UNKNOWN	= (-1);
 
 	/**
 	 * XMLファイルフォーマットでのデータ代数集合のルートノード名
@@ -2289,7 +2330,7 @@ public final class Dtalge implements IDataOutput, Iterable<Dtalge>
 	 * <li>通常の文字列の場合は、<code>{@link #CSVVALTYPE_STRING}</code>
 	 * </ul>
 	 */
-	static protected int getCsvValueType(String value) {
+	static public int getCsvValueType(String value) {
 		if (value==null) {
 			// 値なし
 			return CSVVALTYPE_NONE;
@@ -2538,7 +2579,7 @@ public final class Dtalge implements IDataOutput, Iterable<Dtalge>
 	 * 
 	 * @since 0.20
 	 */
-	static protected void writeBasesToTableCsv(CsvWriter writer, Set<DtBase> bases)
+	static public void writeBasesToTableCsv(CsvWriter writer, Collection<DtBase> bases)
 		throws IOException
 	{
 		assert !bases.isEmpty();
@@ -2895,7 +2936,7 @@ public final class Dtalge implements IDataOutput, Iterable<Dtalge>
 	 * 
 	 * @since 0.20
 	 */
-	static protected List<DtBase> readBasesFromTableCsv(CsvReader reader)
+	static public List<DtBase> readBasesFromTableCsv(CsvReader reader)
 		throws IOException, CsvFormatException
 	{
 		CsvReader.CsvRecord record;
@@ -3099,7 +3140,7 @@ public final class Dtalge implements IDataOutput, Iterable<Dtalge>
 		return node;
 	}
 	
-	static protected class CsvFileType {
+	static public class CsvFileType {
 		static public int	V1 = 1;
 		static public int V2 = 2;
 		

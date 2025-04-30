@@ -1,21 +1,4 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *  
- *  Copyright 2007-2010  SOARS Project.
- *  <author> Hiroshi Deguchi(SOARS Project.)
- *  <author> Yasunari Ishizuka(PieCake.inc,)
- */
-/*
  * @(#)ReferenceCacheSet.java	0.10	2008/08/25
  *     - created by Y.Ishizuka(PieCake.inc,)
  */
@@ -40,17 +23,17 @@ import dtalge.util.internal.ReferenceType;
  * このクラスのキャッシュは、コンストラクタで指定された参照種別に
  * よってキャッシュが破棄されるタイミングが異なる。
  * <p>
- * <code>{@link basealge.util.ReferenceType#STRONG}</code> が指定された場合、
+ * <code>{@link dtalge.util.internal.ReferenceType#STRONG}</code> が指定された場合、
  * このキャッシュには強参照のインスタンスが格納される。つまり、このキャッシュ
  * オブジェクトが破棄されない限り、キャッシュとして格納されているインスタンスは
  * 破棄されない。
  * <p>
- * <code>{@link basealge.util.ReferenceType#SOFT}</code> が指定された場合、
+ * <code>{@link dtalge.util.internal.ReferenceType#SOFT}</code> が指定された場合、
  * このキャッシュにはソフト参照のインスタンスが格納される。キャッシュに
  * 格納されたオブジェクトは、ソフト到達可能なオブジェクトと判断された場合、
  * 自動的に破棄される。
  * <p>
- * <code>{@link basealge.util.ReferenceType#WEAK}</code> が指定された場合、
+ * <code>{@link dtalge.util.internal.ReferenceType#WEAK}</code> が指定された場合、
  * このキャッシュには弱参照のインスタンスが格納される。キャッシュに
  * 格納されたオブジェクトは、弱到達可能なオブジェクトと判断された場合、
  * 自動的に破棄される。
@@ -127,7 +110,7 @@ public class ReferenceCacheSet<E> extends AbstractSet<E> implements CacheSet<E>
 	 * 指定された初期容量および負荷係数で、新しい空のキャッシュを生成する。
 	 * キャッシュされるインスタンスは、指定された参照種別に準じて格納される。
 	 * 
-	 * @param refType	参照種別({@link basealge.util.ReferenceType})
+	 * @param refType	参照種別({@link dtalge.util.internal.ReferenceType})
      * @param initialCapacity キャッシュの初期容量
      * @param loadFactor キャッシュの負荷係数
      * 
@@ -155,7 +138,7 @@ public class ReferenceCacheSet<E> extends AbstractSet<E> implements CacheSet<E>
 	 * 指定された初期容量およびデフォルトの負荷係数で、新しい空のキャッシュを生成する。
 	 * キャッシュされるインスタンスは、指定された参照種別に準じて格納される。
 	 * 
-	 * @param refType	参照種別({@link basealge.util.ReferenceType})
+	 * @param refType	参照種別({@link dtalge.util.internal.ReferenceType})
      * @param initialCapacity キャッシュの初期容量
      * 
      * @throws IllegalArgumentException	初期容量が 0 より小さいか、負荷係数が正の値ではない場合にスローされる
@@ -168,7 +151,7 @@ public class ReferenceCacheSet<E> extends AbstractSet<E> implements CacheSet<E>
 	 * デフォルトの初期容量と負荷係数で、新しい空のキャッシュを生成する。
 	 * キャッシュされるインスタンスは、指定された参照種別に準じて格納される。
 	 * 
-	 * @param refType	参照種別({@link basealge.util.ReferenceType})
+	 * @param refType	参照種別({@link dtalge.util.internal.ReferenceType})
 	 */
 	public ReferenceCacheSet(ReferenceType refType) {
 		this.refType = validNotNull(refType, "'refType' argument cannot be null.");

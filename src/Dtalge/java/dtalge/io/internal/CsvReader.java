@@ -1,21 +1,4 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *  
- *  Copyright 2007-2010  SOARS Project.
- *  <author> Hiroshi Deguchi(SOARS Project.)
- *  <author> Yasunari Ishizuka(PieCake.inc,)
- */
-/*
  * @(#)CsvReader.java	0.20	2010/02/25
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)CsvReader.java	0.10	2008/08/21
@@ -765,6 +748,7 @@ public class CsvReader
 		 * <code>fromIndex</code> に制約はない。負の値の場合は 0 の場合と同じ結果となる。このレコードが保持している
 		 * フィールド数より大きい場合は、常に <tt>false</tt> を返す。
 		 * 
+		 * @param fromIndex	開始インデックス
 		 * @return	レコードが指定されたインデックス以降に値を持つフィールドを保持していれば <tt>true</tt> を返す。
 		 * 			フィールドが存在しない場合や、値を保持しているフィールドが一つもない場合は <tt>false</tt> を返す。
 		 */
@@ -890,6 +874,8 @@ public class CsvReader
 
 		/**
 		 * 読み込まれるフィールドが存在する場合に <tt>true</tt> を返す。
+		 * 
+		 * @return レコードがフィールドを持っていれば <tt>true</tt>
 		 */
 		public boolean hasNextField() {
 			return (pos < record.aryFields.length);

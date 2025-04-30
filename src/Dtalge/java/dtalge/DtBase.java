@@ -1,21 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *  
- *  Copyright 2007-2010  SOARS Project.
- *  <author> Hiroshi Deguchi(SOARS Project.)
- *  <author> Yasunari Ishizuka(PieCake.inc,)
- */
-/*
+ * @(#)DtBase.java	0.5.0	2019/02/20
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)DtBase.java	0.20	2010/03/10
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)DtBase.java	0.10	2008/08/25
@@ -24,6 +9,8 @@
 package dtalge;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -84,7 +71,7 @@ import dtalge.util.internal.XmlErrors;
  * <p>
  * 省略されている基底キーは省略記号<code>('#')</code>で表される。
  * 
- * @version 0.20	2010/02/25
+ * @version 0.5.0
  * 
  * @author H.Deguchi(SOARS Project.)
  * @author Y.Ishizuka(PieCake.inc,)
@@ -476,7 +463,7 @@ public final class DtBase extends AbDtBase implements Comparable<DtBase>
 	 * 
 	 * @throws IOException 書き込みに失敗した場合にスローされる
 	 */
-	protected void writeFieldToCSV(CsvWriter writer) throws IOException
+	public void writeFieldToCSV(CsvWriter writer) throws IOException
 	{
 		// name key
 		writer.writeField(getNameKey());
@@ -514,7 +501,7 @@ public final class DtBase extends AbDtBase implements Comparable<DtBase>
 	 * @throws IOException 読み込み時エラーが発生したときにスローされる
 	 * @throws CsvFormatException カラムのデータが正しくない場合にスローされる
 	 */
-	static protected DtBase readFieldFromCSV(CsvReader.CsvFieldReader reader)
+	static public DtBase readFieldFromCSV(CsvReader.CsvFieldReader reader)
 		throws IOException, CsvFormatException
 	{
 		// name key
@@ -572,7 +559,23 @@ public final class DtBase extends AbDtBase implements Comparable<DtBase>
 	 * 
 	 * @since 0.20
 	 */
-	static protected final class BaseKeyContainer extends AbDtBase {}
+	static public final class BaseKeyContainer extends AbDtBase {}
+
+	/**
+	 * 基底キーを保持するコンテナのコレクションから、基底のリストを生成する。
+	 * @param c	基底キーコンテナのコレクション
+	 * @return	生成されたデータ代数基底のリスト
+	 * @since 0.5.0
+	 */
+	static public ArrayList<DtBase> makeDtBaseListByKeyContainers(Collection<? extends BaseKeyContainer> c) {
+		// 基底キーの集合を生成
+		ArrayList<DtBase> baselist = new ArrayList<DtBase>(c.size());
+		for (BaseKeyContainer container : c) {
+			DtBase newBase = DtBase.newBase(container._baseKeys);
+			baselist.add(newBase);
+		}
+		return baselist;
+	}
 
 	/**
 	 * テーブル形式のCSVファイルの現在のレコードを、名前キーのレコードとして読み込む。
@@ -583,7 +586,7 @@ public final class DtBase extends AbDtBase implements Comparable<DtBase>
 	 * 
 	 * @since 0.20
 	 */
-	static protected void readNameKeyFieldsFromTableCsv(CsvReader.CsvRecord record, List<BaseKeyContainer> keylist)
+	static public void readNameKeyFieldsFromTableCsv(CsvReader.CsvRecord record, List<BaseKeyContainer> keylist)
 		throws IOException, CsvFormatException
 	{
 		// check field exists
@@ -625,7 +628,7 @@ public final class DtBase extends AbDtBase implements Comparable<DtBase>
 	 * 
 	 * @since 0.20
 	 */
-	static protected void readTypeKeyFieldsFromTableCsv(CsvReader.CsvRecord record, List<BaseKeyContainer> keylist)
+	static public void readTypeKeyFieldsFromTableCsv(CsvReader.CsvRecord record, List<BaseKeyContainer> keylist)
 		throws IOException, CsvFormatException
 	{
 		// check field exists
@@ -682,7 +685,7 @@ public final class DtBase extends AbDtBase implements Comparable<DtBase>
 	 * 
 	 * @since 0.20
 	 */
-	static protected void readAttributeKeyFieldsFromTableCsv(CsvReader.CsvRecord record, List<BaseKeyContainer> keylist)
+	static public void readAttributeKeyFieldsFromTableCsv(CsvReader.CsvRecord record, List<BaseKeyContainer> keylist)
 		throws IOException, CsvFormatException
 	{
 		// check field exists
@@ -727,7 +730,7 @@ public final class DtBase extends AbDtBase implements Comparable<DtBase>
 	 * 
 	 * @since 0.20
 	 */
-	static protected void readSubjectKeyFieldsFromTableCsv(CsvReader.CsvRecord record, List<BaseKeyContainer> keylist)
+	static public void readSubjectKeyFieldsFromTableCsv(CsvReader.CsvRecord record, List<BaseKeyContainer> keylist)
 		throws IOException, CsvFormatException
 	{
 		// check field exists

@@ -1,11 +1,36 @@
 ﻿***************************************************************************
 *  Dtalge - Change Log                                                    *
-*                                               Last update : 2012/06/13  *
+*                                               Last update : 2021/08/31  *
 ***************************************************************************
 
 ==========================================================================
   データ代数パッケージの変更履歴
 ==========================================================================
+
+◆0.5.2.20210831
+　・MongoDB-Java-Driver のバージョンを更新しました(3.12.10 <- 3.9.0)。
+
+◆0.5.1.20200319
+　・MongoDB をバックエンドとして利用するデータ代数オブジェクトの不具合を修正しました。
+
+◆0.5.0.20190227
+　・MongoDB をバックエンドとして利用するデータ代数オブジェクトを追加しました。
+　　この機能として、以下のクラスおよびインタフェースを追加しました。
+　　各クラスの詳細については、JavaDoc を参照してください。
+　　　dtalge.db.mongo.MongoDtalge
+　　　dtalge.db.mongo.MongoDtAlgeSet
+　　　dtalge.db.mongo.MongoDtBaseSet
+　　　dtalge.db.mongo.MongoDtStringThesaurus
+　　　dtalge.db.mongo.MongoDtNamedStringThesaurus
+　　　dtalge.db.BigDtalge
+　　　dtalge.db.BigDtalgeElement
+　　　dtalge.db.BigDtAlgeSet
+　　　dtalge.db.BigDtAlgeSetInnerElement
+　　　dtalge.db.BigDtBaseSet
+　　　dtalge.db.BigDtStringThesaurus
+　　　dtalge.db.BigDtStringThesaurusElement
+　　　dtalge.db.BigDtNamedStringThesaurus
+　　　dtalge.db.BigDtNamedStringThesaurusInnerElement
 
 ◆0.40.20120613
 　・データ代数集合CSV標準形、ならびにテーブル形式のCSV標準形のフォーマットを

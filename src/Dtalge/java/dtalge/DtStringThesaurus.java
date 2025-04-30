@@ -1,21 +1,6 @@
 /*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *  
- *  Copyright 2007-2011  SOARS Project.
- *  <author> Hiroshi Deguchi(SOARS Project.)
- *  <author> Yasunari Ishizuka(PieCake.inc,)
- */
-/*
+ * @(#)DtStringThesaurus.java	0.5.0	2019/02/25
+ *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)DtStringThesaurus.java	0.30	2011/03/16
  *     - modified by Y.Ishizuka(PieCake.inc,)
  * @(#)DtStringThesaurus.java	0.20	2010/02/25
@@ -31,6 +16,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -92,7 +78,7 @@ import dtalge.util.internal.XmlErrors;
  * <p>
  * このクラスのシソーラス定義には、次のような制約がある。
  * <ul>
- * <li><S>1つの子は、1つ以上の異なる親との関係を保持する。</S>
+ * <li>1つの子は、1つ以上の異なる親との関係を保持する。
  * <li>ある語句の祖先(もしくは子孫)が、この語句自身となるような(循環関係となる)関係付けは行えない。
  * <li>語句は全て有効な文字列であることを前提とする。<tt>null</tt> や空文字(長さが 0 の文字列)は
  * 語句として扱えない。
@@ -107,7 +93,7 @@ import dtalge.util.internal.XmlErrors;
  * <ul>
  * <li>語句として、<tt>null</tt> もしくは空文字(長さが 0 の文字列)は指定できない。
  * <li>ある語句の先祖が、その語句自身となるような(循環関係となる)関係付けは指定できない。
- * <li><S>ある語句の直接の親は 1 つ以上の異なる語句を定義できる。</S>
+ * <li>ある語句の直接の親は 1 つ以上の異なる語句を定義できる。
  * <li>CSV 形式ファイルのテキスト・ファイル・エンコーディングは、入出力時に指定されない場合は、
  * プラットフォーム標準の文字コードとなる。
  * <li>XML 形式ファイルのテキスト・ファイル・エンコーディングは、&quot;UTF-8&quot; となる。
@@ -183,18 +169,18 @@ import dtalge.util.internal.XmlErrors;
  * <li>{@link #toXML(File)}
  * </ul>
  * 
- * @version 0.30	2011/03/16
+ * @version 0.5.0
  * 
  * @author H.Deguchi(SOARS Project.)
  * @author Y.Ishizuka(PieCake.inc,)
  */
-public class DtStringThesaurus implements IDataOutput
+public class DtStringThesaurus implements IDtStringThesaurus, IDataOutput
 {
 	//------------------------------------------------------------
 	// Constants
 	//------------------------------------------------------------
 	
-	static protected final String[] EmptyStringArray = new String[0];
+	static public final String[] EmptyStringArray = new String[0];
 
 	//------------------------------------------------------------
 	// Fields
@@ -458,6 +444,36 @@ public class DtStringThesaurus implements IDataOutput
 	}
 
 	/**
+	 * このシソーラス定義にふくまれる親子関係のすべての親の語句を取得する。
+	 * @return	すべての親子関係の親の語句を格納する文字列リストを返す。
+	 * 			親子関係が一つもない場合は、要素が空の文字列リストを返す。
+	 * @since 0.5.0
+	 */
+	public List<String> getAllThesaurusParents() {
+		if (relationMap.isEmpty()) {
+			return Collections.emptyList();
+		} else {
+			//--- 子をキーとするマップのキーセット
+			return new ArrayList<String>(relationMap.keySet());
+		}
+	}
+
+	/**
+	 * このシソーラス定義にふくまれる親子関係のすべての子の語句を取得する。
+	 * @return	すべての親子関係の子の語句を格納する文字列リストを返す。
+	 * 			親子関係が一つもない場合は、要素が空の文字列リストを返す。
+	 * @since 0.5.0
+	 */
+	public List<String> getAllThesaurusChildren() {
+		if (childrenMap.isEmpty()) {
+			return Collections.emptyList();
+		} else {
+			//--- 親をキーとするマップのキーセット
+			return new ArrayList<String>(childrenMap.keySet());
+		}
+	}
+
+	/**
 	 * 指定された 2 つの語句が比較可能(関係を持つ)であれば <tt>true</tt> を返す。
 	 * なお、2 つの引数が同値の場合、<tt>false</tt> を返す。
 	 * 
@@ -498,8 +514,10 @@ public class DtStringThesaurus implements IDataOutput
 	 * @param word1		比較する語句
 	 * @param word2		比較する語句のもう一方
 	 * @return	比較結果を返す。
+	 * 
+	 * @since 0.5.0
 	 */
-	public int compareTo(String word1, String word2) {
+	public int compare(String word1, String word2) {
 		// 同値？
 		if (word1 == null || word2 == null) {
 			return 0;
@@ -520,6 +538,22 @@ public class DtStringThesaurus implements IDataOutput
 		
 		// no relation
 		return (0);
+	}
+
+	/**
+	 * 指定された 2 つの語句をシソーラス定義に基づき比較する。
+	 * <code>word1</code> が <code>word2</code> の子孫にあたる(<code>word1</code> &lt; <code>word2</code>)場合は負の値を返す。
+	 * <code>word1</code> が <code>word2</code> の祖先にあたる(<code>word1</code> &gt; <code>word2</code>)場合は正の値を返す。
+	 * 上記以外の場合は 0 を返す。<br>
+	 * なお、2 つの語句のどちらかが <tt>null</tt> もしくは同値の場合も 0 を返す。
+	 * <p>このメソッドは、{@link #compare(String, String)} と同じ結果を返す。
+	 * 
+	 * @param word1		比較する語句
+	 * @param word2		比較する語句のもう一方
+	 * @return	比較結果を返す。
+	 */
+	public int compareTo(String word1, String word2) {
+		return compare(word1, word2);
 	}
 
 	/**
@@ -582,6 +616,27 @@ public class DtStringThesaurus implements IDataOutput
 		
 		// 分類集合かを検証
 		return isClassificationSet(c.toArray(new String[c.size()]));
+	}
+	
+	/**
+	 * 2 つの語句の関係が比較可能であり、(<tt>descendant</tt> &lt; <tt>ancestor</tt>) で
+	 * あるかどうかを判定する。
+	 * 現在のシソーラス定義において「子は親よりも小さい」ため、<code>descendant</code> の先祖が
+	 * <code>ancestor</code> の場合のみ、<tt>true</tt> を返す。
+	 * <p>なお、<code>descendant</code> もしくは <code>ancestor</code> のどちらかが <tt>null</tt> の
+	 * 場合、このメソッドは <tt>false</tt> を返す。
+	 * @param ancestor		先祖とみなす語句
+	 * @param descendant	子孫とみなす語句
+	 * @return (<tt>descendant</tt> &lt; <tt>ancestor</tt>) の場合に <tt>true</tt> を返す
+	 * @since 0.5.0
+	 */
+	public boolean lessThan(String descendant, String ancestor) {
+		if (descendant == ancestor || descendant == null || descendant.equals(ancestor)) {
+			// 比較不能
+			return false;
+		}
+		
+		return hasRelation(descendant, ancestor);
 	}
 
 	/**
@@ -1115,7 +1170,7 @@ public class DtStringThesaurus implements IDataOutput
 	/**
 	 * CSVファイルフォーマットの第1行目のキーワード
 	 */
-	static protected final String CSV_KEYWORD = "#Thesaurus";
+	static public final String CSV_KEYWORD = "#Thesaurus";
 
 	/**
 	 * XMLファイルフォーマットでのシソーラスのルートノード名
